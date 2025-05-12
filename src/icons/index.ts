@@ -19,5 +19,5 @@ export { default as RusIcons } from './rus';
 export { default as TeachVal1Icon } from './teach-val-1';
 export { default as TeachVal2Icon } from './teach-val-2';
 export { default as TeachVal3Icon } from './teach-val-3';
-export { default as TurkIcon } from './turk';
+export { default as TurkIcons } from './turk';
 export { default as UzbIcons } from './uzb';

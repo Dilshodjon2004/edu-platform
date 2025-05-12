@@ -1,7 +1,9 @@
 import { Box, Button, Card, CardBody, Input, Stack } from '@chakra-ui/react'
 import SectionTitle from '../section-title/section-title'
+import { useTranslation } from 'react-i18next'
 
 const Newsletter = () => {
+	const { t } = useTranslation()
 	return (
 		<Card mt={10}>
 			<CardBody
@@ -14,8 +16,8 @@ const Newsletter = () => {
 					<SectionTitle
 						textAlign={'center'}
 						maxW={'container.sm'}
-						title='Subscribe our Newsletter'
-						subtitle='Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia enim aspernatur ipsam recusandae voluptas autem quisquam itaque repellendus laboriosam libero!'
+						title={t('newsletter_title', { ns: 'home' })}
+						subtitle={t('newsletter_description', { ns: 'home' })}
 					/>
 					<Box pos={'relative'}>
 						<Input
@@ -23,7 +25,7 @@ const Newsletter = () => {
 							w={'full'}
 							bg={'white'}
 							color={'gray.900'}
-							placeholder={'Your email...'}
+							placeholder={t('newsletter_placeholder', { ns: 'home' }) || ''}
 							_placeholder={{ color: 'gray.500' }}
 						/>
 						<Button
@@ -33,7 +35,7 @@ const Newsletter = () => {
 							colorScheme={'blue'}
 							zIndex={9}
 						>
-							Submit
+							{t('newsletter_submit', { ns: 'home' })}
 						</Button>
 					</Box>
 				</Stack>

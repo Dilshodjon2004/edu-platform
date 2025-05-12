@@ -14,13 +14,15 @@ import SectionTitle from '../section-title/section-title'
 import { FaUserGraduate } from 'react-icons/fa'
 import { AiOutlinePlayCircle } from 'react-icons/ai'
 import Link from 'next/link'
+import { useTranslation } from 'react-i18next'
 
 const Instructors = () => {
+	const { t } = useTranslation()
 	return (
 		<>
 			<SectionTitle
-				title='Learn from the best instructors'
-				subtitle='All our mentor with high experienced'
+				title={t('instructor_title', { ns: 'home' })}
+				subtitle={t('instructor_description', { ns: 'home' })}
 			/>
 
 			<Grid
@@ -62,9 +64,11 @@ const Instructors = () => {
 			</Grid>
 
 			<Text align={'center'}>
-				Want to help people learn, grow and achieve more in life?{' '}
+				{t('instructor_link_title', { ns: 'home' })}{' '}
 				<Box as='span' color={'teal'} _hover={{ textDecoration: 'underline' }}>
-					<Link href={'/become-instructor'}>Become an instructor</Link>
+					<Link href={'/become-instructor'}>
+						{t('instructor_link_router', { ns: 'home' })}
+					</Link>
 				</Box>
 			</Text>
 		</>

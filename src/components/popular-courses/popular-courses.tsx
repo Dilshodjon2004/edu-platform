@@ -16,13 +16,15 @@ import ReactStars from 'react-stars'
 import { CiViewList } from 'react-icons/ci'
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import { SiGoogleanalytics } from 'react-icons/si'
+import { useTranslation } from 'react-i18next'
 
 const PopularCourses = () => {
+	const { t } = useTranslation()
 	return (
 		<>
 			<SectionTitle
-				title='Explore featured Courses'
-				subtitle='10,000+ unique online course list designs'
+				title={t('popular_courses_title', { ns: 'home' })}
+				subtitle={t('popular_courses_description', { ns: 'home' })}
 			/>
 			<Carousel
 				responsive={courseCarousel}
