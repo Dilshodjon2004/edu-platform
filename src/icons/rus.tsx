@@ -1,5 +1,5 @@
-import { Icon } from '@chakra-ui/react'
-import { IconProp } from './icons.props'
+import { Icon } from '@chakra-ui/react';
+import { IconProp } from './icons.props';
 
 const RusIcon = ({ ...props }: IconProp): JSX.Element => (
 	<Icon
@@ -14,16 +14,10 @@ const RusIcon = ({ ...props }: IconProp): JSX.Element => (
 	>
 		<defs>
 			<clipPath id='3ddd0ebfde'>
-				<path
-					d='M 2.582031 23 L 34.832031 23 L 34.832031 30.328125 L 2.582031 30.328125 Z M 2.582031 23 '
-					clipRule='nonzero'
-				/>
+				<path d='M 2.582031 23 L 34.832031 23 L 34.832031 30.328125 L 2.582031 30.328125 Z M 2.582031 23 ' clipRule='nonzero' />
 			</clipPath>
 			<clipPath id='ac23ffb961'>
-				<path
-					d='M 2.582031 14 L 34.832031 14 L 34.832031 24 L 2.582031 24 Z M 2.582031 14 '
-					clipRule='nonzero'
-				/>
+				<path d='M 2.582031 14 L 34.832031 14 L 34.832031 24 L 2.582031 24 Z M 2.582031 14 ' clipRule='nonzero' />
 			</clipPath>
 			<clipPath id='3e37e541af'>
 				<path
@@ -57,6 +51,6 @@ const RusIcon = ({ ...props }: IconProp): JSX.Element => (
 			/>
 		</g>
 	</Icon>
-)
+);
 
-export default RusIcon
+export default RusIcon;

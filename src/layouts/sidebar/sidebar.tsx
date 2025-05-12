@@ -16,6 +16,7 @@ const Sidebar = ({ toggle }: SidebarProps): JSX.Element => {
 	const router = useRouter()
 	return (
 		<Box
+			zIndex={1001}
 			w={{ base: 'full', lg: '300px' }}
 			h={'90vh'}
 			bg={useColorModeValue('gray.50', 'gray.900')}
@@ -42,7 +43,7 @@ const Sidebar = ({ toggle }: SidebarProps): JSX.Element => {
 						{item.links.map(nav => {
 							const active = router.asPath === nav.route
 							return (
-								<Link href={`${nav.route}`}>
+								<Link href={`${nav.route}`} key={nav.label}>
 									<Button
 										colorScheme='blue'
 										variant={active ? 'solid' : 'ghost'}

@@ -1,5 +1,5 @@
-import { Icon } from '@chakra-ui/react'
-import { IconProp } from './icons.props'
+import { Icon } from '@chakra-ui/react';
+import { IconProp } from './icons.props';
 
 const EngIcons = ({ ...props }: IconProp): JSX.Element => (
 	<Icon
@@ -35,5 +35,5 @@ const EngIcons = ({ ...props }: IconProp): JSX.Element => (
 			/>
 		</g>
 	</Icon>
-)
-export default EngIcons
+);
+export default EngIcons;

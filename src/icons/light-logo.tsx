@@ -1,5 +1,5 @@
-import { Icon } from '@chakra-ui/react'
-import { IconProp } from './icons.props'
+import { Icon } from '@chakra-ui/react';
+import { IconProp } from './icons.props';
 
 const LightLogo = ({ ...props }: IconProp): JSX.Element => (
 	<Icon
@@ -15,10 +15,7 @@ const LightLogo = ({ ...props }: IconProp): JSX.Element => (
 		<defs>
 			<g />
 			<clipPath id='a52e12732b'>
-				<path
-					d='M 1.574219 0 L 30.734375 0 L 30.734375 29.03125 L 1.574219 29.03125 Z M 1.574219 0 '
-					clipRule='nonzero'
-				/>
+				<path d='M 1.574219 0 L 30.734375 0 L 30.734375 29.03125 L 1.574219 29.03125 Z M 1.574219 0 ' clipRule='nonzero' />
 			</clipPath>
 		</defs>
 		<g clipPath='url(#a52e12732b)'>
@@ -71,6 +68,6 @@ const LightLogo = ({ ...props }: IconProp): JSX.Element => (
 			</g>
 		</g>
 	</Icon>
-)
+);
 
-export default LightLogo
+export default LightLogo;

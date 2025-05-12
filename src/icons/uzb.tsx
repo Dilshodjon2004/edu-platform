@@ -1,5 +1,5 @@
-import { Icon } from '@chakra-ui/react'
-import { IconProp } from './icons.props'
+import { Icon } from '@chakra-ui/react';
+import { IconProp } from './icons.props';
 
 const UzbIcons = ({ ...props }: IconProp): JSX.Element => (
 	<Icon
@@ -20,22 +20,13 @@ const UzbIcons = ({ ...props }: IconProp): JSX.Element => (
 				/>
 			</clipPath>
 			<clipPath id='42922f3208'>
-				<path
-					d='M 2.582031 23 L 34.832031 23 L 34.832031 30.328125 L 2.582031 30.328125 Z M 2.582031 23 '
-					clipRule='nonzero'
-				/>
+				<path d='M 2.582031 23 L 34.832031 23 L 34.832031 30.328125 L 2.582031 30.328125 Z M 2.582031 23 ' clipRule='nonzero' />
 			</clipPath>
 			<clipPath id='e646d55be2'>
-				<path
-					d='M 2.582031 14 L 34.832031 14 L 34.832031 24 L 2.582031 24 Z M 2.582031 14 '
-					clipRule='nonzero'
-				/>
+				<path d='M 2.582031 14 L 34.832031 14 L 34.832031 24 L 2.582031 24 Z M 2.582031 14 ' clipRule='nonzero' />
 			</clipPath>
 			<clipPath id='943a090765'>
-				<path
-					d='M 2.582031 15 L 34.832031 15 L 34.832031 22 L 2.582031 22 Z M 2.582031 15 '
-					clipRule='nonzero'
-				/>
+				<path d='M 2.582031 15 L 34.832031 15 L 34.832031 22 L 2.582031 22 Z M 2.582031 15 ' clipRule='nonzero' />
 			</clipPath>
 		</defs>
 		<g clipPath='url(#c52326898a)'>
@@ -77,6 +68,6 @@ const UzbIcons = ({ ...props }: IconProp): JSX.Element => (
 			fillRule='nonzero'
 		/>
 	</Icon>
-)
+);
 
-export default UzbIcons
+export default UzbIcons;
