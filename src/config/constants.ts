@@ -183,7 +183,6 @@ export const coursesFilter = [
 	},
 ]
 
-
 export const courses: ICourseType[] = [
 	{
 		image: 'https://media.graphassets.com/3gf746AKRbWNjB8OCoEB',
@@ -280,5 +279,36 @@ export const courses: ICourseType[] = [
 			avatar:
 				'https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small_2x/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png',
 		},
+	},
+]
+
+export const booksCategory = [
+	{
+		label: 'filter_all_category',
+		id: 'all-categories',
+	},
+	{
+		label: 'filter_programming',
+		id: 'programming',
+	},
+	{
+		label: 'filter_design',
+		id: 'design',
+	},
+	{
+		label: 'filter_business',
+		id: 'business',
+	},
+	{
+		label: 'filter_history',
+		id: 'history',
+	},
+	{
+		label: 'filter_writing',
+		id: 'writing',
+	},
+	{
+		label: 'filter_lifestyle',
+		id: 'lifestyle',
 	},
 ]
