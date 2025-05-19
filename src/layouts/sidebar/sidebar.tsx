@@ -16,6 +16,8 @@ import { useTranslation } from 'react-i18next'
 const Sidebar = ({ toggle }: SidebarProps): JSX.Element => {
 	const router = useRouter()
 	const { t } = useTranslation()
+
+	 
 	return (
 		<Box
 			zIndex={1001}
@@ -43,7 +45,7 @@ const Sidebar = ({ toggle }: SidebarProps): JSX.Element => {
 					<Box key={item.title} mt={10}>
 						<Text>{t(item.title, { ns: 'layout' })}</Text>
 						{item.links.map(nav => {
-							const active = router.asPath === nav.route
+							const active = `/${router.pathname.split('/')[1]}` === nav.route
 							return (
 								<Link href={`${nav.route}`} key={nav.label}>
 									<Button

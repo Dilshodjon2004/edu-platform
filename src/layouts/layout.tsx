@@ -16,6 +16,7 @@ const Layout = ({ children }: LayoutProps): JSX.Element => {
 			<Box
 				mt={'11vh'}
 				pl={{ base: 0, lg: '320px' }}
+				minH={'90vh'}
 				transition={'all .4s ease'}
 			>
 				<Container maxW={'container.lg'}>{children}</Container>

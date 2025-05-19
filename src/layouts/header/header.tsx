@@ -21,11 +21,14 @@ import { BsFillMoonFill, BsFillSunFill } from 'react-icons/bs'
 import { MdOutlineContactSupport } from 'react-icons/md'
 import { TbWorld } from 'react-icons/tb'
 import { HeaderProps } from './header.props'
+import { useRouter } from 'next/router'
 const Header = ({ onToggle }: HeaderProps) => {
 	const { toggleColorMode, colorMode } = useColorMode()
 	const { t, i18n } = useTranslation()
+	const router = useRouter()
 
 	const onLanguage = (lng: string) => {
+		router.replace(router.asPath)
 		i18n.changeLanguage(lng)
 	}
 	return (
