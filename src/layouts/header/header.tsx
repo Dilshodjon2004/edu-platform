@@ -102,7 +102,11 @@ const Header = ({ onToggle }: HeaderProps) => {
 						onClick={toggleColorMode}
 						variant={'outline'}
 					/>
-					<Button rightIcon={<BiUserCircle />}>
+					<Button
+						rightIcon={<BiUserCircle />}
+						colorScheme='blue'
+						onClick={() => router.push('/auth')}
+					>
 						{t('login', { ns: 'layout' })}
 					</Button>
 				</HStack>
