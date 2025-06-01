@@ -1,6 +1,7 @@
 export interface ICourseType {
 	image: string
 	title: string
+	slug: string
 	lessonCount: number
 	totalHour: number
 	level: string

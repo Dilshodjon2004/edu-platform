@@ -16,8 +16,13 @@ import { CiViewList } from 'react-icons/ci'
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import { SiGoogleanalytics } from 'react-icons/si'
 import { BsMinecartLoaded } from 'react-icons/bs'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 const AllCoursesCard = ({ course }: AllCoursesCardProps) => {
+	const router = useRouter()
+
+	const onDetailedCourse = () => router.push(`/courses/${course.slug}`)
 	return (
 		<>
 			<Box py={4}>
@@ -29,7 +34,10 @@ const AllCoursesCard = ({ course }: AllCoursesCardProps) => {
 						h={'250px'}
 						borderRadius={'lg'}
 						objectFit={'cover'}
+						cursor={'pointer'}
+						onClick={onDetailedCourse}
 					/>
+
 					<Stack>
 						<HStack>
 							<Text color={'#e59819'}>{course.reviewAvarage.toFixed(1)}</Text>
@@ -94,7 +102,9 @@ const AllCoursesCard = ({ course }: AllCoursesCardProps) => {
 								<Button rightIcon={<BsMinecartLoaded />} colorScheme='blue'>
 									Add to cart
 								</Button>
-								<Button colorScheme='blue'>Detail</Button>
+								<Button colorScheme='blue' onClick={onDetailedCourse}>
+									Detail
+								</Button>
 							</Flex>
 						</Flex>
 					</Stack>
