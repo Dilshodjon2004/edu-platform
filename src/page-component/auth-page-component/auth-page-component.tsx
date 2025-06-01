@@ -16,16 +16,22 @@ import {
 import AuthNavbarComponent from './auth-navbar-component'
 import { avatars } from '@/config/constants'
 import { useState } from 'react'
-import { Login, Register, SocialMedia, Verification } from '@/components'
+import {
+	AccountRecovery,
+	Login,
+	Register,
+	SocialMedia,
+	Verification,
+} from '@/components'
 import { useTranslation } from 'react-i18next'
 
 const AuthPageComponent = () => {
-	const [state, setState] = useState<'login' | 'register' | 'verification'>(
-		'login'
-	)
+	const [state, setState] = useState<
+		'login' | 'register' | 'verification' | 'account-recovery'
+	>('login')
 
 	const onNavigateStateComponent = (
-		component: 'login' | 'register' | 'verification'
+		component: 'login' | 'register' | 'verification' | 'account-recovery'
 	) => setState(component)
 
 	const breakpointValue = useBreakpointValue({ base: 'md', md: 'lg' })
@@ -38,6 +44,12 @@ const AuthPageComponent = () => {
 				return <Register onNavigateStateComponent={onNavigateStateComponent} />
 			case 'verification':
 				return <Verification />
+			case 'account-recovery':
+				return (
+					<AccountRecovery
+						onNavigateStateComponent={onNavigateStateComponent}
+					/>
+				)
 		}
 	}
 
