@@ -1,12 +1,28 @@
 import { IArticleType } from '@/interfaces/article.interface'
 import { Language } from '@/interfaces/constants.interface'
 import { withLayout } from '@/layouts/layout'
+import Seo from '@/layouts/seo/seo'
 import { ArticlePageComponent } from '@/page-component'
 import { Articles } from '@/services/article.service'
 import { GetServerSideProps } from 'next'
+import { useTranslation } from 'react-i18next'
 
 const ArticlePage = ({ articles }: ArticlesPageProps): JSX.Element => {
-	return <ArticlePageComponent articles={articles} />
+	const { t } = useTranslation()
+	return (
+		<Seo
+			metaTitle={
+				`Sammi | ${t('article_page_title', { ns: 'seo' })}` ||
+				'Sammi | Articles'
+			}
+			metaDescription={
+				`Sammi | ${t('article_page_description', { ns: 'seo' })}` ||
+				'Useful articles of sammi'
+			}
+		>
+			<ArticlePageComponent articles={articles} />
+		</Seo>
+	)
 }
 
 export default withLayout(ArticlePage)
