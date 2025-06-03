@@ -372,3 +372,16 @@ export const avatars = [
 		url: 'https://bit.ly/ryan-florence',
 	},
 ]
+
+export const voiceLanguages = [
+	{
+		language: 'en',
+		lang: 'en-US',
+		voiceUrl: 'Google US English',
+	},
+	{
+		language: 'ru',
+		lang: 'ru-RU',
+		voiceUrl: 'Google русский',
+	},
+]

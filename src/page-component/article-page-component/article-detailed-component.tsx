@@ -1,25 +1,76 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { ArticleDetailedComponentProps } from './article-page-component.props'
 import {
 	Avatar,
 	Box,
+	Button,
 	Card,
 	CardBody,
 	Heading,
 	HStack,
+	Icon,
 	Image,
 	Stack,
 	Text,
+	useToast,
 } from '@chakra-ui/react'
 import { format } from 'date-fns'
 import { calculateTimeToRead } from '@/helpers/time.helper'
 import { useTranslation } from 'react-i18next'
 import { RichText } from '@graphcms/rich-text-react-renderer'
+import { useSpeechSynthesis } from 'react-speech-kit'
+import { useRouter } from 'next/router'
+import Cookies from 'js-cookie'
+import { voiceLanguages } from '@/config/constants'
+import { AiFillPlayCircle } from 'react-icons/ai'
+import { BsFillStopCircleFill } from 'react-icons/bs'
 
 const ArticleDetailedComponent = ({
 	article,
 }: ArticleDetailedComponentProps): JSX.Element => {
 	const { t } = useTranslation()
+	const [myVoice, setMyVoice] = useState()
+	const toast = useToast()
+	const router = useRouter()
+
+	const onEnd = () => {
+		toast({
+			title: 'End of listening',
+			status: 'info',
+			position: 'top-right',
+			isClosable: true,
+			duration: 500,
+		})
+	}
+
+	const { speak, voices, cancel, speaking, supported } = useSpeechSynthesis({
+		onEnd,
+	})
+
+	useEffect(() => {
+		const lang = Cookies.get('i18next')
+		const currentLanguage = voiceLanguages.find(item => item.language === lang)
+		const supportLanguage = voiceLanguages.map(c => c.voiceUrl)
+		const AllSupportedVoices = voices.filter(item =>
+			supportLanguage.includes(item.voiceURI)
+		)
+		const currentVoice = AllSupportedVoices.find(
+			item => item.lang === currentLanguage?.lang
+		)
+		setMyVoice(currentVoice)
+		console.log(myVoice)
+		console.log(voices)
+	}, [voices, router])
+
+	const startSpeak = () => {
+		speak({
+			text: `${t('start_reading_article', { ns: 'global' })} ${
+				article.title
+			} ${t('article', { ns: 'global' })}. ${article.description.text}`,
+			voice: myVoice,
+		})
+	}
+
 	return (
 		<>
 			<Card>
@@ -67,6 +118,42 @@ const ArticleDetailedComponent = ({
 				</CardBody>
 			</Card>
 			<Box>
+				{supported && myVoice && (
+					<Box
+						my={5}
+						position={'relative'}
+						cursor={'pointer'}
+						border={'1px'}
+						w={'300px'}
+						p={1}
+						borderRadius={'lg'}
+						maxH={'200px'}
+						borderColor={'gray'}
+					>
+						{!speaking ? (
+							<HStack onClick={startSpeak}>
+								<Icon as={AiFillPlayCircle} w={10} h={10} />
+								<Text>{t('play', { ns: 'global' })}</Text>
+							</HStack>
+						) : (
+							<HStack onClick={cancel}>
+								<Icon as={BsFillStopCircleFill} w={10} h={10} />
+								<Text>{t('stop', { ns: 'global' })}</Text>
+								{speaking && (
+									<>
+										<Image
+											src='/images/wave.gif'
+											alt='wave'
+											pos={'absolute'}
+											width={'50%'}
+											right={0}
+										/>
+									</>
+								)}
+							</HStack>
+						)}
+					</Box>
+				)}
 				<RichText
 					content={article.description.raw}
 					renderers={{

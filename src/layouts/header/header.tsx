@@ -22,6 +22,7 @@ import { MdOutlineContactSupport } from 'react-icons/md'
 import { TbWorld } from 'react-icons/tb'
 import { HeaderProps } from './header.props'
 import { useRouter } from 'next/router'
+import { AiOutlineLogin } from 'react-icons/ai'
 const Header = ({ onToggle }: HeaderProps) => {
 	const { toggleColorMode, colorMode } = useColorMode()
 	const { t, i18n } = useTranslation()
@@ -62,14 +63,15 @@ const Header = ({ onToggle }: HeaderProps) => {
 					</HStack>
 				</Box>
 				<HStack>
-					<IconButton
+					{/* <IconButton
 						aria-label='support'
 						icon={<MdOutlineContactSupport />}
 						colorScheme='blue'
 						variant={'ghost'}
-					/>
+					/> */}
 					<Menu placement='bottom'>
 						<MenuButton
+							display={{ base: 'none', md: 'flex' }}
 							as={Button}
 							textTransform={'capitalize'}
 							rightIcon={<TbWorld />}
@@ -103,12 +105,20 @@ const Header = ({ onToggle }: HeaderProps) => {
 						variant={'outline'}
 					/>
 					<Button
+						display={{ base: 'none', md: 'flex' }}
 						rightIcon={<BiUserCircle />}
 						colorScheme='blue'
 						onClick={() => router.push('/auth')}
 					>
 						{t('login', { ns: 'layout' })}
 					</Button>
+					<IconButton
+						aria-label='login'
+						icon={<AiOutlineLogin />}
+						colorScheme={'blue'}
+						onClick={() => router.push('/auth')}
+						variant={'outline'}
+					/>
 				</HStack>
 			</Flex>
 		</Box>
