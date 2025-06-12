@@ -24,3 +24,9 @@ export interface IEmailAndOtp {
 	email: string
 	otpVerification: string
 }
+
+export interface ISign {
+	email: string
+	password: string
+	callback?: () => void
+}

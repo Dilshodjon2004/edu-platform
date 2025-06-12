@@ -38,14 +38,19 @@ const Login = ({ onNavigateStateComponent }: LoginProps) => {
 	const toast = useToast()
 
 	const onSubmit = (formData: IEmailAndPassword) => {
-		login({ email: formData.email, password: formData.password })
-		router.push('/')
-		toast({
-			title: 'Successfully logged in!',
-			status: 'info',
-			isClosable: true,
-			position: 'top-right',
-			duration: 1000,
+		login({
+			email: formData.email,
+			password: formData.password,
+			callback: () => {
+				router.push('/')
+				toast({
+					title: 'Successfully logged in!',
+					status: 'info',
+					isClosable: true,
+					position: 'top-right',
+					duration: 1000,
+				})
+			},
 		})
 	}
 	return (

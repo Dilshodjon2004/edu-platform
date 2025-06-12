@@ -31,4 +31,21 @@ export const AuthValidation = {
 				.min(6, 'OTP should be 6 digits number!'),
 		})
 	},
+	onlyEmail() {
+		return Yup.object({
+			email: Yup.string()
+				.email('Email is invalid!')
+				.required('Email is required!'),
+		})
+	},
+	editPassword() {
+		return Yup.object({
+			password: Yup.string()
+				.min(6, 'Password should not be less than 6 characters!')
+				.required('Password is required!'),
+			confirmPassword: Yup.string()
+				.oneOf([Yup.ref('password')], "Password doesn't match!")
+				.required('Confirm password is required!'),
+		})
+	},
 }

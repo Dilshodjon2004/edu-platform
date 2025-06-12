@@ -31,12 +31,14 @@ const Register = ({ onNavigateStateComponent }: RegisterProps) => {
 
 	const onSubmit = async (formData: IEmailAndPassword) => {
 		const { email, password } = formData
-		const response = await sendVerificationCode({ email })
-		const result: any = response
-		if (result.payload === 'success') {
-			pendingRegister({ email, password })
-			!isLoading && onNavigateStateComponent('verification')
-		}
+		sendVerificationCode({
+			email,
+			isUser: false,
+			callback: () => {
+				pendingRegister({ email, password })
+				!isLoading && onNavigateStateComponent('verification')
+			},
+		})
 	}
 	return (
 		<Stack spacing={4}>
