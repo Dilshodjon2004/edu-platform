@@ -1,6 +1,7 @@
 import { language } from '@/config/constants'
 import { DarkLogo, LightLogo } from '@/icons'
 import {
+	Avatar,
 	Box,
 	Button,
 	Flex,
@@ -18,15 +19,20 @@ import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 import { BiMenuAltLeft, BiUserCircle } from 'react-icons/bi'
 import { BsFillMoonFill, BsFillSunFill } from 'react-icons/bs'
-import { MdOutlineContactSupport } from 'react-icons/md'
 import { TbWorld } from 'react-icons/tb'
 import { HeaderProps } from './header.props'
 import { useRouter } from 'next/router'
 import { AiOutlineLogin } from 'react-icons/ai'
+import { FiSettings } from 'react-icons/fi'
+import { CiLogout } from 'react-icons/ci'
+import { useAuth } from '@/hooks/useAuth'
+import { useActions } from '@/hooks/useActions'
 const Header = ({ onToggle }: HeaderProps) => {
 	const { toggleColorMode, colorMode } = useColorMode()
 	const { t, i18n } = useTranslation()
 	const router = useRouter()
+	const { user } = useAuth()
+	const { logout } = useActions()
 
 	const onLanguage = (lng: string) => {
 		router.replace(router.asPath)
@@ -63,12 +69,6 @@ const Header = ({ onToggle }: HeaderProps) => {
 					</HStack>
 				</Box>
 				<HStack>
-					{/* <IconButton
-						aria-label='support'
-						icon={<MdOutlineContactSupport />}
-						colorScheme='blue'
-						variant={'ghost'}
-					/> */}
 					<Menu placement='bottom'>
 						<MenuButton
 							display={{ base: 'none', md: 'flex' }}
@@ -104,21 +104,56 @@ const Header = ({ onToggle }: HeaderProps) => {
 						onClick={toggleColorMode}
 						variant={'outline'}
 					/>
-					<Button
-						display={{ base: 'none', md: 'flex' }}
-						rightIcon={<BiUserCircle />}
-						colorScheme='blue'
-						onClick={() => router.push('/auth')}
-					>
-						{t('login', { ns: 'layout' })}
-					</Button>
-					<IconButton
-						aria-label='login'
-						icon={<AiOutlineLogin />}
-						colorScheme={'blue'}
-						onClick={() => router.push('/auth')}
-						variant={'outline'}
-					/>
+					{user ? (
+						<Menu>
+							<MenuButton
+								as={Button}
+								rounded={'full'}
+								variant={'link'}
+								cursor={'pointer'}
+								minW={0}
+							>
+								<Avatar backgroundColor={'blue.500'} />
+							</MenuButton>
+							<MenuList p={0} m={0}>
+								<MenuItem
+									h={14}
+									onClick={() => router.push('/setting')}
+									fontWeight={'bold'}
+									icon={<FiSettings fontSize={17} />}
+								>
+									Settings
+								</MenuItem>
+								<MenuItem
+									h={14}
+									onClick={logout}
+									fontWeight={'bold'}
+									icon={<CiLogout fontSize={17} />}
+								>
+									Logout
+								</MenuItem>
+							</MenuList>
+						</Menu>
+					) : (
+						<>
+							<Button
+								display={{ base: 'none', md: 'flex' }}
+								rightIcon={<BiUserCircle />}
+								colorScheme='blue'
+								onClick={() => router.push('/auth')}
+							>
+								{t('login', { ns: 'layout' })}
+							</Button>
+							<IconButton
+								display={{ base: 'flex', md: 'none' }}
+								aria-label='login'
+								icon={<AiOutlineLogin />}
+								colorScheme={'blue'}
+								onClick={() => router.push('/auth')}
+								variant={'outline'}
+							/>
+						</>
+					)}
 				</HStack>
 			</Flex>
 		</Box>

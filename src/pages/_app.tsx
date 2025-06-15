@@ -3,6 +3,7 @@ import '@fontsource/roboto'
 import 'react-multi-carousel/lib/styles.css'
 import 'nprogress/nprogress.css'
 
+import { SessionProvider } from 'next-auth/react'
 import { ChakraProvider } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import { theme } from '@/config/theme'
@@ -17,7 +18,10 @@ import { store } from '@/store/store'
 
 NProgress.configure({ showSpinner: false })
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({
+	Component,
+	pageProps: { session, ...pageProps },
+}: AppProps) {
 	useEffect(() => {
 		const handleStart = () => NProgress.start()
 		const handleStop = () => NProgress.done()
@@ -35,13 +39,15 @@ export default function App({ Component, pageProps }: AppProps) {
 	return (
 		<HydrationProvider>
 			<Provider store={store}>
-				<ChakraProvider theme={theme}>
+				<SessionProvider session={session}>
 					<I18nextProvider i18n={i18n}>
-						<Client>
-							<Component {...pageProps} />
-						</Client>
+						<ChakraProvider theme={theme}>
+							<Client>
+								<Component {...pageProps} />
+							</Client>
+						</ChakraProvider>
 					</I18nextProvider>
-				</ChakraProvider>
+				</SessionProvider>
 			</Provider>
 		</HydrationProvider>
 	)

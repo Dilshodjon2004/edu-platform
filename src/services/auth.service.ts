@@ -4,7 +4,7 @@ import {
 	getMailUrl,
 	getUserUrl,
 } from '@/config/api.config'
-import { removeTokensCookie, saveStorage } from '@/helpers/auth.helper'
+import { removeTokensCookie, saveTokensCookie } from '@/helpers/auth.helper'
 import { IAuthUserResponse } from '@/store/user/user.interface'
 import axios from 'axios'
 import Cookies from 'js-cookie'
@@ -20,7 +20,7 @@ export const AuthService = {
 		)
 
 		if (response.data.accessToken) {
-			saveStorage(response.data)
+			saveTokensCookie(response.data)
 		}
 
 		return response
@@ -36,7 +36,7 @@ export const AuthService = {
 		)
 
 		if (response.data.accessToken) {
-			saveStorage(response.data)
+			saveTokensCookie(response.data)
 		}
 
 		return response
@@ -69,19 +69,29 @@ export const AuthService = {
 		return response
 	},
 
+	async checkUser(email: string) {
+		const response = await axios.post<'user' | 'not-user'>(
+			`${API_URL}${getAuthUrl('check-user')}`,
+			{
+				email,
+			}
+		)
+		return response.data
+	},
+
 	logout() {
 		removeTokensCookie()
 		localStorage.removeItem('user')
 	},
 
 	async getNewTokens() {
-		const refreshToken = Cookies.get('refreshToken')
+		const refreshToken = Cookies.get('refresh')
 		const response = await axios.post(`${API_URL}${getAuthUrl('access')}`, {
 			refreshToken,
 		})
 
 		if (response.data.accessToken) {
-			saveStorage(response.data)
+			saveTokensCookie(response.data)
 		}
 
 		return response
