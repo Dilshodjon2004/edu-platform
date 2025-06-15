@@ -27,6 +27,7 @@ import { FiSettings } from 'react-icons/fi'
 import { CiLogout } from 'react-icons/ci'
 import { useAuth } from '@/hooks/useAuth'
 import { useActions } from '@/hooks/useActions'
+
 const Header = ({ onToggle }: HeaderProps) => {
 	const { toggleColorMode, colorMode } = useColorMode()
 	const { t, i18n } = useTranslation()
@@ -37,6 +38,11 @@ const Header = ({ onToggle }: HeaderProps) => {
 	const onLanguage = (lng: string) => {
 		router.replace(router.asPath)
 		i18n.changeLanguage(lng)
+	}
+
+	const logoutHandler = () => {
+		logout()
+		router.push('/auth')
 	}
 	return (
 		<Box
@@ -126,7 +132,7 @@ const Header = ({ onToggle }: HeaderProps) => {
 								</MenuItem>
 								<MenuItem
 									h={14}
-									onClick={logout}
+									onClick={logoutHandler}
 									fontWeight={'bold'}
 									icon={<CiLogout fontSize={17} />}
 								>

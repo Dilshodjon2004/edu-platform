@@ -15,6 +15,7 @@ import Router from 'next/router'
 import { useEffect } from 'react'
 import { Provider } from 'react-redux'
 import { store } from '@/store/store'
+import AuthProvider from '@/provider/auth.provider'
 
 NProgress.configure({ showSpinner: false })
 
@@ -40,10 +41,12 @@ export default function App({
 		<HydrationProvider>
 			<Provider store={store}>
 				<SessionProvider session={session}>
-					<I18nextProvider i18n={i18n}>
+					<I18nextProvider i18n={i18n}> 
 						<ChakraProvider theme={theme}>
 							<Client>
-								<Component {...pageProps} />
+								<AuthProvider>
+									<Component {...pageProps} />
+								</AuthProvider>
 							</Client>
 						</ChakraProvider>
 					</I18nextProvider>
