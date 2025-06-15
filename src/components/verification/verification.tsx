@@ -19,7 +19,7 @@ import { useRouter } from 'next/router'
 
 const Verification = () => {
 	const { t } = useTranslation()
-	const { verifyVerificationCode, register } = useActions()
+	const { verifyVerificationCode, register, clearError } = useActions()
 	const { error, isLoading, user } = useTypedSelector(state => state.user)
 	const router = useRouter()
 	const toast = useToast()
@@ -66,7 +66,7 @@ const Verification = () => {
 			<Text color={'gray.500'} fontSize={{ base: 'sm', sm: 'md' }}>
 				{t('verification_description', { ns: 'global' })}
 			</Text>
-			{typeof error === 'string' && <ErrorAlert title={error} />}
+			{typeof error === 'string' && <ErrorAlert title={error} clearHandler={clearError} />}
 			<Formik
 				onSubmit={onSubmit}
 				initialValues={{ otp: '' }}

@@ -2,13 +2,9 @@ import {
 	Box,
 	Button,
 	Checkbox,
-	FormControl,
-	FormLabel,
 	Heading,
 	HStack,
 	Icon,
-	Input,
-	InputGroup,
 	InputRightElement,
 	Stack,
 	Text,
@@ -33,7 +29,7 @@ const Login = ({ onNavigateStateComponent }: LoginProps) => {
 	const toggleShow = () => setShow(prev => !prev)
 	const { error, isLoading } = useTypedSelector(state => state.user)
 	const { t } = useTranslation()
-	const { login } = useActions()
+	const { login, clearError } = useActions()
 	const router = useRouter()
 	const toast = useToast()
 
@@ -78,7 +74,9 @@ const Login = ({ onNavigateStateComponent }: LoginProps) => {
 				validationSchema={AuthValidation.login}
 			>
 				<Form>
-					{typeof error === 'string' && <ErrorAlert title={error} />}
+					{typeof error === 'string' && (
+						<ErrorAlert title={error} clearHandler={clearError}  />
+					)}
 					<TextField
 						name='email'
 						type='text'

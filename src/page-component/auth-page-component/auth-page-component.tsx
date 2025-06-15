@@ -24,15 +24,20 @@ import {
 	Verification,
 } from '@/components'
 import { useTranslation } from 'react-i18next'
+import { useActions } from '@/hooks/useActions'
 
 const AuthPageComponent = () => {
+	const { clearError } = useActions()
 	const [state, setState] = useState<
 		'login' | 'register' | 'verification' | 'account-recovery'
 	>('login')
 
 	const onNavigateStateComponent = (
 		component: 'login' | 'register' | 'verification' | 'account-recovery'
-	) => setState(component)
+	) => {
+		setState(component)
+		clearError()
+	}
 
 	const breakpointValue = useBreakpointValue({ base: 'md', md: 'lg' })
 

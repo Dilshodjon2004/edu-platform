@@ -38,8 +38,12 @@ const AccountRecovery = ({
 	const { show, toggleShow, showConfirm, toggleShowConfirm } = useShowPassword()
 	const toast = useToast()
 	const { t } = useTranslation()
-	const { sendVerificationCode, verifyVerificationCode, editUserPassword } =
-		useActions()
+	const {
+		sendVerificationCode,
+		verifyVerificationCode,
+		editUserPassword,
+		clearError,
+	} = useActions()
 	const { error, isLoading } = useTypedSelector(state => state.user)
 
 	const onForm1Submit = (formData: { email: string }) => {
@@ -98,7 +102,9 @@ const AccountRecovery = ({
 				</Text>
 			</Heading>
 			<Text>{t('account_recovery_description_form1', { ns: 'global' })}</Text>
-			{typeof error === 'string' && <ErrorAlert title={error} />}
+			{typeof error === 'string' && (
+				<ErrorAlert title={error} clearHandler={clearError} />
+			)}
 			<Formik
 				onSubmit={onForm1Submit}
 				initialValues={{ email: '' }}
@@ -149,7 +155,7 @@ const AccountRecovery = ({
 				</Text>
 			</Heading>
 			<Text>{t('account_recovery_description_form2', { ns: 'global' })}</Text>
-			{typeof error === 'string' && <ErrorAlert title={error} />}
+			{typeof error === 'string' && <ErrorAlert title={error} clearHandler={clearError} />}
 			<Formik
 				onSubmit={onForm2Submit}
 				initialValues={{ otp: '' }}
@@ -231,7 +237,7 @@ const AccountRecovery = ({
 				validationSchema={AuthValidation.editPassword}
 			>
 				<Form>
-					{typeof error === 'string' && <ErrorAlert title={error} />}
+					{typeof error === 'string' && <ErrorAlert title={error} clearHandler={clearError}  />}
 					<TextField
 						name='password'
 						label={t('account_recovery_title_form3', { ns: 'global' })}

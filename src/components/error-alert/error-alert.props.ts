@@ -1,3 +1,4 @@
 export interface ErrorAlertProps {
-	title: string 
+	title: string
+	clearHandler?: () => void
 }

@@ -1,13 +1,18 @@
-import  $axios  from '@/api/axios'
-import { getAuthUrl, getMailUrl, getUserUrl } from '@/config/api.config'
+import {
+	API_URL,
+	getAuthUrl,
+	getMailUrl,
+	getUserUrl,
+} from '@/config/api.config'
 import { removeTokensCookie, saveTokensCookie } from '@/helpers/auth.helper'
 import { IAuthUserResponse } from '@/store/user/user.interface'
+import axios from 'axios'
 import Cookies from 'js-cookie'
 
 export const AuthService = {
 	async register(email: string, password: string) {
-		const response = await $axios.post<IAuthUserResponse>(
-			`${getAuthUrl('register')}`,
+		const response = await axios.post<IAuthUserResponse>(
+			`${API_URL}${getAuthUrl('register')}`,
 			{
 				email,
 				password,
@@ -22,8 +27,8 @@ export const AuthService = {
 	},
 
 	async login(email: string, password: string) {
-		const response = await $axios.post<IAuthUserResponse>(
-			`${getAuthUrl('login')}`,
+		const response = await axios.post<IAuthUserResponse>(
+			`${API_URL}${getAuthUrl('login')}`,
 			{
 				email,
 				password,
@@ -38,17 +43,20 @@ export const AuthService = {
 	},
 
 	async sendOtp(email: string, isUser: boolean) {
-		const response = await $axios.post<'success'>(`${getMailUrl('send-otp')}`, {
-			email,
-			isUser,
-		})
+		const response = await axios.post<'success'>(
+			`${API_URL}${getMailUrl('send-otp')}`,
+			{
+				email,
+				isUser,
+			}
+		)
 
 		return response
 	},
 
 	async verifyOtp(email: string, otpVerification: string) {
-		const response = await $axios.post<'success'>(
-			`${getMailUrl('verify-otp')}`,
+		const response = await axios.post<'success'>(
+			`${API_URL}${getMailUrl('verify-otp')}`,
 			{ email, otpVerification }
 		)
 
@@ -56,8 +64,8 @@ export const AuthService = {
 	},
 
 	async editUserPassword(email: string, password: string) {
-		const response = await $axios.put<'success'>(
-			`${getUserUrl('edit-password')}`,
+		const response = await axios.put<'success'>(
+			`${API_URL}${getUserUrl('edit-password')}`,
 			{ email, password }
 		)
 
@@ -65,8 +73,8 @@ export const AuthService = {
 	},
 
 	async checkUser(email: string) {
-		const response = await $axios.post<'user' | 'not-user'>(
-			`${getAuthUrl('check-user')}`,
+		const response = await axios.post<'user' | 'not-user'>(
+			`${API_URL}${getAuthUrl('check-user')}`,
 			{
 				email,
 			}
@@ -81,7 +89,7 @@ export const AuthService = {
 
 	async getNewTokens() {
 		const refreshToken = Cookies.get('refresh')
-		const response = await $axios.post(`${getAuthUrl('access')}`, {
+		const response = await axios.post(`${API_URL}${getAuthUrl('access')}`, {
 			refreshToken,
 		})
 
