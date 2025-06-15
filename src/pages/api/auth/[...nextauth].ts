@@ -1,13 +1,12 @@
-import { API_URL, getAuthUrl } from '@/config/api.config'
+import { getAuthUrl } from '@/config/api.config'
 import { AuthService } from '@/services/auth.service'
 import { IAuthUserResponse } from '@/store/user/user.interface'
-import axios from 'axios'
 import { NextApiRequest, NextApiResponse } from 'next'
 import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import GithubProvider from 'next-auth/providers/github'
 import { serialize } from 'cookie'
-// import { serialize } from 'cookie'
+import $axios from '@/api/axios'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	return NextAuth(req, res, {
@@ -29,8 +28,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 					const checkUser = await AuthService.checkUser(email)
 
 					if (checkUser === 'user') {
-						const response = await axios.post<IAuthUserResponse>(
-							`${API_URL}${getAuthUrl('login')}`,
+						const response = await $axios.post<IAuthUserResponse>(
+							`${getAuthUrl('login')}`,
 							{
 								email,
 								password: '',
@@ -47,8 +46,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 							}),
 						])
 					} else if (checkUser === 'not-user') {
-						const response = await axios.post<IAuthUserResponse>(
-							`${API_URL}${getAuthUrl('register')}`,
+						const response = await $axios.post<IAuthUserResponse>(
+							`${getAuthUrl('register')}`,
 							{
 								email,
 								password: '',
