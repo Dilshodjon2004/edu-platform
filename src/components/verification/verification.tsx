@@ -37,7 +37,7 @@ const Verification = () => {
 					callback: () => {
 						router.push('/')
 						toast({
-							title: 'Successfully logged in!',
+							title: `${t('successfully_logged', { ns: 'global' })}`,
 							position: 'top-right',
 							duration: 1000,
 							isClosable: true,

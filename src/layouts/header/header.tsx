@@ -128,7 +128,7 @@ const Header = ({ onToggle }: HeaderProps) => {
 									fontWeight={'bold'}
 									icon={<FiSettings fontSize={17} />}
 								>
-									Settings
+									{t('settings', { ns: 'global' })}
 								</MenuItem>
 								<MenuItem
 									h={14}
@@ -136,7 +136,7 @@ const Header = ({ onToggle }: HeaderProps) => {
 									fontWeight={'bold'}
 									icon={<CiLogout fontSize={17} />}
 								>
-									Logout
+									{t('logout', { ns: 'global' })}
 								</MenuItem>
 							</MenuList>
 						</Menu>

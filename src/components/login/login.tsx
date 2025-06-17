@@ -40,7 +40,7 @@ const Login = ({ onNavigateStateComponent }: LoginProps) => {
 			callback: () => {
 				router.push('/')
 				toast({
-					title: 'Successfully logged in!',
+					title: `${t('successfully_logged', { ns: 'global' })}`,
 					status: 'info',
 					isClosable: true,
 					position: 'top-right',
@@ -68,15 +68,15 @@ const Login = ({ onNavigateStateComponent }: LoginProps) => {
 			<Text color={'gray.500'} fontSize={{ base: 'sm', sm: 'md' }}>
 				{t('login_description', { ns: 'global' })}
 			</Text>
+			{typeof error === 'string' && (
+				<ErrorAlert title={error} clearHandler={clearError} />
+			)}
 			<Formik
 				onSubmit={onSubmit}
 				initialValues={{ email: '', password: '' }}
 				validationSchema={AuthValidation.login}
 			>
 				<Form>
-					{typeof error === 'string' && (
-						<ErrorAlert title={error} clearHandler={clearError}  />
-					)}
 					<TextField
 						name='email'
 						type='text'

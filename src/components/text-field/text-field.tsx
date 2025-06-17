@@ -6,7 +6,8 @@ import {
 	InputGroup,
 } from '@chakra-ui/react'
 import { TextFieldProps } from './text-field.props'
-import { ErrorMessage, FieldHookConfig, useField } from 'formik'
+import { FieldHookConfig, useField } from 'formik'
+import { useTranslation } from 'react-i18next'
 
 const TextField = ({
 	label,
@@ -17,6 +18,7 @@ const TextField = ({
 	...props
 }: TextFieldProps & FieldHookConfig<string>) => {
 	const [field, meta] = useField(props)
+	const { t } = useTranslation()
 	return (
 		<FormControl mt={15} isRequired isInvalid={!!meta.touched && !!meta.error}>
 			<FormLabel>{label}</FormLabel>
@@ -32,7 +34,7 @@ const TextField = ({
 				{children}
 			</InputGroup>
 			<FormErrorMessage>
-				<ErrorMessage name={field.name} />
+				{t(`${meta.error}`, { ns: 'global' })}
 			</FormErrorMessage>
 		</FormControl>
 	)
