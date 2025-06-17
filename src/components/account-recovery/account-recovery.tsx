@@ -128,7 +128,7 @@ const AccountRecovery = ({
 							boxShadow: 'xl',
 						}}
 						isLoading={isLoading}
-						loadingText={'Loading...'}
+						loadingText={`${t('loading', { ns: 'global' })}`}
 						type='submit'
 					>
 						{t('account_recovery_btn_form1', { ns: 'global' })}
@@ -155,7 +155,9 @@ const AccountRecovery = ({
 				</Text>
 			</Heading>
 			<Text>{t('account_recovery_description_form2', { ns: 'global' })}</Text>
-			{typeof error === 'string' && <ErrorAlert title={error} clearHandler={clearError} />}
+			{typeof error === 'string' && (
+				<ErrorAlert title={error} clearHandler={clearError} />
+			)}
 			<Formik
 				onSubmit={onForm2Submit}
 				initialValues={{ otp: '' }}
@@ -204,7 +206,7 @@ const AccountRecovery = ({
 							}}
 							type='submit'
 							isLoading={isLoading}
-							loadingText={'Loading...'}
+							loadingText={`${t('loading', { ns: 'global' })}`}
 						>
 							{t('account_recovery_btn_form2', { ns: 'global' })}
 						</Button>
@@ -237,7 +239,9 @@ const AccountRecovery = ({
 				validationSchema={AuthValidation.editPassword}
 			>
 				<Form>
-					{typeof error === 'string' && <ErrorAlert title={error} clearHandler={clearError}  />}
+					{typeof error === 'string' && (
+						<ErrorAlert title={error} clearHandler={clearError} />
+					)}
 					<TextField
 						name='password'
 						label={t('account_recovery_title_form3', { ns: 'global' })}
@@ -280,7 +284,7 @@ const AccountRecovery = ({
 						}}
 						type='submit'
 						isLoading={isLoading}
-						loadingText={'Loading...'}
+						loadingText={`${t('loading', { ns: 'global' })}`}
 					>
 						{t('account_recovery_btn_form3', { ns: 'global' })}
 					</Button>

@@ -77,7 +77,7 @@ const Header = ({ onToggle }: HeaderProps) => {
 				<HStack>
 					<Menu placement='bottom'>
 						<MenuButton
-							display={{ base: 'none', md: 'flex' }}
+							display={{ base: 'none', md: 'block' }}
 							as={Button}
 							textTransform={'capitalize'}
 							rightIcon={<TbWorld />}
@@ -119,7 +119,7 @@ const Header = ({ onToggle }: HeaderProps) => {
 								cursor={'pointer'}
 								minW={0}
 							>
-								<Avatar backgroundColor={'blue.500'} />
+								<Avatar backgroundColor={'blue.500'} src={user.avatar} />
 							</MenuButton>
 							<MenuList p={0} m={0}>
 								<MenuItem

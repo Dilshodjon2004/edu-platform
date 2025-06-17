@@ -87,5 +87,6 @@
 	"login_with_new_password": "Вы можете войти в аккаунт с новым паролем",
 	"successfully_edited": "Успешно изменено",
 	"settings": "настройки",
-	"logout": "выйти"
+	"logout": "выйти",
+	"loading": "загрузка"
 }

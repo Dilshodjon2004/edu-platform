@@ -6,4 +6,5 @@ export interface IUserType {
 	role?: RoleUser
 	createdAt?: string
 	password?: string
+	avatar?: string
 }

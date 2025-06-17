@@ -83,5 +83,6 @@
 	"login_with_new_password": "Dasturga yangi parol bilan kirishingiz mumkin",
 	"successfully_edited": "Muvaffaqiyatli tahrirlandi",
 	"settings": "sozlamalar",
-	"logout": "chiqish"
+	"logout": "chiqish",
+	"loading": "Kutib turing"
 }

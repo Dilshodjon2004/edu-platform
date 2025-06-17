@@ -66,7 +66,9 @@ const Verification = () => {
 			<Text color={'gray.500'} fontSize={{ base: 'sm', sm: 'md' }}>
 				{t('verification_description', { ns: 'global' })}
 			</Text>
-			{typeof error === 'string' && <ErrorAlert title={error} clearHandler={clearError} />}
+			{typeof error === 'string' && (
+				<ErrorAlert title={error} clearHandler={clearError} />
+			)}
 			<Formik
 				onSubmit={onSubmit}
 				initialValues={{ otp: '' }}
@@ -115,7 +117,7 @@ const Verification = () => {
 							}}
 							type='submit'
 							isLoading={isLoading}
-							loadingText={'Loading...'}
+							loadingText={`${t('loading', { ns: 'global' })}`}
 						>
 							{t('verification_btn', { ns: 'global' })}
 						</Button>

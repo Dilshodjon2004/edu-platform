@@ -35,7 +35,14 @@ const AuthNavbarComponent = () => {
 		i18n.changeLanguage(lng)
 	}
 
-	const toggleMenu = () => setMenu(prev => !prev)
+	const toggleMenu = () => {
+		setMenu(prev => !prev)
+		if (menu) {
+			document.body.style.overflow = ''
+		} else {
+			document.body.style.overflow = 'hidden'
+		}
+	}
 	return (
 		<Box zIndex={10} w={'full'} h={'10vh'}>
 			<Container maxW={'container.lg'}>
@@ -45,7 +52,7 @@ const AuthNavbarComponent = () => {
 							display={{ base: 'flex', md: 'none' }}
 							aria-label='menu'
 							onClick={toggleMenu}
-							icon={<BiMenuAltLeft />}
+							icon={<BiMenuAltLeft fontSize={25} />}
 							colorScheme={'facebook'}
 							variant={'outline'}
 						/>
@@ -68,7 +75,6 @@ const AuthNavbarComponent = () => {
 						))}
 						<Menu placement='bottom'>
 							<MenuButton
-								// display={{ base: 'none', md: 'flex' }}
 								as={Button}
 								textTransform={'capitalize'}
 								rightIcon={<TbWorld />}

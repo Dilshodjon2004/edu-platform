@@ -83,5 +83,6 @@
 	"login_with_new_password": "Programa yeni bir şifre ile girebilirsiniz",
 	"successfully_edited": "Başarıyla düzenlendi",
 	"settings": "ayarlar",
-	"logout": "çıkış Yap"
+	"logout": "çıkış Yap",
+	"loading": "Yükleniyor"
 }

@@ -87,5 +87,6 @@
 	"login_with_new_password": "You can login to account with new password",
 	"successfully_edited": "Successfully edited",
 	"settings": "settings",
-	"logout": "logout"
+	"logout": "logout",
+	"loading": "loading"
 }
