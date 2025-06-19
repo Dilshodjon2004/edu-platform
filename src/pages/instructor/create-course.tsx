@@ -1,8 +1,9 @@
 import { withInstructorLayout } from '@/layouts/instructor'
+import { InstructorCreateCoursePageComponent } from '@/page-component'
 import { NextPage } from 'next'
 
 const CreateCourse: NextPage = () => {
-	return <div>CreateCourse</div>
+	return <InstructorCreateCoursePageComponent />
 }
 
 export default withInstructorLayout(CreateCourse)
