@@ -1,7 +1,11 @@
+import { ErrorAlert } from '@/components'
 import SectionTitle from '@/components/section-title/section-title'
 import TextField from '@/components/text-field/text-field'
 import { teachValues } from '@/config/constants'
+import { useActions } from '@/hooks/useActions'
+import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { LaunchCourseIcon, PlanCurriculumIcon, RecordVideoIcon } from '@/icons'
+import { IInstructorApplyBody } from '@/store/instructor/instructor.interface'
 import { InstructorValidation } from '@/validations/instructor.validation'
 import {
 	Box,
@@ -41,16 +45,23 @@ const BecomeInstructorPageComponent = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const { t } = useTranslation()
 	const toast = useToast()
+	const { applyInstructor, clearInstructorError } = useActions()
+	const { error, isLoading } = useTypedSelector(state => state.instructor)
 
-	const onSubmit = () => {
-		toast({
-			title: 'Successfully sent',
-			description: "We'll contact with you coming",
-			isClosable: true,
-			position: 'top-right',
-			duration: 1500,
+	const onSubmit = (formData: IInstructorApplyBody) => {
+		applyInstructor({
+			...formData,
+			callback: () => {
+				toast({
+					title: 'Successfully sent',
+					description: "We'll contact with you coming",
+					isClosable: true,
+					position: 'top-right',
+					duration: 1500,
+				})
+				onClose()
+			},
 		})
-		onClose()
 	}
 	return (
 		<Stack spacing={16}>
@@ -163,12 +174,18 @@ const BecomeInstructorPageComponent = () => {
 					<Divider />
 					<Formik
 						onSubmit={onSubmit}
-						initialValues={InstructorValidation.applyInstructorValue}
+						initialValues={InstructorValidation.applyInstructorValue()}
 						validationSchema={InstructorValidation.applyInstructorValidation}
 					>
 						<Form>
 							<ModalBody>
 								<Stack spacing={4}>
+									{typeof error === 'string' && (
+										<ErrorAlert
+											title={error}
+											clearHandler={clearInstructorError}
+										/>
+									)}
 									<Flex gap={4}>
 										<TextField
 											name={'firstName'}
@@ -203,6 +220,8 @@ const BecomeInstructorPageComponent = () => {
 									colorScheme='blue'
 									h={14}
 									rightIcon={<GoVerified />}
+									isLoading={isLoading}
+									loadingText={`${t('loading', { ns: 'global' })}`}
 								>
 									{t('send_to_verify_btn', { ns: 'global' })}
 								</Button>
