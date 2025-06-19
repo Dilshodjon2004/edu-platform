@@ -66,7 +66,7 @@ const BecomeInstructorPageComponent = () => {
 	return (
 		<Stack spacing={16}>
 			<Card>
-				<CardBody>
+				<CardBody p={0}>
 					<HStack>
 						<Stack px={5}>
 							<SectionTitle

@@ -1,10 +1,11 @@
 import { withLayout } from '@/layouts/layout'
 import Seo from '@/layouts/seo/seo'
 import { CoursesPageComponent } from '@/page-component'
+
 import { useTranslation } from 'react-i18next'
 
 const Courses = () => {
-	const { t } = useTranslation();
+	const { t } = useTranslation()
 
 	return (
 		<Seo
@@ -19,6 +20,7 @@ const Courses = () => {
 		>
 			<CoursesPageComponent />
 		</Seo>
+	)
 }
 
 export default withLayout(Courses)
