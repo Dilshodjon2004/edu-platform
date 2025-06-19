@@ -63,6 +63,7 @@ const Header = ({ onToggle }: HeaderProps) => {
 				<Box>
 					<HStack>
 						<Icon
+							display={{ base: 'flex', md: 'none' }}
 							as={BiMenuAltLeft}
 							onClick={onToggle}
 							w={6}
