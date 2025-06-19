@@ -12,6 +12,9 @@ import {
 	PrintIcons,
 	RightLineIcon,
 	RusIcons,
+	TeachVal1Icon,
+	TeachVal2Icon,
+	TeachVal3Icon,
 	TurkIcons,
 	UzbIcons,
 } from '@/icons'
@@ -383,5 +386,23 @@ export const voiceLanguages = [
 		language: 'ru',
 		lang: 'ru-RU',
 		voiceUrl: 'Google русский',
+	},
+]
+
+export const teachValues = [
+	{
+		title: 'teach_your_way',
+		description: 'teach_your_way_description',
+		icon: TeachVal1Icon,
+	},
+	{
+		title: 'inspire_learners',
+		description: 'inspire_learners_ddescription',
+		icon: TeachVal2Icon,
+	},
+	{
+		title: 'get_rewarded',
+		description: 'get_rewarded_description',
+		icon: TeachVal3Icon,
 	},
 ]
