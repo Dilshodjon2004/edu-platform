@@ -1,8 +1,9 @@
 import { withInstructorLayout } from '@/layouts/instructor'
+import { InstructorRevenuePageComponent } from '@/page-component'
 import { NextPage } from 'next'
 
 const Revenue: NextPage = () => {
-	return <div>Revenue</div>
+	return <InstructorRevenuePageComponent />
 }
 
 export default withInstructorLayout(Revenue)
