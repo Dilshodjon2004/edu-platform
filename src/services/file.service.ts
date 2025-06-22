@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export const FileService = {
 	async fileUpload(formData: FormData, folder: string = 'default') {
-		const response = await axios.post(
+		const response = await axios.post<{ url: string }>(
 			`${API_URL}${getFileUrl('save')}?folder=${folder}`,
 			formData,
 			{

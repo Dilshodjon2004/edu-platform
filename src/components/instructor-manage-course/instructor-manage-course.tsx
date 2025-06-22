@@ -20,7 +20,10 @@ import {
 import TextField from '../text-field/text-field'
 import TagField from '../tag-field/tag-field'
 import { FileService } from '@/services/file.service'
+import { useTypedSelector } from '@/hooks/useTypedSelector'
+import { useTranslation } from 'react-i18next'
 import { useActions } from '@/hooks/useActions'
+import ErrorAlert from '../error-alert/error-alert'
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
@@ -29,21 +32,32 @@ const InstructorManageCourse = ({
 	titleBtn,
 }: InstructorManageCourseProps) => {
 	const [file, setFile] = useState<File | undefined>()
-	const { createCourse } = useActions()
+	const [errorFile, setErrorFile] = useState('')
+	const { error, isLoading } = useTypedSelector(state => state.course)
+	const { clearCourseError, startLoading } = useActions()
+
+	const { t } = useTranslation()
 
 	const handleChange = (file: File) => {
 		setFile(file)
 	}
 
-	const onSubmit = async (formValues: FormikValues) => {
-		if (file) {
-			const formData = new FormData()
-			formData.append('image', file as File)
-			await FileService.fileUpload(formData, 'preview-image')
+	const onSubmit = async (formValues: FormikValues, { resetForm }) => {
+		if (!file) {
+			setErrorFile('Preview image is required')
+			return
 		}
-		const data = formValues as SubmitValuesInterface
-		createCourse({ ...data, callback: () => console.log('success') })
-		await submitHandler(data)
+		const formData = new FormData()
+		formData.append('image', file as File)
+		startLoading()
+		const response = await FileService.fileUpload(formData, 'preview-image')
+		const data = {
+			...formValues,
+			previewImage: response.url,
+		} as SubmitValuesInterface
+
+		submitHandler(data)
+		resetForm()
 	}
 
 	return (
@@ -114,12 +128,17 @@ const InstructorManageCourse = ({
 												</Text>
 											)}
 									</Box>
+									{typeof error === 'string' && (
+										<ErrorAlert title={error} clearHandler={clearCourseError} />
+									)}
 									<Button
 										w={'full'}
 										type={'submit'}
 										h={14}
 										colorScheme={'blue'}
 										rightIcon={<GiSave />}
+										isLoading={isLoading}
+										loadingText={`${t('loading', { ns: 'global' })}`}
 									>
 										{titleBtn}
 									</Button>
@@ -167,6 +186,11 @@ const InstructorManageCourse = ({
 											types={['JPG', 'PNG', 'GIF']}
 											style={{ minWidth: '100%' }}
 										/>
+										{errorFile && (
+											<Text mt={2} fontSize='14px' color='red.500'>
+												{errorFile}
+											</Text>
+										)}
 									</Box>
 								</Stack>
 							</Box>

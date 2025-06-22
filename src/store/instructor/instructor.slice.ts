@@ -11,6 +11,9 @@ export const instructorSlice = createSlice({
 	name: 'instructor',
 	initialState,
 	reducers: {
+		startLoading: state => {
+			state.isLoading = true
+		},
 		clearInstructorError: state => {
 			state.error = null
 		},
