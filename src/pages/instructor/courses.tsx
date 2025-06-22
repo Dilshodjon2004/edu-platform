@@ -5,8 +5,6 @@ import { InstructorService } from '@/services/instructor.service'
 import { ICourseType } from '@/interfaces/course.interface'
 
 const Courses: NextPage<CoursesPageType> = ({ courses }) => {
-	console.log(courses)
-
 	return <InstructorCoursesPageComponent />
 }
 

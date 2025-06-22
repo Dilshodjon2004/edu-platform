@@ -1,6 +1,7 @@
 import { InstructorCoursesCard } from '@/components'
 import SectionTitle from '@/components/section-title/section-title'
-import { courses } from '@/config/constants'
+import { useTypedSelector } from '@/hooks/useTypedSelector'
+// import { courses } from '@/config/constants'
 import {
 	Card,
 	CardBody,
@@ -16,6 +17,7 @@ import Image from 'next/image'
 import React from 'react'
 
 const CoursesPageComponent = () => {
+	const { courses } = useTypedSelector(state => state.instructor)
 	return (
 		<>
 			<Card>

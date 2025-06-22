@@ -4,6 +4,8 @@ import { Box, Container } from '@chakra-ui/react'
 import Header from '../header/header'
 import Footer from '../footer/footer'
 import InstructorSidebar from '../sidebar/instructor-sidebar'
+import InstructorProvider from '@/provider/instructor.provider'
+import { IInstructorProviderProps } from './instructor.props'
 
 const Layout: FC<LayoutProps> = ({ children }): JSX.Element => {
 	const [toggle, setToggle] = useState<boolean>(false)
@@ -28,13 +30,17 @@ const Layout: FC<LayoutProps> = ({ children }): JSX.Element => {
 
 export default Layout
 
-export const withInstructorLayout = <T extends Record<string, unknown>>(
+export const withInstructorLayout = <
+	T extends Record<string, unknown> & IInstructorProviderProps
+>(
 	Component: FunctionComponent<T>
 ) => {
 	return function withLayoutComponent(props: T): JSX.Element {
 		return (
 			<Layout>
-				<Component {...props} />
+				<InstructorProvider course={props.course} courses={props.courses}>
+					<Component {...props} />
+				</InstructorProvider>
 			</Layout>
 		)
 	}
