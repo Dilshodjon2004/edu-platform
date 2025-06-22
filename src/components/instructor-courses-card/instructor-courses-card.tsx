@@ -19,10 +19,11 @@ import { FiEdit2 } from 'react-icons/fi'
 import { BsTrash } from 'react-icons/bs'
 import { HiOutlineStatusOnline } from 'react-icons/hi'
 import Image from 'next/image'
+import { loadImage } from '@/helpers/image.helper'
 
-const InstructorCoursesCard: FC<
-	InstructorCoursesCardProps
-> = ({item}): JSX.Element => {
+const InstructorCoursesCard: FC<InstructorCoursesCardProps> = ({
+	item,
+}): JSX.Element => {
 	return (
 		<HStack
 			key={item.title}
@@ -61,7 +62,7 @@ const InstructorCoursesCard: FC<
 			<Box w={'30%'} h={'300px'} position={'relative'}>
 				<Image
 					fill
-					src={item.image}
+					src={loadImage(item.previewImage)}
 					alt={item.title}
 					style={{ objectFit: 'cover', borderRadius: '10px' }}
 				/>

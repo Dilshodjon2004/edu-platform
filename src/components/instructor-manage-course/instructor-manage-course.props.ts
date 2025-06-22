@@ -1,11 +1,14 @@
+import { ICourseType } from '@/interfaces/course.interface'
+
 export interface InstructorManageCourseProps {
 	titleBtn: string
 	submitHandler: (data: SubmitValuesInterface) => void
+	courseValues?: ICourseType | null
 }
 
 export interface SubmitValuesInterface {
 	title: string
-	exerpt: string
+	excerpt: string
 	learn: string[]
 	requirements: string[]
 	description: string

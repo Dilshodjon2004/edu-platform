@@ -1,15 +1,27 @@
 import * as Yup from 'yup'
 
-export const manageCourseValues = {
+interface Type {
+	title: string
+	excerpt: string
+	learn: string[]
+	requirements: string[]
+	description: string
+	level: string
+	category: string
+	price: number
+	tags: string[]
+}
+
+export const manageCourseValues: Type = {
 	title: '',
-	exerpt: '',
-	learn: '',
-	requirements: '',
+	excerpt: '',
+	learn: [],
+	requirements: [],
 	description: '',
 	level: '',
 	category: '',
 	price: 0,
-	tags: '',
+	tags: [],
 }
 
 export const CourseValidation = {
@@ -18,7 +30,7 @@ export const CourseValidation = {
 			title: Yup.string()
 				.min(8, 'Title should be minimum 8 character')
 				.required('Title is required'),
-			exerpt: Yup.string()
+			excerpt: Yup.string()
 				.min(15, 'Exerpt should be minimum 15 character')
 				.required('Exerpt is required'),
 			learn: Yup.array().required('Learn is required'),

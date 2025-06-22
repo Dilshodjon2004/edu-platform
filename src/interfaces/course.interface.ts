@@ -1,5 +1,4 @@
 export interface ICourseType {
-	image: string
 	title: string
 	slug: string
 	lessonCount: number
@@ -9,6 +8,13 @@ export interface ICourseType {
 	reviewAvarage: number
 	reviewCount: number
 	author: ICourseAuthorType
+	previewImage: string
+	tags: string[]
+	learn: string[]
+	requirements: string[]
+	excerpt: string
+	description: string
+	category: string
 }
 
 export interface ICourseAuthorType {

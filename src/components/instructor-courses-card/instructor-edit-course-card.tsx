@@ -20,6 +20,7 @@ import { FiEdit2 } from 'react-icons/fi'
 import { BsTrash } from 'react-icons/bs'
 import { HiOutlineStatusOnline } from 'react-icons/hi'
 import { useRouter } from 'next/router'
+import { loadImage } from '@/helpers/image.helper'
 
 const InstructorEditCourseCard: FC<InstructorCoursesCardProps> = ({
 	item,
@@ -38,7 +39,7 @@ const InstructorEditCourseCard: FC<InstructorCoursesCardProps> = ({
 				<Box pos={'relative'} w={'full'} h={'300px'}>
 					<Image
 						fill
-						src={item.image}
+					src={loadImage(item.previewImage)}
 						style={{ objectFit: 'cover', borderRadius: '10px' }}
 						alt={item.title}
 					/>

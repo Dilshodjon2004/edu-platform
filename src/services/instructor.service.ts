@@ -25,8 +25,15 @@ export const InstructorService = {
 		return response.data
 	},
 
-	async getDetailedCourse(slug: string) {
-		const response = await $axios.get(getInstructorUrl(`course/${slug}`))
+	async getDetailedCourse(token?: string, slug?: string) {
+		const response = await $axios.get(
+			`${getInstructorUrl(`course/${slug}`)} `,
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}
+		)
 
 		return response.data
 	},
