@@ -23,11 +23,11 @@ const TagField = ({
 				name={name}
 				placeHolder={placeholder}
 			/>
-			{errorMessage ? (
+			{errorMessage && (
 				<Text mt={2} fontSize='14px' color='red.500'>
-					{!!errorMessage}
+					{errorMessage}
 				</Text>
-			) : null}
+			)}
 		</Box>
 	)
 }

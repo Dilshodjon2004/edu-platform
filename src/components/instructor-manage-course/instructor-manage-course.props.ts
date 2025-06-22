@@ -11,6 +11,6 @@ export interface SubmitValuesInterface {
 	description: string
 	level: string
 	category: string
-	price: string
+	price: number
 	tags: string[]
 }

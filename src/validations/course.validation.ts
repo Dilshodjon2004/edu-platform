@@ -8,7 +8,7 @@ export const manageCourseValues = {
 	description: '',
 	level: '',
 	category: '',
-	price: '',
+	price: 0,
 	tags: '',
 }
 
@@ -29,7 +29,7 @@ export const CourseValidation = {
 				.required('Description is required'),
 			level: Yup.string().required('Level is required'),
 			category: Yup.string().required('Category is required'),
-			price: Yup.string().required('Price is required'),
+			price: Yup.number().required('Price is required'),
 		})
 	},
 }

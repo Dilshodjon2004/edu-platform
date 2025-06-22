@@ -9,7 +9,7 @@ export const applyInstructor = createAsyncThunk<
 >('instructor/apply', async (body, thunkApi) => {
 	try {
 		const response = await InstructorService.applyInstructor(body)
-		body.callback && body.callback()
+		body.callback()
 		return response
 	} catch (error) {
 		return thunkApi.rejectWithValue(errorCatch(error))

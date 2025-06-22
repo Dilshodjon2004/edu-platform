@@ -8,5 +8,5 @@ export interface IInstructorApplyBody {
 	lastName: string
 	email: string
 	socialMedia: string
-	callback?: () => void
+	callback: () => void
 }
