@@ -1,6 +1,6 @@
 import InstructorManageCourse from '@/components/instructor-manage-course/instructor-manage-course'
-import { SubmitValuesInterface } from '@/components/instructor-manage-course/instructor-manage-course.props'
 import { useActions } from '@/hooks/useActions'
+import { ICourseType } from '@/interfaces/course.interface'
 import { Divider, useToast } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import 'react-quill/dist/quill.snow.css'
@@ -11,7 +11,7 @@ const CreateCoursePageComponent = () => {
 	const toast = useToast()
 	const router = useRouter()
 
-	const onSubmit = (data: SubmitValuesInterface) => {
+	const onSubmit = (data: ICourseType) => {
 		createCourse({
 			...data,
 			callback: () => {

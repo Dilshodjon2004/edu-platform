@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { ICourseInitialStateType } from './course.interface'
-import { createCourse } from './course.action'
+import { createCourse, deleteCourse, editCourse } from './course.action'
 
 const initialState: ICourseInitialStateType = {
 	isLoading: false,
@@ -26,6 +26,30 @@ export const courseSlice = createSlice({
 				state.error = null
 			})
 			.addCase(createCourse.rejected, (state, { payload }) => {
+				state.isLoading = false
+				state.error = payload
+			})
+			.addCase(editCourse.pending, state => {
+				state.isLoading = true
+				state.error = null
+			})
+			.addCase(editCourse.fulfilled, state => {
+				state.isLoading = false
+				state.error = null
+			})
+			.addCase(editCourse.rejected, (state, { payload }) => {
+				state.isLoading = false
+				state.error = payload
+			})
+			.addCase(deleteCourse.pending, state => {
+				state.isLoading = true
+				state.error = null
+			})
+			.addCase(deleteCourse.fulfilled, state => {
+				state.isLoading = false
+				state.error = null
+			})
+			.addCase(deleteCourse.rejected, (state, { payload }) => {
 				state.isLoading = false
 				state.error = payload
 			})

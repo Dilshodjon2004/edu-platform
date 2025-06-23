@@ -10,6 +10,7 @@ import {
 	Icon,
 	Stack,
 	Text,
+	useToast,
 } from '@chakra-ui/react'
 import Image from 'next/image'
 import { CiViewList } from 'react-icons/ci'
@@ -21,11 +22,35 @@ import { BsTrash } from 'react-icons/bs'
 import { HiOutlineStatusOnline } from 'react-icons/hi'
 import { useRouter } from 'next/router'
 import { loadImage } from '@/helpers/image.helper'
+import { useActions } from '@/hooks/useActions'
 
 const InstructorEditCourseCard: FC<InstructorCoursesCardProps> = ({
 	item,
 }): JSX.Element => {
 	const router = useRouter()
+	const toast = useToast()
+	const { deleteCourse } = useActions()
+
+	const onDelete = () => {
+		const isAgree = confirm('Are you sure?')
+		if (isAgree) {
+			deleteCourse({
+				courseId: item._id,
+				callback: () => {
+					toast({
+						title: 'Successully deleted',
+						description: item.title,
+						position: 'top-right',
+						duration: 1500,
+						isClosable: true,
+					})
+					setTimeout(() => {
+						router.reload()
+					}, 1500)
+				},
+			})
+		}
+	}
 	return (
 		<HStack
 			key={item.title}
@@ -39,7 +64,7 @@ const InstructorEditCourseCard: FC<InstructorCoursesCardProps> = ({
 				<Box pos={'relative'} w={'full'} h={'300px'}>
 					<Image
 						fill
-					src={loadImage(item.previewImage)}
+						src={loadImage(item.previewImage)}
 						style={{ objectFit: 'cover', borderRadius: '10px' }}
 						alt={item.title}
 					/>
@@ -71,7 +96,9 @@ const InstructorEditCourseCard: FC<InstructorCoursesCardProps> = ({
 					>
 						Edit
 					</Button>
-					<Button rightIcon={<BsTrash />}>Delete</Button>
+					<Button rightIcon={<BsTrash />} onClick={onDelete}>
+						Delete
+					</Button>
 					<Button rightIcon={<HiOutlineStatusOnline />}>Status</Button>
 				</HStack>
 			</Stack>

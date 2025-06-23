@@ -15,6 +15,7 @@ export interface ICourseType {
 	excerpt: string
 	description: string
 	category: string
+	_id: string
 }
 
 export interface ICourseAuthorType {

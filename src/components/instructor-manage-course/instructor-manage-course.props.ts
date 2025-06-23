@@ -2,7 +2,7 @@ import { ICourseType } from '@/interfaces/course.interface'
 
 export interface InstructorManageCourseProps {
 	titleBtn: string
-	submitHandler: (data: SubmitValuesInterface) => void
+	submitHandler: (data: ICourseType) => void
 	courseValues?: ICourseType | null
 }
 
