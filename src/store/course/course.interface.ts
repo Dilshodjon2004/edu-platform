@@ -9,7 +9,7 @@ export interface ICreateCourseBody extends ICourseType {
 	callback: () => void
 }
 
-export interface IDeleteBody {
+export interface IById {
 	courseId: string
 	callback: () => void
 }

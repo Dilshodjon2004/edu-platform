@@ -16,6 +16,7 @@ export interface ICourseType {
 	description: string
 	category: string
 	_id: string
+	isActive: boolean
 }
 
 export interface ICourseAuthorType {

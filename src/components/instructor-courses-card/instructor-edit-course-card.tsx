@@ -44,9 +44,7 @@ const InstructorEditCourseCard: FC<InstructorCoursesCardProps> = ({
 						duration: 1500,
 						isClosable: true,
 					})
-					setTimeout(() => {
-						router.reload()
-					}, 1500)
+					router.replace(router.asPath)
 				},
 			})
 		}
