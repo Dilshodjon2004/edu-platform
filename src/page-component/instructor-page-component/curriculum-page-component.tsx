@@ -1,5 +1,6 @@
 import { SectionAccordion, SectionForm } from '@/components'
 import SectionTitle from '@/components/section-title/section-title'
+import { useActions } from '@/hooks/useActions'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import {
 	Accordion,
@@ -15,17 +16,37 @@ import {
 	ModalContent,
 	ModalHeader,
 	ModalOverlay,
+	Skeleton,
 	Stack,
 	Text,
 	useDisclosure,
+	useToast,
 } from '@chakra-ui/react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import { BsFillPlusCircleFill } from 'react-icons/bs'
 
 const CurriculumPageComponent = () => {
 	const { course } = useTypedSelector(state => state.instructor)
 	const { isOpen, onOpen, onClose } = useDisclosure()
+	const toast = useToast()
+	const { getSection } = useActions()
+	const { pendingSection, sections } = useTypedSelector(state => state.section)
+
+	useEffect(() => {
+		getSection({
+			courseId: course?._id,
+			callback: () => {
+				toast({
+					title: 'Sections fetched successfully',
+					position: 'top-right',
+					duration: 1500,
+					isClosable: true,
+				})
+			},
+		})
+	}, [course])
 	return (
 		<>
 			<Card>
@@ -59,11 +80,19 @@ const CurriculumPageComponent = () => {
 							onClick={onOpen}
 						/>
 					</Flex>
-					<Accordion allowToggle>
-						{sections.map((section, index) => (
-							<SectionAccordion key={index} section={section} />
-						))}
-					</Accordion>
+					{pendingSection ? (
+						<Stack>
+							<Skeleton height='20px' />
+							<Skeleton height='20px' />
+							<Skeleton height='20px' />
+						</Stack>
+					) : (
+						<Accordion allowToggle>
+							{sections.map((section, index) => (
+								<SectionAccordion key={index} section={section} />
+							))}
+						</Accordion>
+					)}
 				</CardBody>
 			</Card>
 
@@ -74,7 +103,7 @@ const CurriculumPageComponent = () => {
 					<ModalCloseButton />
 					<Divider />
 					<ModalBody pb={5}>
-						<SectionForm />
+						<SectionForm onClose={onClose} />
 					</ModalBody>
 				</ModalContent>
 			</Modal>
@@ -83,64 +112,3 @@ const CurriculumPageComponent = () => {
 }
 
 export default CurriculumPageComponent
-
-const sections = [
-	{
-		title: '#1 Modul. ReactJS asoslari',
-		lessons: [
-			{
-				name: '1-dars: ReactJS nima',
-			},
-			{
-				name: '1-dars: ReactJS nima',
-			},
-			{
-				name: '1-dars: ReactJS nima',
-			},
-			{
-				name: '1-dars: ReactJS nima',
-			},
-			{
-				name: '1-dars: ReactJS nima',
-			},
-			{
-				name: '1-dars: ReactJS nima',
-			},
-			{
-				name: '1-dars: ReactJS nima',
-			},
-			{
-				name: '1-dars: ReactJS nima',
-			},
-			{
-				name: '1-dars: ReactJS nima',
-			},
-			{
-				name: '1-dars: ReactJS nima',
-			},
-			{
-				name: '1-dars: ReactJS nima',
-			},
-			{
-				name: '1-dars: ReactJS nima',
-			},
-		],
-	},
-	{
-		title: '#2 Modul. VueJS asoslari',
-		lessons: [
-			{
-				name: '1-dars: VueJS nima',
-			},
-			{
-				name: '1-dars: VueJS nima',
-			},
-			{
-				name: '1-dars: VueJS nima',
-			},
-			{
-				name: '1-dars: VueJS nima',
-			},
-		],
-	},
-]

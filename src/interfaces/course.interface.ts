@@ -24,3 +24,4 @@ export interface ICourseAuthorType {
 	lastName: string
 	avatar: string
 }
+
