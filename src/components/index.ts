@@ -22,3 +22,6 @@ export { default as InstructorCoursesCard } from './instructor-courses-card/inst
 export { default as InstructorEditCourseCard } from './instructor-courses-card/instructor-edit-course-card'
 export { default as InstructorDraftCourseCard } from './draft-course-card/draft-course-card'
 export { default as StatsCard } from './stats-card/stats-card'
+export { default as SectionAccordion } from './section-accordion/section-accordion'
+export { default as SectionForm } from './section-form/section-form'
+export { default as LessonForm } from './lesson-form/lesson-form'

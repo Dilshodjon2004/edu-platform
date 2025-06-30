@@ -1,0 +1,146 @@
+import { SectionAccordion, SectionForm } from '@/components'
+import SectionTitle from '@/components/section-title/section-title'
+import { useTypedSelector } from '@/hooks/useTypedSelector'
+import {
+	Accordion,
+	Card,
+	CardBody,
+	Divider,
+	Flex,
+	HStack,
+	Icon,
+	Modal,
+	ModalBody,
+	ModalCloseButton,
+	ModalContent,
+	ModalHeader,
+	ModalOverlay,
+	Stack,
+	Text,
+	useDisclosure,
+} from '@chakra-ui/react'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
+import { BsFillPlusCircleFill } from 'react-icons/bs'
+
+const CurriculumPageComponent = () => {
+	const { course } = useTypedSelector(state => state.instructor)
+	const { isOpen, onOpen, onClose } = useDisclosure()
+	return (
+		<>
+			<Card>
+				<CardBody p={0}>
+					<HStack justify={'center'}>
+						<Image
+							width={480}
+							height={480}
+							src={'/images/curriculum.png'}
+							alt='photo'
+						/>
+						<Stack>
+							<SectionTitle
+								title={course?.title as string}
+								subtitle='Manage Curriculum for your course'
+							/>
+						</Stack>
+					</HStack>
+				</CardBody>
+			</Card>
+
+			<Card mt={10}>
+				<CardBody>
+					<Flex mb={5} justify={'space-between'} align={'center'}>
+						<Text fontSize={'2xl'}>Create section</Text>
+						<Icon
+							as={BsFillPlusCircleFill}
+							w={6}
+							h={6}
+							cursor={'pointer'}
+							onClick={onOpen}
+						/>
+					</Flex>
+					<Accordion allowToggle>
+						{sections.map((section, index) => (
+							<SectionAccordion key={index} section={section} />
+						))}
+					</Accordion>
+				</CardBody>
+			</Card>
+
+			<Modal isOpen={isOpen} onClose={onClose} isCentered>
+				<ModalOverlay />
+				<ModalContent>
+					<ModalHeader>Create section</ModalHeader>
+					<ModalCloseButton />
+					<Divider />
+					<ModalBody pb={5}>
+						<SectionForm />
+					</ModalBody>
+				</ModalContent>
+			</Modal>
+		</>
+	)
+}
+
+export default CurriculumPageComponent
+
+const sections = [
+	{
+		title: '#1 Modul. ReactJS asoslari',
+		lessons: [
+			{
+				name: '1-dars: ReactJS nima',
+			},
+			{
+				name: '1-dars: ReactJS nima',
+			},
+			{
+				name: '1-dars: ReactJS nima',
+			},
+			{
+				name: '1-dars: ReactJS nima',
+			},
+			{
+				name: '1-dars: ReactJS nima',
+			},
+			{
+				name: '1-dars: ReactJS nima',
+			},
+			{
+				name: '1-dars: ReactJS nima',
+			},
+			{
+				name: '1-dars: ReactJS nima',
+			},
+			{
+				name: '1-dars: ReactJS nima',
+			},
+			{
+				name: '1-dars: ReactJS nima',
+			},
+			{
+				name: '1-dars: ReactJS nima',
+			},
+			{
+				name: '1-dars: ReactJS nima',
+			},
+		],
+	},
+	{
+		title: '#2 Modul. VueJS asoslari',
+		lessons: [
+			{
+				name: '1-dars: VueJS nima',
+			},
+			{
+				name: '1-dars: VueJS nima',
+			},
+			{
+				name: '1-dars: VueJS nima',
+			},
+			{
+				name: '1-dars: VueJS nima',
+			},
+		],
+	},
+]

@@ -57,7 +57,6 @@ const InstructorEditCourseCard: FC<InstructorCoursesCardProps> = ({
 			mt={5}
 			borderRadius={'lg'}
 		>
-			Add commentMore actions
 			<Stack spacing={5}>
 				<Box pos={'relative'} w={'full'} h={'300px'}>
 					<Image
@@ -97,7 +96,12 @@ const InstructorEditCourseCard: FC<InstructorCoursesCardProps> = ({
 					<Button rightIcon={<BsTrash />} onClick={onDelete}>
 						Delete
 					</Button>
-					<Button rightIcon={<HiOutlineStatusOnline />}>Status</Button>
+					<Button
+						rightIcon={<HiOutlineStatusOnline />}
+						onClick={() => router.push(`/instructor/curriculum/${item.slug}`)}
+					>
+						Curriculum
+					</Button>
 				</HStack>
 			</Stack>
 		</HStack>
