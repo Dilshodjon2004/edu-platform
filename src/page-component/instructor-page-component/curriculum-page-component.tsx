@@ -23,11 +23,18 @@ import {
 	useToast,
 } from '@chakra-ui/react'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { BsFillPlusCircleFill } from 'react-icons/bs'
 
 const CurriculumPageComponent = () => {
+	const [sectionData, setSectionData] = useState<{
+		title: string
+		id: string
+	} | null>({
+		title: '',
+		id: '',
+	})
+
 	const { course } = useTypedSelector(state => state.instructor)
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const toast = useToast()
@@ -47,6 +54,11 @@ const CurriculumPageComponent = () => {
 			},
 		})
 	}, [course])
+
+	const onCreateSection = () => {
+		onOpen()
+		setSectionData(null)
+	}
 	return (
 		<>
 			<Card>
@@ -77,7 +89,7 @@ const CurriculumPageComponent = () => {
 							w={6}
 							h={6}
 							cursor={'pointer'}
-							onClick={onOpen}
+							onClick={onCreateSection}
 						/>
 					</Flex>
 					{pendingSection ? (
@@ -89,7 +101,12 @@ const CurriculumPageComponent = () => {
 					) : (
 						<Accordion allowToggle>
 							{sections.map((section, index) => (
-								<SectionAccordion key={index} section={section} />
+								<SectionAccordion
+									key={index}
+									section={section}
+									setSectionData={setSectionData}
+									onOpen={onOpen}
+								/>
 							))}
 						</Accordion>
 					)}
@@ -103,7 +120,7 @@ const CurriculumPageComponent = () => {
 					<ModalCloseButton />
 					<Divider />
 					<ModalBody pb={5}>
-						<SectionForm onClose={onClose} />
+						<SectionForm onClose={onClose} values={sectionData} />
 					</ModalBody>
 				</ModalContent>
 			</Modal>

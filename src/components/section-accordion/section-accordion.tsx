@@ -21,7 +21,11 @@ import { useTypedSelector } from '@/hooks/useTypedSelector'
 import ErrorAlert from '../error-alert/error-alert'
 import { SectionAccordionProps } from './section-accordion.props'
 
-const SectionAccordion = ({ section }: SectionAccordionProps) => {
+const SectionAccordion = ({
+	section,
+	setSectionData,
+	onOpen,
+}: SectionAccordionProps) => {
 	const toast = useToast()
 	const { isOpen, onToggle } = useDisclosure()
 	const { deleteSection, clearSectionError, getSection } = useActions()
@@ -51,6 +55,11 @@ const SectionAccordion = ({ section }: SectionAccordionProps) => {
 		}
 	}
 
+	const onEditSection = () => {
+		onOpen()
+		setSectionData({ title: section.title, id: section._id })
+	}
+
 	return (
 		<AccordionItem>
 			{typeof error === 'string' && (
@@ -68,7 +77,7 @@ const SectionAccordion = ({ section }: SectionAccordionProps) => {
 						{section.title}
 					</Flex>
 					<Flex fontSize={'15px'} align={'center'} gap={3}>
-						<Icon as={MdEdit} w={5} h={5} />
+						<Icon as={MdEdit} w={5} h={5} onClick={onEditSection} />
 						<Icon as={MdDelete} w={5} h={5} onClick={onDelete} />
 						<AccordionIcon />
 					</Flex>
