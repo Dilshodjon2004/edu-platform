@@ -20,6 +20,8 @@ import { useActions } from '@/hooks/useActions'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import ErrorAlert from '../error-alert/error-alert'
 import { SectionAccordionProps } from './section-accordion.props'
+import { manageLessonValues } from '@/validations/course.validation'
+import { LessonType } from '@/interfaces/instructor.interface'
 
 const SectionAccordion = ({
 	section,
@@ -85,7 +87,11 @@ const SectionAccordion = ({
 			</AccordionButton>
 			<AccordionPanel pb={4}>
 				{section.lessons.map((lesson, index) => (
-					<LessonAccordionItem key={index} lesson={lesson} />
+					<LessonAccordionItem
+						key={index}
+						lesson={lesson}
+						sectionId={section._id}
+					/>
 				))}
 				<Center>
 					<Button
@@ -98,7 +104,9 @@ const SectionAccordion = ({
 					</Button>
 				</Center>
 				<Collapse in={isOpen} animateOpacity>
-					<LessonForm />
+					<LessonForm
+						sectionId={section._id}
+					/>
 				</Collapse>
 			</AccordionPanel>
 		</AccordionItem>
