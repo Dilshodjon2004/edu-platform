@@ -26,16 +26,16 @@ import ErrorAlert from '../error-alert/error-alert'
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
-const LessonForm = ({ sectionId, values }: LessonFormProps) => {
+const LessonForm = ({ sectionId, values, onToggle }: LessonFormProps) => {
 	const { t } = useTranslation()
 	const [initialValues, setInitialValues] = useState(manageLessonValues)
 	const { createLesson, getSection, clearLessonError, editLesson } =
 		useActions()
 	const { course } = useTypedSelector(state => state.instructor)
-	const { isLoading, error } = useTypedSelector(state => state.lesson)
+	const { isLoading, error } = useTypedSelector(state => state.section)
 	const toast = useToast()
 
-	const onSubmit = (formValues: FormikValues) => {
+	const onSubmit = (formValues: FormikValues, { resetForm }) => {
 		const data = formValues as LessonType
 
 		if (values) {
@@ -49,7 +49,8 @@ const LessonForm = ({ sectionId, values }: LessonFormProps) => {
 						duration: 1500,
 						isClosable: true,
 					})
-					getSection({ courseId: course?._id, callback: () => {} })
+					onToggle()
+					resetForm()
 				},
 			})
 		} else {
@@ -63,7 +64,8 @@ const LessonForm = ({ sectionId, values }: LessonFormProps) => {
 						duration: 1500,
 						isClosable: true,
 					})
-					getSection({ courseId: course?._id, callback: () => {} })
+					onToggle()
+					resetForm()
 				},
 			})
 		}

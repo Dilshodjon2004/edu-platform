@@ -4,7 +4,7 @@ import { SectionService } from '@/services/section.service'
 import { errorCatch } from '@/helpers/api.helper'
 import { SectionType } from '@/interfaces/instructor.interface'
 
-export const createSection = createAsyncThunk<'success', ISectionBodyType>(
+export const createSection = createAsyncThunk<SectionType[], ISectionBodyType>(
 	'section/create',
 	async (body, thunkApi) => {
 		try {
@@ -17,7 +17,7 @@ export const createSection = createAsyncThunk<'success', ISectionBodyType>(
 	}
 )
 
-export const deleteSection = createAsyncThunk<'success', ISectionBodyType>(
+export const deleteSection = createAsyncThunk<SectionType[], ISectionBodyType>(
 	'section/delete',
 	async (body, thunkApi) => {
 		try {
@@ -30,7 +30,7 @@ export const deleteSection = createAsyncThunk<'success', ISectionBodyType>(
 	}
 )
 
-export const editSection = createAsyncThunk<'success', ISectionBodyType>(
+export const editSection = createAsyncThunk<SectionType, ISectionBodyType>(
 	'section/edit',
 	async (body, thunkApi) => {
 		try {

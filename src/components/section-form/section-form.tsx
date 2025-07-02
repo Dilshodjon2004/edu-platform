@@ -16,8 +16,7 @@ const SectionForm = ({ onClose, values }: SectionFormProps) => {
 
 	const { t } = useTranslation()
 	const toast = useToast()
-	const { createSection, clearSectionError, getSection, editSection } =
-		useActions()
+	const { createSection, clearSectionError, editSection } = useActions()
 	const { error, isLoading } = useTypedSelector(state => state.section)
 	const { course } = useTypedSelector(state => state.instructor)
 
@@ -34,10 +33,6 @@ const SectionForm = ({ onClose, values }: SectionFormProps) => {
 						isClosable: true,
 					})
 					onClose()
-					getSection({
-						courseId: course?._id,
-						callback: () => {},
-					})
 				},
 			})
 		} else {
@@ -52,10 +47,6 @@ const SectionForm = ({ onClose, values }: SectionFormProps) => {
 						isClosable: true,
 					})
 					onClose()
-					getSection({
-						courseId: course?._id,
-						callback: () => {},
-					})
 				},
 			})
 		}

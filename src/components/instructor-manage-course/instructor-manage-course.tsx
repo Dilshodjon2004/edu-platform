@@ -86,7 +86,6 @@ const InstructorManageCourse = ({
 		}
 	}, [courseValues])
 
-	console.log(initialValues)
 
 	return (
 		<>

@@ -58,8 +58,6 @@ const ArticleDetailedComponent = ({
 			item => item.lang === currentLanguage?.lang
 		)
 		setMyVoice(currentVoice)
-		console.log(myVoice)
-		console.log(voices)
 	}, [voices, router])
 
 	const startSpeak = () => {

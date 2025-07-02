@@ -51,10 +51,6 @@ const SectionAccordion = ({
 						duration: 1500,
 						isClosable: true,
 					})
-					getSection({
-						courseId: course?._id,
-						callback: () => {},
-					})
 				},
 			})
 		}
@@ -79,12 +75,7 @@ const SectionAccordion = ({
 		dragSection({
 			sections: editedIndex,
 			courseId: course?._id,
-			callback: () => {
-				getSection({
-					courseId: course?._id,
-					callback: () => {},
-				})
-			},
+			callback: () => {},
 		})
 	}
 	return (
@@ -135,7 +126,7 @@ const SectionAccordion = ({
 					</Button>
 				</Center>
 				<Collapse in={isOpen} animateOpacity>
-					<LessonForm sectionId={section._id} />
+					<LessonForm sectionId={section._id} onToggle={onToggle} />
 				</Collapse>
 			</AccordionPanel>
 		</AccordionItem>

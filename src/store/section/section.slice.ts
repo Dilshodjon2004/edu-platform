@@ -7,6 +7,7 @@ import {
 	editSection,
 	getSection,
 } from './section.action'
+import { createLesson, deleteLesson, editLesson } from '../lesson/lesson.action'
 
 const initialState: ISectionInitialStateType = {
 	isLoading: false,
@@ -29,9 +30,10 @@ export const sectionSlice = createSlice({
 				state.isLoading = true
 				state.error = null
 			})
-			.addCase(createSection.fulfilled, state => {
+			.addCase(createSection.fulfilled, (state, { payload }) => {
 				state.isLoading = false
 				state.error = null
+				state.sections = payload
 			})
 			.addCase(createSection.rejected, (state, { payload }) => {
 				state.isLoading = false
@@ -41,9 +43,10 @@ export const sectionSlice = createSlice({
 				state.isLoading = true
 				state.error = null
 			})
-			.addCase(deleteSection.fulfilled, state => {
+			.addCase(deleteSection.fulfilled, (state, { payload }) => {
 				state.isLoading = false
 				state.error = null
+				state.sections = payload
 			})
 			.addCase(deleteSection.rejected, (state, { payload }) => {
 				state.isLoading = false
@@ -53,9 +56,17 @@ export const sectionSlice = createSlice({
 				state.isLoading = true
 				state.error = null
 			})
-			.addCase(editSection.fulfilled, state => {
+			.addCase(editSection.fulfilled, (state, { payload }) => {
 				state.isLoading = false
 				state.error = null
+
+				const newSections = state.sections.map(item => {
+					if (item._id === payload._id) {
+						return payload
+					}
+					return item
+				})
+				state.sections = newSections
 			})
 			.addCase(editSection.rejected, (state, { payload }) => {
 				state.isLoading = false
@@ -75,15 +86,83 @@ export const sectionSlice = createSlice({
 				state.error = payload
 			})
 			.addCase(dragSection.pending, state => {
-				state.pendingSection = true
 				state.error = null
+				state.isLoading = true
 			})
-			.addCase(dragSection.fulfilled, state => {
-				state.pendingSection = false
+			.addCase(dragSection.fulfilled, (state, { payload }) => {
 				state.error = null
+				state.sections = payload
+				state.isLoading = false
 			})
 			.addCase(dragSection.rejected, (state, { payload }) => {
-				state.pendingSection = false
+				state.error = payload
+				state.isLoading = false
+			})
+			.addCase(createLesson.pending, state => {
+				state.isLoading = true
+				state.error = null
+			})
+			.addCase(createLesson.fulfilled, (state, { payload }) => {
+				state.isLoading = false
+				state.error = null
+
+				const newArr = state.sections.map(item => {
+					if (item._id === payload._id) {
+						return payload
+					}
+					return item
+				})
+
+				state.sections = newArr
+			})
+			.addCase(createLesson.rejected, (state, { payload }) => {
+				state.isLoading = false
+				state.error = payload
+			})
+			.addCase(editLesson.pending, state => {
+				state.isLoading = true
+				state.error = null
+			})
+			.addCase(editLesson.fulfilled, (state, { payload }) => {
+				state.isLoading = false
+				state.error = null
+
+				const newArr = state.sections.map(item => {
+					const lessons = item.lessons.map(lesson => {
+						if (lesson._id === payload._id) {
+							return payload
+						}
+
+						return lesson
+					})
+					item.lessons = lessons
+					return item
+				})
+				state.sections = newArr
+			})
+			.addCase(editLesson.rejected, (state, { payload }) => {
+				state.isLoading = false
+				state.error = payload
+			})
+			.addCase(deleteLesson.pending, state => {
+				state.isLoading = true
+				state.error = null
+			})
+			.addCase(deleteLesson.fulfilled, (state, { payload }) => {
+				state.isLoading = false
+				state.error = null
+
+				const newArr = state.sections.map(item => {
+					if (item._id === payload._id) {
+						return payload
+					}
+					return item
+				})
+
+				state.sections = newArr
+			})
+			.addCase(deleteLesson.rejected, (state, { payload }) => {
+				state.isLoading = false
 				state.error = payload
 			})
 	},
