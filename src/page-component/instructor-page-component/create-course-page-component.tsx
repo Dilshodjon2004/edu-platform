@@ -3,6 +3,7 @@ import { useActions } from '@/hooks/useActions'
 import { ICourseType } from '@/interfaces/course.interface'
 import { Divider, useToast } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'react-i18next'
 import 'react-quill/dist/quill.snow.css'
 import SectionTitle from 'src/components/section-title/section-title'
 
@@ -10,14 +11,17 @@ const CreateCoursePageComponent = () => {
 	const { createCourse } = useActions()
 	const toast = useToast()
 	const router = useRouter()
+	const { t } = useTranslation()
 
 	const onSubmit = (data: ICourseType) => {
 		createCourse({
 			...data,
 			callback: () => {
 				toast({
-					title: 'Course created successfully',
-					description: 'You can customize your curriculum for this course.',
+					title: t('successfully_created_course', { ns: 'instructor' }),
+					description: t('successfully_created_course_description', {
+						ns: 'instructor',
+					}),
 					position: 'top-right',
 					duration: 1500,
 					isClosable: true,
@@ -29,12 +33,12 @@ const CreateCoursePageComponent = () => {
 	return (
 		<>
 			<SectionTitle
-				title='Create course'
-				subtitle="Note that when you're creating course it will be draft"
+				title={t('create_course_title', { ns: 'instructor' })}
+				subtitle={t('create_course_description', { ns: 'instructor' })}
 			/>
 			<Divider mt={5} />
 			<InstructorManageCourse
-				titleBtn='Create course'
+				titleBtn={t('create_course_btn', { ns: 'instructor' })}
 				submitHandler={onSubmit}
 			/>
 		</>

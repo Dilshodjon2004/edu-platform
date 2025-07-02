@@ -31,7 +31,7 @@ const DraftCourseCard: FC<DraftCourseCardProps> = ({ item }): JSX.Element => {
 				courseId: item._id,
 				callback: () => {
 					toast({
-						title: 'Successfully drafted',
+						title: t('successfully_drafted_course', { ns: 'instructor' }),
 						description: item.title,
 						position: 'top-right',
 						duration: 1500,
@@ -45,7 +45,7 @@ const DraftCourseCard: FC<DraftCourseCardProps> = ({ item }): JSX.Element => {
 				courseId: item._id,
 				callback: () => {
 					toast({
-						title: 'Successfully activated',
+						title: t('successfully_activate_course', { ns: 'instructor' }),
 						description: item.title,
 						position: 'top-right',
 						duration: 1500,
@@ -81,9 +81,11 @@ const DraftCourseCard: FC<DraftCourseCardProps> = ({ item }): JSX.Element => {
 			<Stack spacing={5}>
 				<Heading>{item.title}</Heading>
 				<Text fontWeight={'bold'} color={'facebook.500'}>
-					Status:{' '}
+					{t('status', { ns: 'instructor' })}:{' '}
 					<Box as={'span'} color={item.isActive ? 'green.500' : 'red.500'}>
-						{item.isActive ? 'Active' : 'Draft'}
+						{item.isActive
+							? t('active', { ns: 'instructor' })
+							: t('draft', { ns: 'instructor' })}
 					</Box>
 				</Text>
 				<Button
@@ -94,7 +96,9 @@ const DraftCourseCard: FC<DraftCourseCardProps> = ({ item }): JSX.Element => {
 					isLoading={isLoading}
 					loadingText={`${t('loading', { ns: 'global' })}`}
 				>
-					{!item.isActive ? 'Active' : 'Draft'}
+					{!item.isActive
+						? t('activate', { ns: 'instructor' })
+						: t('draft', { ns: 'instructor' })}
 				</Button>
 			</Stack>
 		</Box>

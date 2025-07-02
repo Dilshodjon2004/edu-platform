@@ -27,7 +27,7 @@ const SectionForm = ({ onClose, values }: SectionFormProps) => {
 				title: formValues.title,
 				callback: () => {
 					toast({
-						title: 'Section edited successfully',
+						title: t('successfully_edited', { ns: 'instructor' }),
 						position: 'top-right',
 						duration: 1500,
 						isClosable: true,
@@ -41,7 +41,7 @@ const SectionForm = ({ onClose, values }: SectionFormProps) => {
 				courseId: course?._id as string,
 				callback: () => {
 					toast({
-						title: 'Section created successfully',
+						title: t('successfully_created_course', { ns: 'instructor' }),
 						position: 'top-right',
 						duration: 1500,
 						isClosable: true,
@@ -67,7 +67,7 @@ const SectionForm = ({ onClose, values }: SectionFormProps) => {
 				{typeof error === 'string' && (
 					<ErrorAlert title={error} clearHandler={clearSectionError} />
 				)}
-				<TextField name={'title'} label='Title' />
+				<TextField name={'title'} label={t('title', { ns: 'instructor' })} />
 				<Button
 					h={14}
 					mt={4}
@@ -77,7 +77,7 @@ const SectionForm = ({ onClose, values }: SectionFormProps) => {
 					isLoading={isLoading}
 					loadingText={`${t('loading', { ns: 'global' })}`}
 				>
-					Submit
+					{t('search_input_btn', { ns: 'courses' })}
 				</Button>
 			</Form>
 		</Formik>

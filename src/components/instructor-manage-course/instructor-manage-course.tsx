@@ -21,10 +21,7 @@ import {
 } from 'src/validations/course.validation'
 import SelectField from '../select-field/select-field'
 import TextAreaField from '../text-area-field/text-area-field'
-import {
-	InstructorManageCourseProps,
-	SubmitValuesInterface,
-} from './instructor-manage-course.props'
+import { InstructorManageCourseProps } from './instructor-manage-course.props'
 import TextField from '../text-field/text-field'
 import TagField from '../tag-field/tag-field'
 import { FileService } from '@/services/file.service'
@@ -86,7 +83,6 @@ const InstructorManageCourse = ({
 		}
 	}, [courseValues])
 
-
 	return (
 		<>
 			<Formik
@@ -102,18 +98,20 @@ const InstructorManageCourse = ({
 								<Stack spacing={5}>
 									<TextField
 										name='title'
-										label='Title'
+										label={t('title', { ns: 'instructor' })}
 										placeholder='JavaScript from 0 to hero'
 									/>
 									<TextAreaField
 										name='excerpt'
 										placeholder='Full course about JavaScript'
 										height={'150px'}
-										label={'Excerpt'}
+										label={t('excerpt', { ns: 'instructor' }) || 'Exerpt'}
 									/>
 									<Flex gap={4}>
 										<TagField
-											label='What will students learn in your course?'
+											label={t('what_students_will_learn', {
+												ns: 'instructor',
+											})}
 											name='learn'
 											values={formik.values.learn}
 											placeholder='Full project...'
@@ -125,10 +123,10 @@ const InstructorManageCourse = ({
 											}
 										/>
 										<TagField
-											label='Requirements'
+											label={t('requirements', { ns: 'instructor' })}
 											name='requirements'
 											values={formik.values.requirements}
-											placeholder='Basic JavaScript...'
+											placeholder=''
 											formik={formik}
 											errorMessage={
 												formik.touched.requirements
@@ -139,7 +137,7 @@ const InstructorManageCourse = ({
 									</Flex>
 									<Box>
 										<FormLabel mb={3}>
-											Description{' '}
+											{t('description', { ns: 'instructor' })}{' '}
 											<Box as={'span'} color={'red.300'}>
 												*
 											</Box>
@@ -178,24 +176,24 @@ const InstructorManageCourse = ({
 								<Stack spacing={5}>
 									<SelectField
 										name='level'
-										label='Level'
+										label={t('level', { ns: 'instructor' })}
 										placeholder='-'
 										arrOptions={courseLevel}
 									/>
 									<SelectField
 										name='category'
-										label='Category'
+										label={t('category', { ns: 'instructor' })}
 										placeholder='-'
 										arrOptions={courseCategory}
 									/>
 									<SelectField
 										name='price'
-										label='Price'
+										label={t('price', { ns: 'instructor' })}
 										placeholder='-'
 										arrOptions={coursePrice}
 									/>
 									<TagField
-										label='Course tags'
+										label={t('course_tags', { ns: 'instructor' })}
 										values={formik.values.tags}
 										name='tags'
 										placeholder='JavaScript...'
@@ -205,7 +203,7 @@ const InstructorManageCourse = ({
 										}
 									/>
 									<FormLabel>
-										Course preview image{' '}
+										{t('course_preview_image', { ns: 'instructor' })}{' '}
 										<Box as={'span'} color={'red.300'}>
 											*
 										</Box>

@@ -29,9 +29,7 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 const LessonForm = ({ sectionId, values, onToggle }: LessonFormProps) => {
 	const { t } = useTranslation()
 	const [initialValues, setInitialValues] = useState(manageLessonValues)
-	const { createLesson, getSection, clearLessonError, editLesson } =
-		useActions()
-	const { course } = useTypedSelector(state => state.instructor)
+	const { createLesson, clearLessonError, editLesson } = useActions()
 	const { isLoading, error } = useTypedSelector(state => state.section)
 	const toast = useToast()
 
@@ -44,7 +42,7 @@ const LessonForm = ({ sectionId, values, onToggle }: LessonFormProps) => {
 				...data,
 				callback: () => {
 					toast({
-						title: 'Successfully edited lesson',
+						title: t('successfully_edited', { ns: 'instructor' }),
 						position: 'top-right',
 						duration: 1500,
 						isClosable: true,
@@ -59,7 +57,7 @@ const LessonForm = ({ sectionId, values, onToggle }: LessonFormProps) => {
 				sectionId,
 				callback: () => {
 					toast({
-						title: 'Successfully added lesson',
+						title: t('successfully_created_course', { ns: 'instructor' }),
 						position: 'top-right',
 						duration: 1500,
 						isClosable: true,
@@ -96,12 +94,27 @@ const LessonForm = ({ sectionId, values, onToggle }: LessonFormProps) => {
 							{typeof error === 'string' && (
 								<ErrorAlert title={error} clearHandler={clearLessonError} />
 							)}
-							<TextField name='name' label='Name' />
-							<TextAreaField name='embedVideo' label='Embed video' />
+							<TextField name='name' label={t('name', { ns: 'instructor' })} />
+							<TextAreaField
+								name='embedVideo'
+								label={t('embed_video', { ns: 'instructor' }) || 'Embed video'}
+							/>
 							<Flex gap={3}>
-								<TextField name='hour' label='Hour' type='number' />
-								<TextField name='minute' label='Minute' type='number' />
-								<TextField name='second' label='Second' type='number' />
+								<TextField
+									name='hour'
+									label={t('hour', { ns: 'instructor' })}
+									type='number'
+								/>
+								<TextField
+									name='minute'
+									label={t('minute', { ns: 'instructor' })}
+									type='number'
+								/>
+								<TextField
+									name='second'
+									label={t('second', { ns: 'instructor' })}
+									type='number'
+								/>
 							</Flex>
 							<Box>
 								<ReactQuill
@@ -124,7 +137,7 @@ const LessonForm = ({ sectionId, values, onToggle }: LessonFormProps) => {
 								isLoading={isLoading}
 								loadingText={`${t('loading', { ns: 'global' })}`}
 							>
-								Submit
+								{t('search_input_btn', { ns: 'courses' })}
 							</Button>
 						</Stack>
 					</Form>

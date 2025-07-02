@@ -15,15 +15,14 @@ import { CiViewList } from 'react-icons/ci'
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import { SiGoogleanalytics } from 'react-icons/si'
 import { VscOpenPreview } from 'react-icons/vsc'
-import { FiEdit2 } from 'react-icons/fi'
-import { BsTrash } from 'react-icons/bs'
-import { HiOutlineStatusOnline } from 'react-icons/hi'
 import Image from 'next/image'
 import { loadImage } from '@/helpers/image.helper'
+import { useTranslation } from 'react-i18next'
 
 const InstructorCoursesCard: FC<InstructorCoursesCardProps> = ({
 	item,
 }): JSX.Element => {
+	const { t } = useTranslation()
 	return (
 		<HStack
 			key={item.title}
@@ -40,11 +39,15 @@ const InstructorCoursesCard: FC<InstructorCoursesCardProps> = ({
 				<HStack>
 					<Flex align={'center'} gap={1}>
 						<Icon as={CiViewList} />
-						<Text>{item.lessonCount} lesson</Text>
+						<Text>
+							{item.lessonCount} {t('lessons', { ns: 'courses' })}
+						</Text>
 					</Flex>
 					<Flex align={'center'} gap={1}>
 						<Icon as={AiOutlineClockCircle} />
-						<Text>{item.totalHour} hours</Text>
+						<Text>
+							{item.totalHour} {t('hour', { ns: 'courses' })}
+						</Text>
 					</Flex>
 					<Flex align={'center'} gap={1}>
 						<Icon as={SiGoogleanalytics} />
@@ -59,7 +62,7 @@ const InstructorCoursesCard: FC<InstructorCoursesCardProps> = ({
 						h={16}
 						colorScheme='blue'
 					>
-						Preview
+						{t('preview', { ns: 'instructor' })}
 					</Button>
 				</HStack>
 			</Stack>

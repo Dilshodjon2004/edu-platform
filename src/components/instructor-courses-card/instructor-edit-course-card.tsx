@@ -23,6 +23,7 @@ import { HiOutlineStatusOnline } from 'react-icons/hi'
 import { useRouter } from 'next/router'
 import { loadImage } from '@/helpers/image.helper'
 import { useActions } from '@/hooks/useActions'
+import { useTranslation } from 'react-i18next'
 
 const InstructorEditCourseCard: FC<InstructorCoursesCardProps> = ({
 	item,
@@ -30,6 +31,7 @@ const InstructorEditCourseCard: FC<InstructorCoursesCardProps> = ({
 	const router = useRouter()
 	const toast = useToast()
 	const { deleteCourse } = useActions()
+	const { t } = useTranslation()
 
 	const onDelete = () => {
 		const isAgree = confirm('Are you sure?')
@@ -38,7 +40,7 @@ const InstructorEditCourseCard: FC<InstructorCoursesCardProps> = ({
 				courseId: item._id,
 				callback: () => {
 					toast({
-						title: 'Successully deleted',
+						title: t('successfully_deleted', { ns: 'instructor' }),
 						description: item.title,
 						position: 'top-right',
 						duration: 1500,
@@ -58,7 +60,7 @@ const InstructorEditCourseCard: FC<InstructorCoursesCardProps> = ({
 			borderRadius={'lg'}
 		>
 			<Stack spacing={5}>
-				<Box pos={'relative'} w={'full'} h={'300px'}>
+				<Box pos={'relative'} w={'100%'} h={'300px'}>
 					<Image
 						fill
 						src={loadImage(item.previewImage)}
@@ -73,11 +75,15 @@ const InstructorEditCourseCard: FC<InstructorCoursesCardProps> = ({
 				<HStack>
 					<Flex align={'center'} gap={1}>
 						<Icon as={CiViewList} />
-						<Text>{item.lessonCount} lesson</Text>
+						<Text>
+							{item.lessonCount} {t('lessons', { ns: 'courses' })}
+						</Text>
 					</Flex>
 					<Flex align={'center'} gap={1}>
 						<Icon as={AiOutlineClockCircle} />
-						<Text>{item.totalHour} hours</Text>
+						<Text>
+							{item.totalHour} {t('hour', { ns: 'courses' })}
+						</Text>
 					</Flex>
 					<Flex align={'center'} gap={1}>
 						<Icon as={SiGoogleanalytics} />
@@ -85,16 +91,18 @@ const InstructorEditCourseCard: FC<InstructorCoursesCardProps> = ({
 					</Flex>
 				</HStack>
 				<Divider />
-				<HStack>
-					<Button rightIcon={<VscOpenPreview />}>Preview</Button>
+				<Flex flexWrap={'wrap'} gap={5}>
+					<Button rightIcon={<VscOpenPreview />}>
+						{t('preview', { ns: 'instructor' })}
+					</Button>
 					<Button
 						rightIcon={<FiEdit2 />}
 						onClick={() => router.push(`/instructor/edit-courses/${item.slug}`)}
 					>
-						Edit
+						{t('edit_course', { ns: 'instructor' })}
 					</Button>
 					<Button rightIcon={<BsTrash />} onClick={onDelete}>
-						Delete
+						{t('delete_course', { ns: 'instructor' })}
 					</Button>
 					<Button
 						rightIcon={<HiOutlineStatusOnline />}
@@ -102,7 +110,7 @@ const InstructorEditCourseCard: FC<InstructorCoursesCardProps> = ({
 					>
 						Curriculum
 					</Button>
-				</HStack>
+				</Flex>
 			</Stack>
 		</HStack>
 	)

@@ -21,6 +21,7 @@ import { useTypedSelector } from '@/hooks/useTypedSelector'
 import ErrorAlert from '../error-alert/error-alert'
 import { SectionAccordionProps } from './section-accordion.props'
 import { DragEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const SectionAccordion = ({
 	section,
@@ -28,10 +29,10 @@ const SectionAccordion = ({
 	onOpen,
 	sectionIndex,
 }: SectionAccordionProps) => {
+	const { t } = useTranslation()
 	const toast = useToast()
 	const { isOpen, onToggle } = useDisclosure()
-	const { deleteSection, clearSectionError, getSection, dragSection } =
-		useActions()
+	const { deleteSection, clearSectionError, dragSection } = useActions()
 	const { error, isLoading, sections } = useTypedSelector(
 		state => state.section
 	)
@@ -46,7 +47,7 @@ const SectionAccordion = ({
 				courseId: course?._id,
 				callback: () => {
 					toast({
-						title: 'Section deleted successfully',
+						title: t('successfully_deleted', { ns: 'instructor' }),
 						position: 'top-right',
 						duration: 1500,
 						isClosable: true,
@@ -122,7 +123,9 @@ const SectionAccordion = ({
 						_hover={{ textDecoration: 'underline' }}
 						onClick={onToggle}
 					>
-						{isOpen ? 'Close form' : 'Create lesson'}
+						{isOpen
+							? t('close_form', { ns: 'instructor' })
+							: t('create_lesson', { ns: 'instructor' })}
 					</Button>
 				</Center>
 				<Collapse in={isOpen} animateOpacity>

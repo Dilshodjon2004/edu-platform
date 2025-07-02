@@ -9,6 +9,7 @@ import {
 	SimpleGrid,
 	Text,
 } from '@chakra-ui/react'
+import { useTranslation } from 'react-i18next'
 import { AiOutlineDollarCircle } from 'react-icons/ai'
 import { FaFunnelDollar } from 'react-icons/fa'
 import { FiSettings } from 'react-icons/fi'
@@ -16,6 +17,7 @@ import { MdOutlineAccountBalanceWallet } from 'react-icons/md'
 import { SiFuturelearn } from 'react-icons/si'
 import { StatsCard } from 'src/components'
 const RevenuePageComponent = () => {
+	const { t } = useTranslation()
 	return (
 		<>
 			<chakra.h1
@@ -24,11 +26,11 @@ const RevenuePageComponent = () => {
 				py={10}
 				fontWeight={'bold'}
 			>
-				Hi Instructor, that's your revenue statistics
+				{t('revenue_title', { ns: 'instructor' })}
 			</chakra.h1>
 			<SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
 				<StatsCard
-					title={'Earn'}
+					title={t('earn', { ns: 'instructor' })}
 					stat={Number('5000').toLocaleString('en-US', {
 						style: 'currency',
 						currency: 'USD',
@@ -36,7 +38,7 @@ const RevenuePageComponent = () => {
 					icon={<AiOutlineDollarCircle size={'3em'} />}
 				/>
 				<StatsCard
-					title={'Payouts'}
+					title={t('payouts', { ns: 'instructor' })}
 					stat={Number('1000').toLocaleString('en-US', {
 						style: 'currency',
 						currency: 'USD',
@@ -44,7 +46,7 @@ const RevenuePageComponent = () => {
 					icon={<SiFuturelearn size={'3em'} />}
 				/>
 				<StatsCard
-					title={'Balance'}
+					title={t('balance', { ns: 'instructor' })}
 					stat={Number('500').toLocaleString('en-US', {
 						style: 'currency',
 						currency: 'USD',
@@ -56,18 +58,15 @@ const RevenuePageComponent = () => {
 				<CardBody>
 					<HStack justify={'space-between'}>
 						<Heading fontFamily={'mono'} letterSpacing={5}>
-							Revenue report
+							{t('revenue_report', { ns: 'instructor' })}
 						</Heading>
 						<Icon as={FaFunnelDollar} fontSize={60} color={'facebook.400'} />
 					</HStack>
-					<Text>
-						You get paid directly from stripe yo your bank account every 48
-						hours
-					</Text>
+					<Text>{t('revenue_report_description', { ns: 'instructor' })}</Text>
 					<Divider my={5} />
 					<HStack justify={'space-between'}>
 						<Heading fontFamily={'mono'} letterSpacing={5}>
-							Pending balance
+							{t('pending_balance', { ns: 'instructor' })}
 						</Heading>
 						<Text fontSize={40} color={'facebook.400'}>
 							{Number('500').toLocaleString('en-US', {
@@ -76,15 +75,15 @@ const RevenuePageComponent = () => {
 							})}
 						</Text>
 					</HStack>
-					<Text>For 48 hours</Text>
+					<Text>{t('pending_balance_description', { ns: 'instructor' })}</Text>
 					<Divider my={5} />
 					<HStack justify={'space-between'}>
 						<Heading fontFamily={'mono'} letterSpacing={5}>
-							Payouts
+							{t('payouts', { ns: 'instructor' })}
 						</Heading>
 						<Icon as={FiSettings} fontSize={60} color={'facebook.400'} />
 					</HStack>
-					<Text>Update your account details or view previous payouts</Text>
+					<Text>{t('payouts_description', { ns: 'instructor' })}</Text>
 				</CardBody>
 			</Card>
 		</>
