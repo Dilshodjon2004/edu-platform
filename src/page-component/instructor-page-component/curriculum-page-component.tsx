@@ -42,17 +42,19 @@ const CurriculumPageComponent = () => {
 	const { pendingSection, sections } = useTypedSelector(state => state.section)
 
 	useEffect(() => {
-		getSection({
-			courseId: course?._id,
-			callback: () => {
-				toast({
-					title: 'Sections fetched successfully',
-					position: 'top-right',
-					duration: 1500,
-					isClosable: true,
-				})
-			},
-		})
+		if (course?._id) {
+			getSection({
+				courseId: course?._id,
+				callback: () => {
+					toast({
+						title: 'Sections fetched successfully',
+						position: 'top-right',
+						duration: 1500,
+						isClosable: true,
+					})
+				},
+			})
+		}
 	}, [course])
 
 	const onCreateSection = () => {
@@ -99,11 +101,12 @@ const CurriculumPageComponent = () => {
 							<Skeleton height='20px' />
 						</Stack>
 					) : (
-						<Accordion allowToggle>
+						<Accordion allowToggle onDragOver={e => e.preventDefault()}>
 							{sections.map((section, index) => (
 								<SectionAccordion
-									key={index}
+									key={section._id}
 									section={section}
+									sectionIndex={index}
 									setSectionData={setSectionData}
 									onOpen={onOpen}
 								/>

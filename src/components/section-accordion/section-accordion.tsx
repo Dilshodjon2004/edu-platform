@@ -3,12 +3,12 @@ import {
 	AccordionIcon,
 	AccordionItem,
 	AccordionPanel,
-	Box,
 	Button,
 	Center,
 	Collapse,
 	Flex,
 	Icon,
+	List,
 	useDisclosure,
 	useToast,
 } from '@chakra-ui/react'
@@ -20,18 +20,21 @@ import { useActions } from '@/hooks/useActions'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import ErrorAlert from '../error-alert/error-alert'
 import { SectionAccordionProps } from './section-accordion.props'
-import { manageLessonValues } from '@/validations/course.validation'
-import { LessonType } from '@/interfaces/instructor.interface'
+import { DragEvent } from 'react'
 
 const SectionAccordion = ({
 	section,
 	setSectionData,
 	onOpen,
+	sectionIndex,
 }: SectionAccordionProps) => {
 	const toast = useToast()
 	const { isOpen, onToggle } = useDisclosure()
-	const { deleteSection, clearSectionError, getSection } = useActions()
-	const { error, isLoading } = useTypedSelector(state => state.section)
+	const { deleteSection, clearSectionError, getSection, dragSection } =
+		useActions()
+	const { error, isLoading, sections } = useTypedSelector(
+		state => state.section
+	)
 	const { course } = useTypedSelector(state => state.instructor)
 
 	const onDelete = () => {
@@ -62,6 +65,28 @@ const SectionAccordion = ({
 		setSectionData({ title: section.title, id: section._id })
 	}
 
+	const onDragStartSection = (e: DragEvent<HTMLButtonElement>) => {
+		e.dataTransfer.setData('sectionIndex', String(sectionIndex))
+	}
+
+	const onDropSection = (e: DragEvent<HTMLButtonElement>) => {
+		const movingSectionIndex = Number(e.dataTransfer.getData('sectionIndex'))
+		const allSections = [...sections]
+		const movingItem = allSections[movingSectionIndex]
+		allSections.splice(movingSectionIndex, 1)
+		allSections.splice(sectionIndex, 0, movingItem)
+		const editedIndex = allSections.map(c => c._id)
+		dragSection({
+			sections: editedIndex,
+			courseId: course?._id,
+			callback: () => {
+				getSection({
+					courseId: course?._id,
+					callback: () => {},
+				})
+			},
+		})
+	}
 	return (
 		<AccordionItem>
 			{typeof error === 'string' && (
@@ -72,6 +97,9 @@ const SectionAccordion = ({
 				p={2}
 				fontWeight={'bold'}
 				cursor={isLoading ? 'progress' : 'pointer'}
+				draggable
+				onDragStart={onDragStartSection}
+				onDrop={onDropSection}
 			>
 				<Flex w={'100%'} align={'center'} justify={'space-between'}>
 					<Flex align={'center'} gap={2}>
@@ -86,13 +114,16 @@ const SectionAccordion = ({
 				</Flex>
 			</AccordionButton>
 			<AccordionPanel pb={4}>
-				{section.lessons.map((lesson, index) => (
-					<LessonAccordionItem
-						key={index}
-						lesson={lesson}
-						sectionId={section._id}
-					/>
-				))}
+				<List onDragOver={e => e.preventDefault()}>
+					{section.lessons.map((lesson, index) => (
+						<LessonAccordionItem
+							key={lesson._id}
+							lessonIndex={index}
+							lesson={lesson}
+							sectionId={section._id}
+						/>
+					))}
+				</List>
 				<Center>
 					<Button
 						variant={'unstyled'}
@@ -104,9 +135,7 @@ const SectionAccordion = ({
 					</Button>
 				</Center>
 				<Collapse in={isOpen} animateOpacity>
-					<LessonForm
-						sectionId={section._id}
-					/>
+					<LessonForm sectionId={section._id} />
 				</Collapse>
 			</AccordionPanel>
 		</AccordionItem>

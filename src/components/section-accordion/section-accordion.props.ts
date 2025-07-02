@@ -5,4 +5,5 @@ export interface SectionAccordionProps {
 	section: SectionType
 	setSectionData: Dispatch<SetStateAction<{ title: string; id: string } | null>>
 	onOpen: () => void
+	sectionIndex: number
 }

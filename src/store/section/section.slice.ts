@@ -3,6 +3,7 @@ import { ISectionInitialStateType } from './section.interface'
 import {
 	createSection,
 	deleteSection,
+	dragSection,
 	editSection,
 	getSection,
 } from './section.action'
@@ -70,6 +71,18 @@ export const sectionSlice = createSlice({
 				state.sections = payload
 			})
 			.addCase(getSection.rejected, (state, { payload }) => {
+				state.pendingSection = false
+				state.error = payload
+			})
+			.addCase(dragSection.pending, state => {
+				state.pendingSection = true
+				state.error = null
+			})
+			.addCase(dragSection.fulfilled, state => {
+				state.pendingSection = false
+				state.error = null
+			})
+			.addCase(dragSection.rejected, (state, { payload }) => {
 				state.pendingSection = false
 				state.error = payload
 			})

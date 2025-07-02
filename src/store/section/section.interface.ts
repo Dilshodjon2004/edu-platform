@@ -10,6 +10,8 @@ export interface ISectionInitialStateType {
 export interface ISectionBodyType {
 	title?: string
 	courseId?: string
+	sections?: string[]
+	lessons?: string[]
 	sectionId?: string
 	callback: () => void
 }
