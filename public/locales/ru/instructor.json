@@ -58,5 +58,6 @@
 	"embed_video": "Встроенное видео",
 	"hour": "Час",
 	"minute": "Минута",
-	"seconds": "Секунды"
+	"seconds": "Секунды",
+	"language": "Язык"
 }

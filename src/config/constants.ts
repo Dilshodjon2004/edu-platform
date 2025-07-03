@@ -499,3 +499,5 @@ export const courseCategory = [
 ]
 
 export const coursePrice = [10, 20, 30, 40, 50]
+
+export const courseLanguage = ['en', 'uz', 'ru', 'tr']

@@ -14,6 +14,8 @@ const CreateCoursePageComponent = () => {
 	const { t } = useTranslation()
 
 	const onSubmit = (data: ICourseType) => {
+		
+
 		createCourse({
 			...data,
 			callback: () => {

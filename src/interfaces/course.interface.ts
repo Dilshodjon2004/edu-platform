@@ -16,6 +16,7 @@ export interface ICourseType {
 	description: string
 	category: string
 	_id: string
+	language: string
 	isActive: boolean
 }
 
@@ -24,4 +25,3 @@ export interface ICourseAuthorType {
 	lastName: string
 	avatar: string
 }
-

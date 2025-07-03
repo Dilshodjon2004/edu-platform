@@ -1,3 +1,4 @@
+import { language } from '@/config/constants'
 import * as Yup from 'yup'
 
 interface Type {
@@ -10,6 +11,7 @@ interface Type {
 	category: string
 	price: number
 	tags: string[]
+	language: string
 }
 
 export const manageCourseValues: Type = {
@@ -22,6 +24,7 @@ export const manageCourseValues: Type = {
 	category: '',
 	price: 0,
 	tags: [],
+	language: '',
 }
 
 interface LessonTypeValues {
@@ -48,18 +51,19 @@ export const CourseValidation = {
 			title: Yup.string()
 				.min(8, 'title_min_char')
 				.required('title_is_required'),
-			exerpt: Yup.string()
+			excerpt: Yup.string()
 				.min(15, 'exerpt_min_char')
 				.required('exerpt_is_required'),
-			learn: Yup.array().required('level_is_required'),
-			requirements: Yup.array().required('requirements_is_required'),
-			tags: Yup.array().required('course_tags_is_required'),
+			learn: Yup.array().min(3).required('level_is_required'),
+			requirements: Yup.array().min(5).required('requirements_is_required'),
+			tags: Yup.array().min(5).required('course_tags_is_required'),
 			description: Yup.string()
 				.min(10, 'description_min_char')
 				.required('description_is_required'),
 			level: Yup.string().required('level_is_required'),
 			category: Yup.string().required('category_is_required'),
-			price: Yup.string().required('price_is_required'),
+			price: Yup.number().required('price_is_required'),
+			language: Yup.string().required('Language is required'),
 		})
 	},
 	section() {
