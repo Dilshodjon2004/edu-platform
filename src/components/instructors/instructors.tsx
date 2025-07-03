@@ -6,7 +6,6 @@ import {
 	Heading,
 	HStack,
 	Icon,
-	Image,
 	Stack,
 	Text,
 } from '@chakra-ui/react'
@@ -15,9 +14,13 @@ import { FaUserGraduate } from 'react-icons/fa'
 import { AiOutlinePlayCircle } from 'react-icons/ai'
 import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
+import { useTypedSelector } from '@/hooks/useTypedSelector'
+import Image from 'next/image'
+import { loadImage } from '@/helpers/image.helper'
 
 const Instructors = () => {
 	const { t } = useTranslation()
+	const { instructors } = useTypedSelector(state => state.instructor)
 	return (
 		<>
 			<SectionTitle
@@ -34,28 +37,27 @@ const Instructors = () => {
 				}}
 				mt={5}
 			>
-				{data.map((item, index) => (
+				{instructors.map((item, index) => (
 					<GridItem key={index}>
 						<Stack spacing={3}>
-							<Image
-								src={item.avatar}
-								alt={item.firstName}
-								borderRadius={'lg'}
-								h={'330px'}
-								objectFit={'cover'}
-							/>
-							<Heading fontSize={'xl'}>
-								{item.firstName} {item.lastName}
-							</Heading>
-							<Text color={'gray.500'}>{item.job}</Text>
+							<Box position={'relative'} w={'full'} h={'330px'}>
+								<Image
+									src={item.avatar}
+									alt={item.fullName}
+									fill
+									style={{ objectFit: 'cover', borderRadius: '8px' }}
+								/>
+							</Box>
+							<Heading fontSize={'xl'}>{item.fullName}</Heading>
+							<Text color={'gray.500'}>Software Engineer</Text>
 							<HStack opacity={'.6'}>
 								<Flex align={'center'} gap={1}>
 									<Icon as={FaUserGraduate} />
-									<Text>{item.students} students</Text>
+									<Text>200 students</Text>
 								</Flex>
 								<Flex align={'center'} gap={1}>
 									<Icon as={AiOutlinePlayCircle} />
-									<Text>{item.courses} courses</Text>
+									<Text>3 courses</Text>
 								</Flex>
 							</HStack>
 						</Stack>

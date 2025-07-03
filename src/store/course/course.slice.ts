@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ICourseInitialStateType } from './course.interface'
 import {
 	activateCourse,
@@ -7,10 +7,13 @@ import {
 	draftCourse,
 	editCourse,
 } from './course.action'
+import { ICourseType } from '@/interfaces/course.interface'
 
 const initialState: ICourseInitialStateType = {
 	isLoading: false,
 	error: null,
+	course: null,
+	courses: [],
 }
 
 export const courseSlice = createSlice({
@@ -19,6 +22,12 @@ export const courseSlice = createSlice({
 	reducers: {
 		clearCourseError: state => {
 			state.error = null
+		},
+		getCourses: (state, action: PayloadAction<ICourseType[]>) => {
+			state.courses = action.payload
+		},
+		getCourse: (state, action: PayloadAction<ICourseType>) => {
+			state.course = action.payload
 		},
 	},
 	extraReducers: builder => {

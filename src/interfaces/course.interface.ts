@@ -21,7 +21,6 @@ export interface ICourseType {
 }
 
 export interface ICourseAuthorType {
-	firstName: string
-	lastName: string
+	fullName: string
 	avatar: string
 }

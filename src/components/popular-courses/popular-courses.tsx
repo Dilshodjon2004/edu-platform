@@ -2,11 +2,12 @@ import SectionTitle from '../section-title/section-title'
 import Carousel from 'react-multi-carousel'
 import { courseCarousel } from '@/config/carousel'
 import { useTranslation } from 'react-i18next'
-import { courses } from '@/config/constants'
 import PopularCoursesCard from '../popular-courses-card/popular-courses-card'
+import { useTypedSelector } from '@/hooks/useTypedSelector'
 
 const PopularCourses = () => {
 	const { t } = useTranslation()
+	const { courses } = useTypedSelector(state => state.course)
 	return (
 		<>
 			<SectionTitle

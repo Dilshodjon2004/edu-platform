@@ -1,6 +1,8 @@
 export interface InstructorType {
-	firstName: string
-	lastName: string
+	fullName: string
+	avatar: string
+	coursesCount: number
+	studentsCount: number
 	email: string
 	socialMedia: string
 }
