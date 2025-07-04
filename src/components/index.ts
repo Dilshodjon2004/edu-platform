@@ -25,3 +25,4 @@ export { default as StatsCard } from './stats-card/stats-card'
 export { default as SectionAccordion } from './section-accordion/section-accordion'
 export { default as SectionForm } from './section-form/section-form'
 export { default as LessonForm } from './lesson-form/lesson-form'
+export { default as AdminInstructorTable } from './admin-instructor-table/admin-instructor-table';
