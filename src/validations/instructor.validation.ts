@@ -6,6 +6,7 @@ export const InstructorValidation = {
 			lastName: '',
 			email: '',
 			socialMedia: '',
+			language: '',
 		}
 	},
 	applyInstructorValidation() {
@@ -16,6 +17,7 @@ export const InstructorValidation = {
 			firstName: Yup.string().required('first_name_required'),
 			lastName: Yup.string().required('last_name_required'),
 			socialMedia: Yup.string().required('social_media_required'),
+			language: Yup.string().required('Language is required'),
 		})
 	},
 }

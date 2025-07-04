@@ -1,10 +1,11 @@
 export interface InstructorType {
 	fullName: string
 	avatar: string
-	coursesCount: number
+	totalCourses: number
 	studentsCount: number
 	email: string
 	socialMedia: string
+	job: string
 }
 
 export interface SectionType {

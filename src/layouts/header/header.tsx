@@ -27,6 +27,7 @@ import { FiSettings } from 'react-icons/fi'
 import { CiLogout } from 'react-icons/ci'
 import { useAuth } from '@/hooks/useAuth'
 import { useActions } from '@/hooks/useActions'
+import { RiAdminFill } from 'react-icons/ri'
 
 const Header = ({ onToggle }: HeaderProps) => {
 	const { toggleColorMode, colorMode } = useColorMode()
@@ -123,6 +124,16 @@ const Header = ({ onToggle }: HeaderProps) => {
 								<Avatar backgroundColor={'blue.500'} src={user.avatar} />
 							</MenuButton>
 							<MenuList p={0} m={0}>
+								{user.role === 'INSTRUCTOR' && (
+									<MenuItem
+										h={14}
+										onClick={() => router.push('/instructor')}
+										fontWeight={'bold'}
+										icon={<RiAdminFill fontSize={17} />}
+									>
+										{t('instructor_admin', { ns: 'instructor' })}
+									</MenuItem>
+								)}
 								<MenuItem
 									h={14}
 									// onClick={() => router.push('/setting')}

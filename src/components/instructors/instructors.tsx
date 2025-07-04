@@ -57,7 +57,7 @@ const Instructors = () => {
 								</Flex>
 								<Flex align={'center'} gap={1}>
 									<Icon as={AiOutlinePlayCircle} />
-									<Text>3 courses</Text>
+									<Text>{item.totalCourses} courses</Text>
 								</Flex>
 							</HStack>
 						</Stack>

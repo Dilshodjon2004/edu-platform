@@ -1,6 +1,7 @@
 import { ICourseType } from '@/interfaces/course.interface'
 import { withInstructorLayout } from '@/layouts/instructor'
 import { InstructorEditDetailedCoursePageComponent } from '@/page-component'
+import { AuthService } from '@/services/auth.service'
 import { InstructorService } from '@/services/instructor.service'
 import { GetServerSideProps, NextPage } from 'next'
 
@@ -14,10 +15,22 @@ export const getServerSideProps: GetServerSideProps<CoursesPageType> = async ({
 	req,
 	query,
 }) => {
-	const course = await InstructorService.getDetailedCourse(
-		req.cookies.refresh,
-		query.slug as string
-	)
+	let course: ICourseType
+	const instructor = await AuthService.checkInstructor(req.cookies.refresh)
+
+	if (!instructor) {
+		return {
+			redirect: {
+				destination: '/',
+				permanent: false,
+			},
+		}
+	} else {
+		course = await InstructorService.getDetailedCourse(
+			req.cookies.refresh,
+			query.slug as string
+		)
+	}
 
 	return {
 		props: {

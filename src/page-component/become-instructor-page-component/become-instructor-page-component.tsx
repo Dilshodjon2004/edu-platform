@@ -1,7 +1,8 @@
 import { ErrorAlert } from '@/components'
 import SectionTitle from '@/components/section-title/section-title'
+import SelectField from '@/components/select-field/select-field'
 import TextField from '@/components/text-field/text-field'
-import { teachValues } from '@/config/constants'
+import { courseLanguage, teachValues } from '@/config/constants'
 import { useActions } from '@/hooks/useActions'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { LaunchCourseIcon, PlanCurriculumIcon, RecordVideoIcon } from '@/icons'
@@ -48,7 +49,7 @@ const BecomeInstructorPageComponent = () => {
 	const { applyInstructor, clearInstructorError } = useActions()
 	const { error, isLoading } = useTypedSelector(state => state.instructor)
 
-	const onSubmit = (formData: IInstructorApplyBody) => {
+	const onSubmit = formData => {
 		applyInstructor({
 			...formData,
 			callback: () => {
@@ -205,6 +206,17 @@ const BecomeInstructorPageComponent = () => {
 										label={t('login_input_email_label', { ns: 'global' })}
 										placeholder='info@sammi.ac'
 										type='email'
+									/>
+									<TextField
+										name='job'
+										label={t('label_job', { ns: 'instructor' })}
+										placeholder='Senior Software Engineer'
+									/>
+									<SelectField
+										name='language'
+										label={t('language', { ns: 'instructor' })}
+										placeholder='-'
+										arrOptions={courseLanguage}
 									/>
 									<TextField
 										name='socialMedia'
