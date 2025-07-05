@@ -8,6 +8,8 @@ import { sectionSliceActions } from './section/section.slice'
 import * as sectionActions from './section/section.action'
 import { lessonSliceActions } from './lesson/lesson.slice'
 import * as lessonActions from './lesson/lesson.action'
+import { adminSliceActions } from './admin/admin.slice'
+import * as adminActions from './admin/admin.action'
 
 export const allActions = {
 	...userSliceActions,
@@ -20,4 +22,6 @@ export const allActions = {
 	...sectionActions,
 	...lessonSliceActions,
 	...lessonActions,
+	...adminSliceActions,
+	...adminActions,
 }

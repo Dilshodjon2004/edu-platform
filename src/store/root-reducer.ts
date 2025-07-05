@@ -1,3 +1,4 @@
+import { adminReducers } from './admin/admin.slice'
 import { courseReducers } from './course/course.slice'
 import { instructorReducers } from './instructor/instructor.slice'
 import { lessonReducers } from './lesson/lesson.slice'
@@ -10,4 +11,5 @@ export const reducer = {
 	course: courseReducers,
 	section: sectionReducers,
 	lesson: lessonReducers,
+	admin: adminReducers,
 }
