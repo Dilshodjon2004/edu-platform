@@ -1,6 +1,7 @@
 import { IUserType } from './user.interface'
 
 export interface InstructorType {
+	_id: string
 	fullName: string
 	avatar: string
 	totalCourses: number

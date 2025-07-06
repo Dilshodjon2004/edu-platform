@@ -1,3 +1,4 @@
+import $axios from '@/api/axios'
 import { API_URL, getAdminUrl, getCourseUrl } from '@/config/api.config'
 import { InstructorType } from '@/interfaces/instructor.interface'
 import axios from 'axios'
@@ -17,6 +18,28 @@ export const AdminService = {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
+			}
+		)
+
+		return data
+	},
+
+	async approveInstructor(instructorId: string) {
+		const { data } = await $axios.put<'success'>(
+			`${getAdminUrl('approve-instructor')}`,
+			{
+				instructorId,
+			}
+		)
+
+		return data
+	},
+
+	async deleteInstructor(instructorId: string) {
+		const { data } = await $axios.put<'success'>(
+			`${getAdminUrl('delete-instructor')}`,
+			{
+				instructorId,
 			}
 		)
 

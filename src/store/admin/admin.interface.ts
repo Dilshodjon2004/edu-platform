@@ -10,11 +10,7 @@ export interface IAdminInitialStateType {
 	users: IUserType[]
 }
 
-export interface ICreateCourseBody extends ICourseType {
-	callback: () => void
-}
-
-export interface IById {
-	courseId: string
+export interface ApproveAndDeleteInstructorBody {
+	instructorId: string
 	callback: () => void
 }
