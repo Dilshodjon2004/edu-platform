@@ -4,7 +4,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IAdminInitialStateType } from './admin.interface'
 import { InstructorType } from '@/interfaces/instructor.interface'
 import { IUserType } from '@/interfaces/user.interface'
-import { approveInstructor, deleteInstructor } from './admin.action'
+import {
+	approveInstructor,
+	deleteInstructor,
+	moreAdminUsers,
+} from './admin.action'
 
 const initialState: IAdminInitialStateType = {
 	isLoading: false,
@@ -54,6 +58,19 @@ export const adminSlice = createSlice({
 				state.error = null
 			})
 			.addCase(deleteInstructor.rejected, (state, { payload }) => {
+				state.isLoading = false
+				state.error = payload
+			})
+			.addCase(moreAdminUsers.pending, state => {
+				state.isLoading = true
+				state.error = null
+			})
+			.addCase(moreAdminUsers.fulfilled, (state, { payload }) => {
+				state.isLoading = false
+				state.error = null
+				state.users = payload
+			})
+			.addCase(moreAdminUsers.rejected, (state, { payload }) => {
 				state.isLoading = false
 				state.error = payload
 			})

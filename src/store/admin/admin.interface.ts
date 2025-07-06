@@ -14,3 +14,9 @@ export interface ApproveAndDeleteInstructorBody {
 	instructorId: string
 	callback: () => void
 }
+
+export interface AdminUserInterfaceResponse {
+	limit: string
+	token?: string
+	callback: () => void
+}

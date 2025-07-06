@@ -1,5 +1,6 @@
 import SectionTitle from '@/components/section-title/section-title'
 import { courseusers } from '@/config/constants'
+import { useTypedSelector } from '@/hooks/useTypedSelector'
 import {
 	Box,
 	Button,
@@ -21,8 +22,13 @@ import { useState } from 'react'
 import { Line } from 'react-chartjs-2'
 import { useTranslation } from 'react-i18next'
 import { AiOutlineFieldNumber, AiOutlineReload } from 'react-icons/ai'
+import { format } from 'date-fns'
+import { useActions } from '@/hooks/useActions'
+import Cookies from 'js-cookie'
+import { ErrorAlert } from '@/components'
 
 const UserPageComponent = () => {
+	const [limit, setLimit] = useState<number>(4)
 	const [chartData, setChartData] = useState({
 		labels: courseusers.map(data => data.year),
 		datasets: [
@@ -41,7 +47,16 @@ const UserPageComponent = () => {
 		],
 	})
 
+	const { users } = useTypedSelector(state => state.admin)
 	const { t } = useTranslation()
+	const { moreAdminUsers, clearAdminError } = useActions()
+	const { isLoading, error } = useTypedSelector(state => state.admin)
+
+	const moreAdminUsersHandler = () => {
+		setLimit(prev => prev + 1)
+		const token = Cookies.get('refresh')
+		moreAdminUsers({ limit: String(limit), token, callback: () => {} })
+	}
 
 	return (
 		<>
@@ -66,7 +81,7 @@ const UserPageComponent = () => {
 					</Stack>
 				</CardBody>
 			</Card>
-
+			{JSON.stringify(users)}
 			<Box mt={10}>
 				<Heading>{t('all_users', { ns: 'instructor' })}</Heading>
 				<Box pos={'relative'} mt={5}>
@@ -88,6 +103,9 @@ const UserPageComponent = () => {
 						{t('search_input_btn', { ns: 'courses' })}
 					</Button>
 				</Box>
+				{typeof error === 'string' && (
+					<ErrorAlert title={error} clearHandler={clearAdminError} />
+				)}
 				<TableContainer mt={10}>
 					<Table variant='striped' colorScheme='teal'>
 						<TableCaption>
@@ -95,6 +113,8 @@ const UserPageComponent = () => {
 								colorScheme={'facebook'}
 								variant={'outline'}
 								rightIcon={<AiOutlineReload />}
+								isLoading={isLoading}
+								onClick={moreAdminUsersHandler}
 							>
 								{t('more', { ns: 'instructor' })}...
 							</Button>
@@ -106,18 +126,21 @@ const UserPageComponent = () => {
 								</Th>
 								<Th>{t('email', { ns: 'instructor' })}</Th>
 								<Th>{t('full_name', { ns: 'instructor' })}</Th>
-								<Th>{t('courses', { ns: 'instructor' })}</Th>
+								<Th>Role</Th>
 								<Th>{t('enrolled_date', { ns: 'instructor' })}</Th>
 							</Tr>
 						</Thead>
 						<Tbody>
-							{courseusers.map((user, idx) => (
+							{users.map((user, idx) => (
 								<Tr key={idx}>
 									<Td>{idx + 1}</Td>
 									<Td>{user.email}</Td>
-									<Td>{user.fullName}</Td>
-									<Td>{2 * idx + 3}</Td>
-									<Td>{user.year}</Td>
+									<Td>{user.fullName || 'Not found'}</Td>
+									<Td>{user.role || 'USER'}</Td>
+									<Td>
+										{user.createdAt &&
+											format(new Date(user.createdAt), 'dd MMMM, yyyy')}
+									</Td>
 								</Tr>
 							))}
 						</Tbody>
