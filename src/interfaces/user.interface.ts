@@ -7,4 +7,5 @@ export interface IUserType {
 	createdAt?: string
 	password?: string
 	avatar?: string
+	job?: string
 }

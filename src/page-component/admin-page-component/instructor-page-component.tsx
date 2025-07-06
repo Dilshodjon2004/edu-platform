@@ -1,5 +1,6 @@
 import { AdminInstructorTable } from '@/components'
 import SectionTitle from '@/components/section-title/section-title'
+import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { RecordVideoIcon } from '@/icons'
 import {
 	Box,
@@ -12,9 +13,11 @@ import {
 	TabPanel,
 	TabPanels,
 	Tabs,
+	Text,
 } from '@chakra-ui/react'
 
 const InstructorPageComponent = () => {
+	const { instructors } = useTypedSelector(state => state.admin)
 	return (
 		<>
 			<Card mt={10}>
@@ -32,6 +35,9 @@ const InstructorPageComponent = () => {
 					</HStack>
 				</CardBody>
 			</Card>
+			{instructors.map(c => (
+				<Text>{c.author.fullName}</Text>
+			))}
 			<Box mt={10} mx={'auto'}>
 				<Tabs isFitted variant='solid-rounded' colorScheme={'blue'}>
 					<TabList mb='1em'>
@@ -40,10 +46,16 @@ const InstructorPageComponent = () => {
 					</TabList>
 					<TabPanels>
 						<TabPanel>
-							<AdminInstructorTable />
+							<AdminInstructorTable
+								instructors={instructors.filter(c => c.approved)}
+								approved={true}
+							/>
 						</TabPanel>
 						<TabPanel>
-							<AdminInstructorTable />
+							<AdminInstructorTable
+								instructors={instructors.filter(c => !c.approved)}
+								approved={false}
+							/>
 						</TabPanel>
 					</TabPanels>
 				</Tabs>

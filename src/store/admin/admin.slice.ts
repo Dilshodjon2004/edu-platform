@@ -20,13 +20,13 @@ export const adminSlice = createSlice({
 		clearCourseError: state => {
 			state.error = null
 		},
-		getCourses: (state, action: PayloadAction<ICourseType[]>) => {
+		getAdminCourses: (state, action: PayloadAction<ICourseType[]>) => {
 			state.courses = action.payload
 		},
-		getInstructors: (state, action: PayloadAction<InstructorType[]>) => {
+		getAdminInstructors: (state, action: PayloadAction<InstructorType[]>) => {
 			state.instructors = action.payload
 		},
-		getUsers: (state, action: PayloadAction<IUserType[]>) => {
+		getAdminUsers: (state, action: PayloadAction<IUserType[]>) => {
 			state.users = action.payload
 		},
 	},

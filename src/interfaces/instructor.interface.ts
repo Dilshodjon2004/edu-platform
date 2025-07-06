@@ -1,3 +1,5 @@
+import { IUserType } from './user.interface'
+
 export interface InstructorType {
 	fullName: string
 	avatar: string
@@ -5,7 +7,8 @@ export interface InstructorType {
 	studentsCount: number
 	email: string
 	socialMedia: string
-	job: string
+	author: IUserType
+	approved: boolean
 }
 
 export interface SectionType {
