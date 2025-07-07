@@ -29,6 +29,7 @@ import { ErrorAlert } from '@/components'
 
 const UserPageComponent = () => {
 	const [limit, setLimit] = useState<number>(4)
+	const [query, setQuery] = useState<string>('')
 	const [chartData, setChartData] = useState({
 		labels: courseusers.map(data => data.year),
 		datasets: [
@@ -49,13 +50,17 @@ const UserPageComponent = () => {
 
 	const { users } = useTypedSelector(state => state.admin)
 	const { t } = useTranslation()
-	const { moreAdminUsers, clearAdminError } = useActions()
+	const { searchAdminUsers, moreAdminUsers, clearAdminError } = useActions()
 	const { isLoading, error } = useTypedSelector(state => state.admin)
 
 	const moreAdminUsersHandler = () => {
 		setLimit(prev => prev + 1)
 		const token = Cookies.get('refresh')
-		moreAdminUsers({ limit: String(limit), token, callback: () => {} })
+		moreAdminUsers({ limit: String(limit), token })
+	}
+
+	const searchUserHandler = () => {
+		searchAdminUsers({ query, limit: String(limit) })
 	}
 
 	return (
@@ -81,7 +86,6 @@ const UserPageComponent = () => {
 					</Stack>
 				</CardBody>
 			</Card>
-			{JSON.stringify(users)}
 			<Box mt={10}>
 				<Heading>{t('all_users', { ns: 'instructor' })}</Heading>
 				<Box pos={'relative'} mt={5}>
@@ -92,13 +96,16 @@ const UserPageComponent = () => {
 						color={'gray.900'}
 						placeholder={t('search_input_placeholder', { ns: 'courses' }) || ''}
 						_placeholder={{ color: 'gray.500' }}
+						value={query}
+						onChange={e => setQuery(e.target.value)}
 					/>
 					<Button
 						pos={'absolute'}
 						right={2}
 						top={2}
-						colorScheme={'facebook'}
+						colorScheme={'blue'}
 						zIndex={999}
+						onClick={searchUserHandler}
 					>
 						{t('search_input_btn', { ns: 'courses' })}
 					</Button>

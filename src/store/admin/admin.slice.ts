@@ -6,8 +6,10 @@ import { InstructorType } from '@/interfaces/instructor.interface'
 import { IUserType } from '@/interfaces/user.interface'
 import {
 	approveInstructor,
+	deleteAdminCourse,
 	deleteInstructor,
 	moreAdminUsers,
+	searchAdminUsers,
 } from './admin.action'
 
 const initialState: IAdminInitialStateType = {
@@ -71,6 +73,32 @@ export const adminSlice = createSlice({
 				state.users = payload
 			})
 			.addCase(moreAdminUsers.rejected, (state, { payload }) => {
+				state.isLoading = false
+				state.error = payload
+			})
+			.addCase(searchAdminUsers.pending, state => {
+				state.isLoading = true
+				state.error = null
+			})
+			.addCase(searchAdminUsers.fulfilled, (state, { payload }) => {
+				state.isLoading = false
+				state.error = null
+				state.users = payload
+			})
+			.addCase(searchAdminUsers.rejected, (state, { payload }) => {
+				state.isLoading = false
+				state.error = payload
+			})
+			.addCase(deleteAdminCourse.pending, state => {
+				state.isLoading = true
+				state.error = null
+			})
+			.addCase(deleteAdminCourse.fulfilled, (state, { payload }) => {
+				state.isLoading = false
+				state.error = null
+				state.courses = payload
+			})
+			.addCase(deleteAdminCourse.rejected, (state, { payload }) => {
 				state.isLoading = false
 				state.error = payload
 			})

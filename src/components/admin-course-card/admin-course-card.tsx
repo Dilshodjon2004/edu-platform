@@ -7,6 +7,7 @@ import {
 	Heading,
 	Stack,
 	Text,
+	useToast,
 } from '@chakra-ui/react'
 import Image from 'next/image'
 import { FC } from 'react'
@@ -14,8 +15,31 @@ import { BsTrash } from 'react-icons/bs'
 import { VscOpenPreview } from 'react-icons/vsc'
 import { loadImage } from 'src/helpers/image.helper'
 import { AdminCourseCardProps } from './admin-course-card.props'
+import { useActions } from '@/hooks/useActions'
+import { useTypedSelector } from '@/hooks/useTypedSelector'
 
 const AdminCourseCard: FC<AdminCourseCardProps> = ({ course }): JSX.Element => {
+	const { deleteAdminCourse } = useActions()
+	const { isLoading } = useTypedSelector(state => state.admin)
+	const toast = useToast()
+
+	const deleteCourseHandler = () => {
+		const isAgree = confirm('Are you sure you want to delete this course?')
+
+		if (isAgree) {
+			deleteAdminCourse({
+				courseId: course._id,
+				callback: () => {
+					toast({
+						title: 'Successfully deleted course',
+						duration: 1500,
+						isClosable: true,
+						position: 'top-right',
+					})
+				},
+			})
+		}
+	}
 	return (
 		<Box p={5} boxShadow={'dark-lg'} mt={5} borderRadius={'lg'}>
 			<Stack spacing={2}>
@@ -52,7 +76,13 @@ const AdminCourseCard: FC<AdminCourseCardProps> = ({ course }): JSX.Element => {
 					>
 						Preview
 					</Button>
-					<Button w={'full'} colorScheme={'red'} rightIcon={<BsTrash />}>
+					<Button
+						w={'full'}
+						colorScheme={'red'}
+						rightIcon={<BsTrash />}
+						onClick={deleteCourseHandler}
+						isLoading={isLoading}
+					>
 						Delete
 					</Button>
 				</ButtonGroup>

@@ -1,5 +1,6 @@
 import $axios from '@/api/axios'
 import { API_URL, getAdminUrl, getCourseUrl } from '@/config/api.config'
+import { ICourseType } from '@/interfaces/course.interface'
 import { InstructorType } from '@/interfaces/instructor.interface'
 import { IUserType } from '@/interfaces/user.interface'
 import axios from 'axios'
@@ -59,6 +60,33 @@ export const AdminService = {
 				},
 			}
 		)
+		return data
+	},
+
+	async searchUsers(query: string, limit: string) {
+		const { data } = await $axios.get<IUserType[]>(
+			`${getAdminUrl('search-users')}`,
+			{
+				params: {
+					email: query,
+					limit,
+				},
+			}
+		)
+
+		return data
+	},
+
+	async deleteCourse(courseId: string) {
+		const { data } = await $axios.delete<ICourseType[]>(
+			`${getAdminUrl('delete-course')}`,
+			{
+				params: {
+					courseId,
+				},
+			}
+		)
+
 		return data
 	},
 }
