@@ -59,8 +59,6 @@ const InstructorManageCourse = ({
 	}
 
 	const onSubmit = async (formValues: FormikValues, { resetForm }) => {
-		console.log(formValues)
-
 		if (!file) {
 			setErrorFile('Preview image is required')
 			return
