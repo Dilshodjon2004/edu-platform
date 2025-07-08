@@ -32,6 +32,7 @@ export const withAdminLayout = <T extends Record<string, unknown> & AdminProps>(
 					courses={props.courses}
 					instructors={props.instructors}
 					users={props.users}
+					books={props.books}
 				>
 					<Component {...props} />
 				</AdminProvider>

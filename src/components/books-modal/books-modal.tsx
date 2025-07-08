@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { BooksModalProps } from './books-modal.props'
 import {
 	Box,
@@ -30,14 +30,19 @@ import { FileService } from '@/services/file.service'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import ErrorAlert from '../error-alert/error-alert'
 
-const BooksModal: FC<BooksModalProps> = ({ isOpen, onClose }): JSX.Element => {
+const BooksModal: FC<BooksModalProps> = ({
+	isOpen,
+	onClose,
+	booksValue,
+}): JSX.Element => {
 	const [values, setValues] = useState(data)
 	const [file, setFile] = useState<File | string | null>()
 	const [errorFile, setErrorFile] = useState('')
 	const { t } = useTranslation()
 	const toast = useToast()
 
-	const { startCreateBooksLoading, createBooks, clearBooksError } = useActions()
+	const { startCreateBooksLoading, createBooks, clearBooksError, updateBooks } =
+		useActions()
 	const { isLoading, error } = useTypedSelector(state => state.books)
 
 	const handleChange = (file: File) => {
@@ -60,22 +65,57 @@ const BooksModal: FC<BooksModalProps> = ({ isOpen, onClose }): JSX.Element => {
 			imageUrl = response.url
 		}
 
-		createBooks({
-			title: formikValues.title,
-			price: formikValues.price,
-			pdf: formikValues.pdf,
-			image: imageUrl as string,
-			callback: () => {
-				toast({
-					title: 'Successfully added',
-					position: 'top-right',
-					duration: 1500,
-					isClosable: true,
-				})
-			},
-		})
-		resetForm()
+		if (!booksValue) {
+			createBooks({
+				title: formikValues.title,
+				price: formikValues.price,
+				pdf: formikValues.pdf,
+				image: imageUrl as string,
+				callback: () => {
+					toast({
+						title: 'Successfully added',
+						position: 'top-right',
+						duration: 1500,
+						isClosable: true,
+					})
+					setFile(null)
+					onClose()
+					resetForm()
+				},
+			})
+		} else {
+			updateBooks({
+				title: formikValues.title,
+				price: formikValues.price,
+				pdf: formikValues.pdf,
+				image: imageUrl as string,
+				_id: booksValue._id,
+				callback: () => {
+					toast({
+						title: 'Successfully updated',
+						position: 'top-right',
+						duration: 1500,
+						isClosable: true,
+					})
+					setFile(null)
+					onClose()
+					resetForm()
+				},
+			})
+			resetForm()
+		}
 	}
+
+	useEffect(() => {
+		setErrorFile('')
+		if (booksValue) {
+			setValues(booksValue)
+			setFile(booksValue.image)
+		} else {
+			setValues(data)
+			setFile(null)
+		}
+	}, [booksValue])
 	return (
 		<Modal isOpen={isOpen} onClose={onClose} isCentered={true} size={'xl'}>
 			<ModalOverlay />
@@ -86,6 +126,7 @@ const BooksModal: FC<BooksModalProps> = ({ isOpen, onClose }): JSX.Element => {
 					onSubmit={onSubmit}
 					initialValues={values}
 					validationSchema={BooksValidation.createBooks}
+					enableReinitialize
 				>
 					<Form>
 						<ModalBody>
@@ -150,10 +191,9 @@ const BooksModal: FC<BooksModalProps> = ({ isOpen, onClose }): JSX.Element => {
 								type='submit'
 								colorScheme='blue'
 								mr={3}
-								onClick={onClose}
 								isLoading={isLoading}
 							>
-								Add books
+								{booksValue ? 'Edit book' : 'Add book'}
 							</Button>
 						</ModalFooter>
 					</Form>
@@ -169,4 +209,5 @@ const data = {
 	title: '',
 	price: 0,
 	image: '',
+	pdf: '',
 }

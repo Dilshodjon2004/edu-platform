@@ -14,7 +14,7 @@ export const BooksService = {
 	},
 
 	async update(body: IBooksType) {
-		const { data } = await $axios.post<IBooksType>(
+		const { data } = await $axios.patch<IBooksType>(
 			`${getBooksUrl('update')}/${body._id}`,
 			body
 		)
@@ -23,16 +23,16 @@ export const BooksService = {
 	},
 
 	async delete(id: string) {
-		const { data } = await $axios.post<IBooksType>(
+		const { data } = await $axios.delete<IBooksType>(
 			`${getBooksUrl('delete')}/${id}`
 		)
 
 		return data
 	},
 
-	async get(id: string) {
-		const { data } = await axios.post<IBooksType>(
-			`${API_URL}${getBooksUrl('find-all')}/${id}`
+	async get() {
+		const { data } = await axios.get<IBooksType[]>(
+			`${API_URL}${getBooksUrl('find-all')}`
 		)
 
 		return data
