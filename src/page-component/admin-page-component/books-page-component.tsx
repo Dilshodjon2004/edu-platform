@@ -19,6 +19,7 @@ import {
 	useToast,
 } from '@chakra-ui/react'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { CgAdd } from 'react-icons/cg'
 import { FaEdit, FaTrash } from 'react-icons/fa'
 import SectionTitle from 'src/components/section-title/section-title'
@@ -30,6 +31,7 @@ const BooksPageComponent = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const { books } = useTypedSelector(state => state.books)
 	const toast = useToast()
+	const { t } = useTranslation()
 	const { deleteBooks } = useActions()
 
 	const deleteBooksHandler = (id: string) => {
@@ -39,7 +41,7 @@ const BooksPageComponent = () => {
 				booksId: id,
 				callback: () => {
 					toast({
-						title: 'Successfully deleted',
+						title: t('successfully_deleted', { ns: 'admin' }),
 						position: 'top-right',
 						duration: 1500,
 						isClosable: true,
@@ -66,8 +68,8 @@ const BooksPageComponent = () => {
 					<HStack>
 						<Box w={'30%'}>
 							<SectionTitle
-								title='Books'
-								subtitle='All books and managing on platform'
+								title={t('books_section_title', { ns: 'admin' })}
+								subtitle={t('books_section_descr', { ns: 'admin' })}
 							/>
 						</Box>
 						<Flex w={'70%'} justify={'flex-end'}>
@@ -133,7 +135,7 @@ const BooksPageComponent = () => {
 									colorScheme={'red'}
 									onClick={() => deleteBooksHandler(item._id as string)}
 								>
-									Delete
+									{t('delete_course', { ns: 'instructor' })}
 								</Button>
 								<Button
 									onClick={() => editOpenModal(item)}
@@ -141,7 +143,7 @@ const BooksPageComponent = () => {
 									rightIcon={<FaEdit />}
 									colorScheme={'green'}
 								>
-									Edit
+									{t('edit_course', { ns: 'instructor' })}
 								</Button>
 							</HStack>
 						</Flex>

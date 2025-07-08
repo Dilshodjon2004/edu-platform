@@ -2,12 +2,14 @@ import { AdminCourseCard, ErrorAlert } from '@/components'
 import { useActions } from '@/hooks/useActions'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { Box, Card, CardBody, Flex, Grid, HStack, Text } from '@chakra-ui/react'
+import { useTranslation } from 'react-i18next'
 import SectionTitle from 'src/components/section-title/section-title'
 import { LaunchCourseIcon } from 'src/icons'
 
 const CoursesPageComponent = () => {
 	const { courses, error } = useTypedSelector(state => state.admin)
 	const { clearAdminError } = useActions()
+	const { t } = useTranslation()
 
 	return (
 		<>
@@ -16,8 +18,8 @@ const CoursesPageComponent = () => {
 					<HStack>
 						<Box w={'30%'}>
 							<SectionTitle
-								title='Courses'
-								subtitle='All courses and managing on platform'
+								title={t('courses_section_title', { ns: 'admin' })}
+								subtitle={t('courses_section_descr', { ns: 'admin' })}
 							/>
 						</Box>
 						<Flex w={'70%'} justify={'flex-end'}>

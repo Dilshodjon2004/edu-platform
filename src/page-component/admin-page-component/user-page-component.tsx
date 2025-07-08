@@ -69,8 +69,8 @@ const UserPageComponent = () => {
 				<CardBody>
 					<Stack>
 						<SectionTitle
-							title='Users'
-							subtitle='Registered users to platform'
+							title={t('user_section_title', { ns: 'admin' })}
+							subtitle={t('user_section_descr', { ns: 'admin' })}
 						/>
 						<Box className='chart-container'>
 							<Line
@@ -133,7 +133,7 @@ const UserPageComponent = () => {
 								</Th>
 								<Th>{t('email', { ns: 'instructor' })}</Th>
 								<Th>{t('full_name', { ns: 'instructor' })}</Th>
-								<Th>Role</Th>
+								<Th>{t('role', { ns: 'admin' })}</Th>
 								<Th>{t('enrolled_date', { ns: 'instructor' })}</Th>
 							</Tr>
 						</Thead>
@@ -142,7 +142,7 @@ const UserPageComponent = () => {
 								<Tr key={idx}>
 									<Td>{idx + 1}</Td>
 									<Td>{user.email}</Td>
-									<Td>{user.fullName || 'Not found'}</Td>
+									<Td>{user.fullName || t('not_found', { ns: 'admin' })}</Td>
 									<Td>{user.role || 'USER'}</Td>
 									<Td>
 										{user.createdAt &&

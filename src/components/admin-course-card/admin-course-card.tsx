@@ -17,11 +17,13 @@ import { loadImage } from 'src/helpers/image.helper'
 import { AdminCourseCardProps } from './admin-course-card.props'
 import { useActions } from '@/hooks/useActions'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
+import { useTranslation } from 'react-i18next'
 
 const AdminCourseCard: FC<AdminCourseCardProps> = ({ course }): JSX.Element => {
 	const { deleteAdminCourse } = useActions()
 	const { isLoading } = useTypedSelector(state => state.admin)
 	const toast = useToast()
+	const { t } = useTranslation()
 
 	const deleteCourseHandler = () => {
 		const isAgree = confirm('Are you sure you want to delete this course?')
@@ -31,7 +33,7 @@ const AdminCourseCard: FC<AdminCourseCardProps> = ({ course }): JSX.Element => {
 				courseId: course._id,
 				callback: () => {
 					toast({
-						title: 'Successfully deleted course',
+						title: t('successfully_deleted', { ns: 'instructor' }),
 						duration: 1500,
 						isClosable: true,
 						position: 'top-right',
@@ -60,10 +62,10 @@ const AdminCourseCard: FC<AdminCourseCardProps> = ({ course }): JSX.Element => {
 					color={'blue.200'}
 					fontWeight={'bold'}
 				>
-					Language: {course.language}
+					{t('language', { ns: 'instructor' })}: {course.language}
 				</Flex>
 				<Text fontWeight={'bold'} color={'blue.500'}>
-					Status:{' '}
+					{t('status', { ns: 'instructor' })}:{' '}
 					<Box as={'span'} color={course.isActive ? 'green.500' : 'red.500'}>
 						{course.isActive ? 'Active' : 'Draft'}
 					</Box>
@@ -74,7 +76,7 @@ const AdminCourseCard: FC<AdminCourseCardProps> = ({ course }): JSX.Element => {
 						rightIcon={<VscOpenPreview />}
 						colorScheme={'blue'}
 					>
-						Preview
+						{t('preview', { ns: 'instructor' })}
 					</Button>
 					<Button
 						w={'full'}
@@ -83,7 +85,7 @@ const AdminCourseCard: FC<AdminCourseCardProps> = ({ course }): JSX.Element => {
 						onClick={deleteCourseHandler}
 						isLoading={isLoading}
 					>
-						Delete
+						{t('delete_course', { ns: 'instructor' })}
 					</Button>
 				</ButtonGroup>
 			</Stack>

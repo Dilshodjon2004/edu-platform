@@ -24,13 +24,13 @@ import { TbWorld } from 'react-icons/tb'
 
 const AdminSidebar = () => {
 	const { toggleColorMode, colorMode } = useColorMode()
-	const { i18n } = useTranslation();
-	const router = useRouter();
+	const { i18n, t } = useTranslation()
+	const router = useRouter()
 
 	const onLanguage = (lng: string) => {
-		router.replace(router.asPath);
-		i18n.changeLanguage(lng);
-	};
+		router.replace(router.asPath)
+		i18n.changeLanguage(lng)
+	}
 	return (
 		<Box
 			width={'350px'}
@@ -102,7 +102,7 @@ const AdminSidebar = () => {
 							>
 								<HStack gap={2}>
 									<Icon as={item.icon} />
-									<Text>{item.name}</Text>
+									<Text>{t(item.name, { ns: 'admin' })}</Text>
 								</HStack>
 							</Button>
 						</Link>

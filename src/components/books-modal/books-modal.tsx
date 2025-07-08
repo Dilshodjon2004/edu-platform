@@ -51,7 +51,7 @@ const BooksModal: FC<BooksModalProps> = ({
 
 	const onSubmit = async (formikValues: FormikValues, { resetForm }) => {
 		if (!file) {
-			setErrorFile('Preview image is required')
+			setErrorFile(t('preview_img_is_requried', { ns: 'global' }) as string)
 			return
 		}
 
@@ -73,7 +73,7 @@ const BooksModal: FC<BooksModalProps> = ({
 				image: imageUrl as string,
 				callback: () => {
 					toast({
-						title: 'Successfully added',
+						title: t('successfully_created_course', { ns: 'instructor' }),
 						position: 'top-right',
 						duration: 1500,
 						isClosable: true,
@@ -92,7 +92,7 @@ const BooksModal: FC<BooksModalProps> = ({
 				_id: booksValue._id,
 				callback: () => {
 					toast({
-						title: 'Successfully updated',
+						title: t('successfully_edited', { ns: 'instructor' }),
 						position: 'top-right',
 						duration: 1500,
 						isClosable: true,
@@ -136,16 +136,16 @@ const BooksModal: FC<BooksModalProps> = ({
 							<VStack>
 								<TextField
 									name='title'
-									label='Title'
+									label={t('title', { ns: 'instructor' })}
 									placeholder='Harry Potter'
 								/>
 								<SelectField
 									name='price'
-									label={t('price', { ns: 'instructor' })}
+									label={t('books_price', { ns: 'admin' })}
 									placeholder='-'
 									arrOptions={coursePrice}
 								/>
-								<TextField name='pdf' label='PDF Link' />
+								<TextField name='pdf' label={t('pdf_link', { ns: 'admin' })} />
 								{file ? (
 									<Box pos={'relative'} w={'full'} h={'200px'}>
 										<Image
@@ -193,7 +193,9 @@ const BooksModal: FC<BooksModalProps> = ({
 								mr={3}
 								isLoading={isLoading}
 							>
-								{booksValue ? 'Edit book' : 'Add book'}
+								{booksValue
+									? t('edit_book', { ns: 'admin' })
+									: t('add_book', { ns: 'admin' })}
 							</Button>
 						</ModalFooter>
 					</Form>
