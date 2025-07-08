@@ -2,12 +2,14 @@ import { FC, ReactNode, useEffect } from 'react'
 import { ICourseType } from '@/interfaces/course.interface'
 import { useActions } from '@/hooks/useActions'
 import { InstructorType } from '@/interfaces/instructor.interface'
+import { IBooksType } from '@/interfaces/books.interface'
 
 interface Props {
 	children: ReactNode
 	courses: ICourseType[]
 	course: ICourseType
 	instructors: InstructorType[]
+	books: IBooksType[]
 }
 
 const AppProvider: FC<Props> = ({
@@ -15,8 +17,9 @@ const AppProvider: FC<Props> = ({
 	courses,
 	course,
 	instructors,
+	books,
 }): JSX.Element => {
-	const { getCourses, getCourse, getInstructors } = useActions()
+	const { getCourses, getCourse, getInstructors, getBooks } = useActions()
 
 	useEffect(() => {
 		if (courses?.length) {
@@ -31,6 +34,11 @@ const AppProvider: FC<Props> = ({
 		}
 		if (course) {
 			getCourse(course)
+		}
+		if (books?.length) {
+			getBooks(books)
+		} else {
+			getBooks([])
 		}
 	}, [courses, course])
 	return <>{children}</>

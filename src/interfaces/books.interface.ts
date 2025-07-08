@@ -4,4 +4,5 @@ export interface IBooksType {
 	pdf: string
 	image: string
 	_id?: string
+	category: string
 }

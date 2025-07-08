@@ -6,7 +6,6 @@ import {
 	Flex,
 	Grid,
 	HStack,
-	Image,
 	Text,
 	useColorModeValue,
 } from '@chakra-ui/react'
@@ -14,30 +13,34 @@ import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AiFillShopping } from 'react-icons/ai'
 import { motion } from 'framer-motion'
+import { useTypedSelector } from '@/hooks/useTypedSelector'
+import { loadImage } from '@/helpers/image.helper'
+import Image from 'next/image'
 
 const BooksPageComponent = () => {
 	const [filter, setFilter] = useState<string>('all-categories')
 	const backgroundColor = useColorModeValue('gray.200', 'gray.900')
 	const { t } = useTranslation()
+	const { books } = useTypedSelector(state => state.books)
 
 	const filteredData = useCallback(() => {
 		switch (filter) {
 			case 'programming':
-				return data.filter(c => c.category === 'programming')
+				return books.filter(c => c.category === 'programming')
 			case 'design':
-				return data.filter(c => c.category === 'design')
+				return books.filter(c => c.category === 'design')
 			case 'business':
-				return data.filter(c => c.category === 'business')
+				return books.filter(c => c.category === 'business')
 			case 'history':
-				return data.filter(c => c.category === 'history')
+				return books.filter(c => c.category === 'history')
 			case 'writing':
-				return data.filter(c => c.category === 'writing')
+				return books.filter(c => c.category === 'writing')
 			case 'lifestyle':
-				return data.filter(c => c.category === 'lifestyle')
+				return books.filter(c => c.category === 'lifestyle')
 			default:
-				return data
+				return books
 		}
-	}, [filter])
+	}, [filter, books])
 	return (
 		<Box mb={20}>
 			<SectionTitle
@@ -73,14 +76,14 @@ const BooksPageComponent = () => {
 				{filteredData().map((item, idx) => (
 					<motion.div key={idx} layout>
 						<Box pos={'relative'}>
-							<Image
-								src={item.image}
-								alt={item.name}
-								borderRadius={'lg'}
-								w={'full'}
-								h={'250px'}
-								objectFit={'cover'}
-							/>
+							<Box pos={'relative'} w={'full'} h={'250px'}>
+								<Image
+									src={loadImage(item.image)}
+									alt={item.title}
+									fill
+									style={{ objectFit: 'cover', borderRadius: '10px' }}
+								/>
+							</Box>
 							<HStack
 								pos={'absolute'}
 								minH={'90px'}
@@ -94,7 +97,7 @@ const BooksPageComponent = () => {
 								justify={'space-between'}
 							>
 								<Box>
-									<Text fontSize={'md'}>{item.name}</Text>
+									<Text fontSize={'md'}>{item.title}</Text>
 									<Text fontWeight={'bold'} fontSize={'xl'}>
 										{item.price.toLocaleString('en-Us', {
 											style: 'currency',

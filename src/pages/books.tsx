@@ -1,10 +1,13 @@
+import { IBooksType } from '@/interfaces/books.interface'
 import { withLayout } from '@/layouts/layout'
 import Seo from '@/layouts/seo/seo'
 import { BooksPageComponent } from '@/page-component'
+import { BooksService } from '@/services/books.service'
+import { GetServerSideProps } from 'next'
 import { useTranslation } from 'react-i18next'
 
 const Books = () => {
-	const { t } = useTranslation();
+	const { t } = useTranslation()
 
 	return (
 		<Seo
@@ -18,7 +21,23 @@ const Books = () => {
 		>
 			<BooksPageComponent />
 		</Seo>
-	);
+	)
 }
 
 export default withLayout(Books)
+
+export const getServerSideProps: GetServerSideProps<
+	BooksPageProps
+> = async () => {
+	const books = await BooksService.get()
+
+	return {
+		props: {
+			books,
+		},
+	}
+}
+
+interface BooksPageProps {
+	books: IBooksType[]
+}

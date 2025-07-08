@@ -19,7 +19,11 @@ import { Form, Formik, FormikValues } from 'formik'
 import { BooksValidation } from '@/validations/books.validation'
 import TextField from '../text-field/text-field'
 import SelectField from '../select-field/select-field'
-import { coursePrice } from '@/config/constants'
+import {
+	booksCategory,
+	coursePrice,
+	createBooksCategory,
+} from '@/config/constants'
 import { useTranslation } from 'react-i18next'
 import Image from 'next/image'
 import { loadImage } from '@/helpers/image.helper'
@@ -70,6 +74,7 @@ const BooksModal: FC<BooksModalProps> = ({
 				title: formikValues.title,
 				price: formikValues.price,
 				pdf: formikValues.pdf,
+				category: formikValues.category,
 				image: imageUrl as string,
 				callback: () => {
 					toast({
@@ -88,6 +93,7 @@ const BooksModal: FC<BooksModalProps> = ({
 				title: formikValues.title,
 				price: formikValues.price,
 				pdf: formikValues.pdf,
+				category: formikValues.category,
 				image: imageUrl as string,
 				_id: booksValue._id,
 				callback: () => {
@@ -138,6 +144,12 @@ const BooksModal: FC<BooksModalProps> = ({
 									name='title'
 									label={t('title', { ns: 'instructor' })}
 									placeholder='Harry Potter'
+								/>
+								<SelectField
+									name='category'
+									label={t('category', { ns: 'instructor' })}
+									placeholder='-'
+									arrOptions={createBooksCategory}
 								/>
 								<SelectField
 									name='price'
@@ -210,6 +222,6 @@ export default BooksModal
 const data = {
 	title: '',
 	price: 0,
-	image: '',
 	pdf: '',
+	category: '',
 }
