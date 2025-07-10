@@ -12,6 +12,7 @@ import { adminSliceActions } from './admin/admin.slice'
 import * as adminActions from './admin/admin.action'
 import { booksSliceActions } from './books/books.slice'
 import * as booksActions from './books/books.action'
+import { cartSliceActions } from './cart/cart.slice'
 
 export const allActions = {
 	...userSliceActions,
@@ -28,4 +29,5 @@ export const allActions = {
 	...adminActions,
 	...booksSliceActions,
 	...booksActions,
+	...cartSliceActions,
 }

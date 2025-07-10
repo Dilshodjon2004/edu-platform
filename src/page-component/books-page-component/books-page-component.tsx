@@ -8,6 +8,7 @@ import {
 	HStack,
 	Text,
 	useColorModeValue,
+	useToast,
 } from '@chakra-ui/react'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -16,12 +17,17 @@ import { motion } from 'framer-motion'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { loadImage } from '@/helpers/image.helper'
 import Image from 'next/image'
+import { useActions } from '@/hooks/useActions'
+import { IBooksType } from '@/interfaces/books.interface'
 
 const BooksPageComponent = () => {
 	const [filter, setFilter] = useState<string>('all-categories')
 	const backgroundColor = useColorModeValue('gray.200', 'gray.900')
 	const { t } = useTranslation()
 	const { books } = useTypedSelector(state => state.books)
+	const cart = useTypedSelector(state => state.cart)
+	const { addBookToCart } = useActions()
+	const toast = useToast()
 
 	const filteredData = useCallback(() => {
 		switch (filter) {
@@ -41,6 +47,25 @@ const BooksPageComponent = () => {
 				return books
 		}
 	}, [filter, books])
+
+	const addToCart = (book: IBooksType) => {
+		const existingProduct = cart.books.find(c => c._id === book._id)
+		if (existingProduct) {
+			toast({
+				title: 'Book already exists in cart',
+				position: 'bottom-right',
+				status: 'warning',
+				duration: 1500,
+			})
+			return
+		}
+		addBookToCart(book)
+		toast({
+			title: 'Book added successfully',
+			position: 'bottom-right',
+			duration: 1500,
+		})
+	}
 	return (
 		<Box mb={20}>
 			<SectionTitle
@@ -105,7 +130,12 @@ const BooksPageComponent = () => {
 										})}
 									</Text>
 								</Box>
-								<Button colorScheme='blue' rightIcon={<AiFillShopping />}>
+								<Button
+									colorScheme='blue'
+									rightIcon={<AiFillShopping />}
+									onClick={() => addToCart(item)}
+									isDisabled={cart.books.map(c => c._id).includes(item._id)}
+								>
 									Buy
 								</Button>
 							</HStack>
