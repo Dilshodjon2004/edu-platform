@@ -1,6 +1,7 @@
 import { CheckoutForm } from '@/components'
 import SectionTitle from '@/components/section-title/section-title'
 import { loadImage } from '@/helpers/image.helper'
+import { getTotalPrice } from '@/helpers/total-price.helper'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { PaymentService } from '@/services/payment.service'
 import {
@@ -26,16 +27,18 @@ const stripePromise = loadStripe(
 const CheckoutPageComponent = () => {
 	const [clientSecret, setClientSecret] = useState('')
 
-	const { books } = useTypedSelector(state => state.cart)
+	const { books, courses } = useTypedSelector(state => state.cart)
 
-	// useEffect(() => {
-	// 	const getClientSecret = async () => {
-	// 		const response = await PaymentService.paymentBooks(10)
-	// 		setClientSecret(response)
-	// 	}
+	useEffect(() => {
+		const getClientSecret = async () => {
+			const response = await PaymentService.paymentBooks(
+				getTotalPrice(courses, books)
+			)
+			setClientSecret(response)
+		}
 
-	// 	getClientSecret()
-	// }, [])
+		getClientSecret()
+	}, [])
 	return (
 		<>
 			<SectionTitle
