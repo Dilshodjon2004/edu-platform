@@ -10,35 +10,23 @@ import {
 	Grid,
 	GridItem,
 	HStack,
-	Skeleton,
-	Stack,
 	Text,
+	useColorMode,
 	useColorModeValue,
 } from '@chakra-ui/react'
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 import Image from 'next/image'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment } from 'react'
 
 const stripePromise = loadStripe(
 	process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
 )
 
 const CheckoutPageComponent = () => {
-	const [clientSecret, setClientSecret] = useState('')
+	const { books } = useTypedSelector(state => state.cart)
+	const { colorMode } = useColorMode()
 
-	const { books, courses } = useTypedSelector(state => state.cart)
-
-	useEffect(() => {
-		const getClientSecret = async () => {
-			const response = await PaymentService.paymentBooks(
-				getTotalPrice(courses, books)
-			)
-			setClientSecret(response)
-		}
-
-		getClientSecret()
-	}, [])
 	return (
 		<>
 			<SectionTitle
@@ -50,25 +38,14 @@ const CheckoutPageComponent = () => {
 			<Grid gridTemplateColumns={'70% 30%'} gap={5}>
 				<GridItem>
 					<Divider my={5} />
-					{clientSecret ? (
-						<Elements
-							stripe={stripePromise}
-							options={{ clientSecret, appearance: { theme: 'night' } }}
-						>
-							<CheckoutForm />
-						</Elements>
-					) : (
-						<Stack>
-							<HStack mt={10}>
-								<Skeleton height={12} w={'50%'} />
-								<Skeleton height={12} w={'25%'} />
-								<Skeleton height={12} w={'25%'} />
-							</HStack>
-							<Skeleton height={12} w={'100%'} mt={5} />
-							<Skeleton height={12} w={'100%'} mt={5} />
-							<Skeleton height={14} w={'100%'} mt={5} />
-						</Stack>
-					)}
+					<Elements
+						stripe={stripePromise}
+						options={{
+							appearance: { theme: colorMode === 'dark' ? 'night' : 'stripe' },
+						}}
+					>
+						<CheckoutForm />
+					</Elements>
 				</GridItem>
 				<GridItem
 					mt={10}
