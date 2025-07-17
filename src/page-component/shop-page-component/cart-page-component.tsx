@@ -1,6 +1,7 @@
 import SectionTitle from '@/components/section-title/section-title'
 import { loadImage } from '@/helpers/image.helper'
 import { getTotalPrice } from '@/helpers/total-price.helper'
+import { useActions } from '@/hooks/useActions'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import {
 	Box,
@@ -26,6 +27,7 @@ import { BsFillTrashFill } from 'react-icons/bs'
 const CartPageComponent = () => {
 	const cart = useTypedSelector(state => state.cart)
 	const router = useRouter()
+	const { removeBookFromCart } = useActions()
 
 	const getSubtitle = () => {
 		let textCourse: string = ''
@@ -80,6 +82,7 @@ const CartPageComponent = () => {
 										aria-label='remove'
 										icon={<BsFillTrashFill />}
 										colorScheme={'red'}
+										onClick={() => removeBookFromCart(book._id as string)}
 									/>
 								</Stack>
 							</Flex>

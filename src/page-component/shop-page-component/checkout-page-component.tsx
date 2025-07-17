@@ -3,6 +3,7 @@ import SectionTitle from '@/components/section-title/section-title'
 import { loadImage } from '@/helpers/image.helper'
 import { getTotalPrice } from '@/helpers/total-price.helper'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
+import { CardType } from '@/interfaces/constants.interface'
 import { PaymentService } from '@/services/payment.service'
 import {
 	Box,
@@ -23,7 +24,7 @@ const stripePromise = loadStripe(
 	process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
 )
 
-const CheckoutPageComponent = () => {
+const CheckoutPageComponent = ({ cards }: { cards: CardType[] }) => {
 	const { books } = useTypedSelector(state => state.cart)
 	const { colorMode } = useColorMode()
 
@@ -44,7 +45,7 @@ const CheckoutPageComponent = () => {
 							appearance: { theme: colorMode === 'dark' ? 'night' : 'stripe' },
 						}}
 					>
-						<CheckoutForm />
+						<CheckoutForm cards={cards} />
 					</Elements>
 				</GridItem>
 				<GridItem
