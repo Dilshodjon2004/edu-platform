@@ -46,6 +46,17 @@ import { SiAmd, SiCisco, SiLogitech, SiSpotify } from 'react-icons/si'
 import { RiMoneyDollarBoxLine } from 'react-icons/ri'
 import { ImBooks } from 'react-icons/im'
 
+export const courseCategory = [
+	'Front-End',
+	'Back-End',
+	'Full-Stack',
+	'Mobile Application',
+	'Web Design',
+	'Graphic Design',
+]
+
+export const courseLevel = ['Beginner', 'Intermediate', 'Expert']
+
 export const navigation = [
 	{
 		title: 'sidebar_title_1',
@@ -160,12 +171,7 @@ export const coursesFilter = [
 	{
 		title: 'filter_category_title',
 		id: 'category',
-		categoryList: [
-			{ name: 'fitler_category_item_1', id: 'web-developments' },
-			{ name: 'fitler_category_item_2', id: 'mobile-application' },
-			{ name: 'fitler_category_item_3', id: 'graphic-design' },
-			{ name: 'fitler_category_item_4', id: 'artificial-intelligence' },
-		],
+		categoryList: courseCategory.map(c => ({ name: c, id: c })),
 	},
 	{
 		title: 'fitler_rating_title',
@@ -190,118 +196,114 @@ export const coursesFilter = [
 	{
 		title: 'filter_level_title',
 		id: 'level',
-		categoryList: [
-			{ name: 'filter_level_item_1', id: 'beginner' },
-			{ name: 'filter_level_item_2', id: 'medium' },
-			{ name: 'filter_level_item_3', id: 'proffessional' },
-		],
+		categoryList: courseLevel.map(c => ({ name: c, id: c })),
 	},
 ]
 
-export const courses: ICourseType[] = [
-	{
-		image: 'https://media.graphassets.com/3gf746AKRbWNjB8OCoEB',
-		title: 'JavaScript full course',
-		slug: 'javascript-full-course',
-		lessonCount: 96,
-		totalHour: 13.6,
-		level: 'Beginner',
-		price: 20,
-		reviewAvarage: 4.5,
-		reviewCount: 200,
-		author: {
-			firstName: 'Samar',
-			lastName: 'Badriddinov',
-			avatar:
-				'https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small_2x/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png',
-		},
-	},
-	{
-		image: 'https://media.graphassets.com/54vR0DStGoFuZBVkFwWQ',
-		title: 'VueJS full course',
-		slug: 'vuejs-full-course',
-		lessonCount: 30,
-		totalHour: 10.6,
-		level: 'Beginner',
-		price: 20,
-		reviewAvarage: 4.5,
-		reviewCount: 250,
-		author: {
-			firstName: 'Samar',
-			lastName: 'Badriddinov',
-			avatar:
-				'https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small_2x/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png',
-		},
-	},
-	{
-		image: 'https://media.graphassets.com/65rcPxsLT9ysJDisXF80',
-		title: 'ReactJS full course',
-		slug: 'reactjs-full-course',
-		lessonCount: 70,
-		totalHour: 19,
-		level: 'Beginner',
-		price: 20,
-		reviewAvarage: 4.5,
-		reviewCount: 150,
-		author: {
-			firstName: 'Samar',
-			lastName: 'Badriddinov',
-			avatar:
-				'https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small_2x/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png',
-		},
-	},
-	{
-		image: 'https://media.graphassets.com/xactyo8TtyTIkAcMWvSm',
-		title: 'VueX full course',
-		slug: 'vuex-full-course',
-		lessonCount: 120,
-		totalHour: 24.6,
-		level: 'Beginner',
-		price: 20,
-		reviewAvarage: 5,
-		reviewCount: 250,
-		author: {
-			firstName: 'Samar',
-			lastName: 'Badriddinov',
-			avatar:
-				'https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small_2x/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png',
-		},
-	},
-	{
-		image: 'https://media.graphassets.com/Ql2hDpJhQsaBT3inNuZ4',
-		title: 'Redux full course',
-		slug: 'redux-full-course',
-		lessonCount: 39,
-		totalHour: 8.2,
-		level: 'Beginner',
-		price: 20,
-		reviewAvarage: 4.9,
-		reviewCount: 120,
-		author: {
-			firstName: 'Samar',
-			lastName: 'Badriddinov',
-			avatar:
-				'https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small_2x/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png',
-		},
-	},
-	{
-		image: 'https://media.graphassets.com/mDcwhbguQpyM74jb18M5',
-		title: 'NodeJS full course',
-		slug: 'nodejs-full-course',
-		lessonCount: 56,
-		totalHour: 20.6,
-		level: 'Beginner',
-		price: 20,
-		reviewAvarage: 5,
-		reviewCount: 250,
-		author: {
-			firstName: 'Samar',
-			lastName: 'Badriddinov',
-			avatar:
-				'https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small_2x/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png',
-		},
-	},
-]
+// export const courses: ICourseType[] = [
+// 	{
+// 		image: 'https://media.graphassets.com/3gf746AKRbWNjB8OCoEB',
+// 		title: 'JavaScript full course',
+// 		slug: 'javascript-full-course',
+// 		lessonCount: 96,
+// 		totalHour: 13.6,
+// 		level: 'Beginner',
+// 		price: 20,
+// 		reviewAvarage: 4.5,
+// 		reviewCount: 200,
+// 		author: {
+// 			firstName: 'Samar',
+// 			lastName: 'Badriddinov',
+// 			avatar:
+// 				'https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small_2x/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png',
+// 		},
+// 	},
+// 	{
+// 		image: 'https://media.graphassets.com/54vR0DStGoFuZBVkFwWQ',
+// 		title: 'VueJS full course',
+// 		slug: 'vuejs-full-course',
+// 		lessonCount: 30,
+// 		totalHour: 10.6,
+// 		level: 'Beginner',
+// 		price: 20,
+// 		reviewAvarage: 4.5,
+// 		reviewCount: 250,
+// 		author: {
+// 			firstName: 'Samar',
+// 			lastName: 'Badriddinov',
+// 			avatar:
+// 				'https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small_2x/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png',
+// 		},
+// 	},
+// 	{
+// 		image: 'https://media.graphassets.com/65rcPxsLT9ysJDisXF80',
+// 		title: 'ReactJS full course',
+// 		slug: 'reactjs-full-course',
+// 		lessonCount: 70,
+// 		totalHour: 19,
+// 		level: 'Beginner',
+// 		price: 20,
+// 		reviewAvarage: 4.5,
+// 		reviewCount: 150,
+// 		author: {
+// 			firstName: 'Samar',
+// 			lastName: 'Badriddinov',
+// 			avatar:
+// 				'https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small_2x/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png',
+// 		},
+// 	},
+// 	{
+// 		image: 'https://media.graphassets.com/xactyo8TtyTIkAcMWvSm',
+// 		title: 'VueX full course',
+// 		slug: 'vuex-full-course',
+// 		lessonCount: 120,
+// 		totalHour: 24.6,
+// 		level: 'Beginner',
+// 		price: 20,
+// 		reviewAvarage: 5,
+// 		reviewCount: 250,
+// 		author: {
+// 			firstName: 'Samar',
+// 			lastName: 'Badriddinov',
+// 			avatar:
+// 				'https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small_2x/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png',
+// 		},
+// 	},
+// 	{
+// 		image: 'https://media.graphassets.com/Ql2hDpJhQsaBT3inNuZ4',
+// 		title: 'Redux full course',
+// 		slug: 'redux-full-course',
+// 		lessonCount: 39,
+// 		totalHour: 8.2,
+// 		level: 'Beginner',
+// 		price: 20,
+// 		reviewAvarage: 4.9,
+// 		reviewCount: 120,
+// 		author: {
+// 			firstName: 'Samar',
+// 			lastName: 'Badriddinov',
+// 			avatar:
+// 				'https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small_2x/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png',
+// 		},
+// 	},
+// 	{
+// 		image: 'https://media.graphassets.com/mDcwhbguQpyM74jb18M5',
+// 		title: 'NodeJS full course',
+// 		slug: 'nodejs-full-course',
+// 		lessonCount: 56,
+// 		totalHour: 20.6,
+// 		level: 'Beginner',
+// 		price: 20,
+// 		reviewAvarage: 5,
+// 		reviewCount: 250,
+// 		author: {
+// 			firstName: 'Samar',
+// 			lastName: 'Badriddinov',
+// 			avatar:
+// 				'https://static.vecteezy.com/system/resources/thumbnails/027/951/137/small_2x/stylish-spectacles-guy-3d-avatar-character-illustrations-png.png',
+// 		},
+// 	},
+// ]
 
 export const createBooksCategory = [
 	'programming',
@@ -497,17 +499,6 @@ export const courseusers = [
 		email: 'ab@gmail.com',
 		userGain: 1500,
 	},
-]
-
-export const courseLevel = ['Beginner', 'Intermediate', 'Expert']
-
-export const courseCategory = [
-	'Front-End',
-	'Back-End',
-	'Full-Stack',
-	'Mobile Application',
-	'Web Design',
-	'Graphic Design',
 ]
 
 export const coursePrice = [10, 20, 30, 40, 50]

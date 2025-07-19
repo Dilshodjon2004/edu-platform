@@ -1,6 +1,9 @@
+import { ICourseType } from '@/interfaces/course.interface'
 import { withLayout } from '@/layouts/layout'
 import Seo from '@/layouts/seo/seo'
 import { CoursesPageComponent } from '@/page-component'
+import { AppService } from '@/services/app.service'
+import { GetServerSideProps } from 'next'
 
 import { useTranslation } from 'react-i18next'
 
@@ -24,3 +27,18 @@ const Courses = () => {
 }
 
 export default withLayout(Courses)
+
+export const getServerSideProps: GetServerSideProps<PageProps> = async ({
+	req,
+}) => {
+	const courses = await AppService.getCourses(req.cookies.i18next)
+	return {
+		props: {
+			courses,
+		},
+	}
+}
+
+interface PageProps {
+	courses: ICourseType[]
+}

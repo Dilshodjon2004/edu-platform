@@ -25,7 +25,7 @@ const stripePromise = loadStripe(
 )
 
 const CheckoutPageComponent = ({ cards }: { cards: CardType[] }) => {
-	const { books } = useTypedSelector(state => state.cart)
+	const { books, courses } = useTypedSelector(state => state.cart)
 	const { colorMode } = useColorMode()
 
 	return (
@@ -59,25 +59,13 @@ const CheckoutPageComponent = ({ cards }: { cards: CardType[] }) => {
 					</Text>
 					{books.map(book => (
 						<Fragment key={book._id}>
-							<HStack justify={'space-between'}>
-								<HStack>
-									<Box pos={'relative'} w={'40px'} h={'30px'}>
-										<Image
-											src={loadImage(book.image)}
-											fill
-											alt={book.title}
-											style={{ objectFit: 'cover' }}
-										/>
-									</Box>
-									<Text>{book.title}</Text>
-								</HStack>
-								<Text fontWeight={'bold'} color={'facebook.500'}>
-									{book.price.toLocaleString('en-US', {
-										style: 'currency',
-										currency: 'USD',
-									})}
-								</Text>
-							</HStack>
+							<OrderedDetailedCard item={book} image={book.image} />
+							<Divider my={5} />
+						</Fragment>
+					))}
+					{courses.map(course => (
+						<Fragment key={course._id}>
+							<OrderedDetailedCard item={course} image={course.previewImage} />
 							<Divider my={5} />
 						</Fragment>
 					))}
@@ -88,3 +76,25 @@ const CheckoutPageComponent = ({ cards }: { cards: CardType[] }) => {
 }
 
 export default CheckoutPageComponent
+
+const OrderedDetailedCard = ({ item, image }) => (
+	<HStack justify={'space-between'}>
+		<HStack>
+			<Box pos={'relative'} w={'40px'} h={'30px'}>
+				<Image
+					src={loadImage(image)}
+					fill
+					alt={item.title}
+					style={{ objectFit: 'cover' }}
+				/>
+			</Box>
+			<Text>{item.title}</Text>
+		</HStack>
+		<Text fontWeight={'bold'} color={'blue.500'}>
+			{item.price.toLocaleString('en-US', {
+				style: 'currency',
+				currency: 'USD',
+			})}
+		</Text>
+	</HStack>
+)

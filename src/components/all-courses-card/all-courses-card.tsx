@@ -1,4 +1,5 @@
 import {
+	Avatar,
 	Box,
 	Button,
 	Divider,
@@ -6,9 +7,9 @@ import {
 	Heading,
 	HStack,
 	Icon,
-	Image,
 	Stack,
 	Text,
+	useToast,
 } from '@chakra-ui/react'
 import { AllCoursesCardProps } from './all-courses-card.props'
 import ReactStars from 'react-stars'
@@ -16,37 +17,60 @@ import { CiViewList } from 'react-icons/ci'
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import { SiGoogleanalytics } from 'react-icons/si'
 import { BsMinecartLoaded } from 'react-icons/bs'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
+import { loadImage } from '@/helpers/image.helper'
+import { useActions } from '@/hooks/useActions'
+import { useTypedSelector } from '@/hooks/useTypedSelector'
 
 const AllCoursesCard = ({ course }: AllCoursesCardProps) => {
 	const router = useRouter()
+	const { addCourseToCart } = useActions()
+	const { courses } = useTypedSelector(state => state.cart)
+	const toast = useToast()
 
 	const onDetailedCourse = () => router.push(`/courses/${course.slug}`)
+
+	const addCourseToCardHandler = () => {
+		const existingProduct = courses.find(c => c._id === course._id)
+
+		if (existingProduct) {
+			toast({
+				title: 'Course already exist in cart',
+				position: 'bottom',
+				status: 'warning',
+			})
+			return
+		}
+		addCourseToCart(course)
+		toast({ title: 'Course added successfully', position: 'bottom' })
+	}
 	return (
 		<>
 			<Box py={4}>
 				<Flex gap={4} direction={{ base: 'column', md: 'row' }}>
-					<Image
-						src={course.image}
-						alt={course.title}
-						w={{ base: '100%', md: '250px' }}
-						h={'250px'}
-						borderRadius={'lg'}
-						objectFit={'cover'}
-						cursor={'pointer'}
+					<Box
+						width={{ base: '100%', md: '250px' }}
+						height='250px'
+						borderRadius='lg'
+						cursor='pointer'
 						onClick={onDetailedCourse}
-					/>
+						position='relative'
+						flexShrink={0}
+					>
+						<Image
+							src={loadImage(course.previewImage)}
+							alt={course.title}
+							fill
+							style={{ objectFit: 'cover' }}
+						/>
+					</Box>
 
 					<Stack>
 						<HStack>
-							<Text color={'#e59819'}>{course.reviewAvarage.toFixed(1)}</Text>
-							<ReactStars
-								edit={false}
-								value={course.reviewAvarage}
-								color2='#e59819'
-							/>
-							<Text opacity={'.8'}>({course.reviewCount})</Text>
+							<Text color={'#e59819'}>5</Text>
+							<ReactStars edit={false} value={5} color2='#e59819' />
+							<Text opacity={'.8'}>(5)</Text>
 						</HStack>
 						<Heading fontSize={'xl'}>{course.title}</Heading>
 						<Text>
@@ -59,18 +83,10 @@ const AllCoursesCard = ({ course }: AllCoursesCardProps) => {
 							direction={{ base: 'column', sm: 'row' }}
 							justifyContent={'space-between'}
 						>
-							<HStack align={'center'}>
-								<Image
-									src={course.author.avatar}
-									alt={course.author.firstName}
-									w={50}
-									h={50}
-									borderRadius={'full'}
-								/>
-								<Text>
-									{course.author.firstName} {course.author.lastName[0]}
-								</Text>
-							</HStack>
+							<Avatar
+								src={course.author.avatar}
+								name={course.author.fullName}
+							/>
 							<HStack>
 								<Flex align={'center'} gap={1}>
 									<Icon as={CiViewList} />
@@ -99,7 +115,14 @@ const AllCoursesCard = ({ course }: AllCoursesCardProps) => {
 								})}
 							</Text>
 							<Flex gap={4} mt={{ base: 5, sm: 0 }}>
-								<Button rightIcon={<BsMinecartLoaded />} colorScheme='blue'>
+								<Button
+									rightIcon={<BsMinecartLoaded />}
+									colorScheme='blue'
+									onClick={addCourseToCardHandler}
+									isDisabled={
+										courses.map(c => c._id).includes(course._id) ? true : false
+									}
+								>
 									Add to cart
 								</Button>
 								<Button colorScheme='blue' onClick={onDetailedCourse}>
