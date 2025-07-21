@@ -11,8 +11,10 @@ import {
 } from '@chakra-ui/react'
 import { FaCheckCircle } from 'react-icons/fa'
 import { useTranslation } from 'react-i18next'
+import { useActions } from '@/hooks/useActions'
+import { useRouter } from 'next/router'
 
-const Pricing = ({ options, price, title, checked }: PricingProps) => {
+const Pricing = ({ options, price, title, checked, product }: PricingProps) => {
 	const colorTextLight = checked ? 'white' : 'blue.600'
 	const bgColorLight = checked ? 'blue.400' : 'gray.300'
 
@@ -20,6 +22,13 @@ const Pricing = ({ options, price, title, checked }: PricingProps) => {
 	const bgColorDark = checked ? 'blue.400' : 'gray.300'
 
 	const { t } = useTranslation()
+	const { addProductToCart } = useActions()
+	const router = useRouter()
+
+	const addProductToCartHandler = () => {
+		addProductToCart(product)
+		router.push('/shop/checkout')
+	}
 	return (
 		<Stack
 			p={3}
@@ -45,6 +54,7 @@ const Pricing = ({ options, price, title, checked }: PricingProps) => {
 					size={'md'}
 					color={useColorModeValue(colorTextLight, colorTextDark)}
 					bgColor={useColorModeValue(bgColorLight, bgColorDark)}
+					onClick={addProductToCartHandler}
 				>
 					{t('pricing_btn', { ns: 'global' })}
 				</Button>

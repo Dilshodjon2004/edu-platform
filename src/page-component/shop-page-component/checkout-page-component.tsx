@@ -25,7 +25,7 @@ const stripePromise = loadStripe(
 )
 
 const CheckoutPageComponent = ({ cards }: { cards: CardType[] }) => {
-	const { books, courses } = useTypedSelector(state => state.cart)
+	const { books, courses, product } = useTypedSelector(state => state.cart)
 	const { colorMode } = useColorMode()
 
 	return (
@@ -69,6 +69,28 @@ const CheckoutPageComponent = ({ cards }: { cards: CardType[] }) => {
 							<Divider my={5} />
 						</Fragment>
 					))}
+					{product.id && (
+						<>
+							<Divider my={5} />
+							<HStack justify={'space-between'}>
+								<Text>
+									{product.name} -{' '}
+									<Box as={'span'} fontWeight={'bold'}>
+										Plan
+									</Box>
+								</Text>
+								<Text fontWeight={'bold'} color={'facebook.500'}>
+									{(product.default_price.unit_amount / 100).toLocaleString(
+										'en-US',
+										{
+											style: 'currency',
+											currency: 'USD',
+										}
+									)}
+								</Text>
+							</HStack>
+						</>
+					)}
 				</GridItem>
 			</Grid>
 		</>

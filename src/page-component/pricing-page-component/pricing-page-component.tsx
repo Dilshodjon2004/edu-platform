@@ -5,12 +5,6 @@ import React, { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const PricingPageComponent = ({ products }: { products: ProductsType[] }) => {
-	const options = [
-		{ id: 1, desc: 'Lorem 1' },
-		{ id: 2, desc: 'Lorem 2' },
-		{ id: 3, desc: 'Lorem 3' },
-	]
-
 	const { t } = useTranslation()
 	return (
 		<>
@@ -51,6 +45,7 @@ const PricingPageComponent = ({ products }: { products: ProductsType[] }) => {
 							options={product.description
 								.split(', ')
 								.map((c, idx) => ({ id: idx, desc: c }))}
+							product={product}
 						/>
 					</Fragment>
 				))}

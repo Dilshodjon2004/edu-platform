@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ICartInitialState } from './cart.interface'
 import { IBooksType } from '@/interfaces/books.interface'
 import { ICourseType } from '@/interfaces/course.interface'
+import { ProductsType } from '@/interfaces/constants.interface'
 
 const initialState: ICartInitialState = {
 	books: [],
 	courses: [],
+	product: {} as ProductsType,
 }
 
 export const cartSlice = createSlice({
@@ -17,6 +19,9 @@ export const cartSlice = createSlice({
 		},
 		addCourseToCart: (state, { payload }: PayloadAction<ICourseType>) => {
 			state.courses = [...state.courses, payload]
+		},
+		addProductToCart: (state, { payload }: PayloadAction<ProductsType>) => {
+			state.product = payload
 		},
 		removeBookFromCart: (state, { payload }: PayloadAction<string>) => {
 			const newArr = state.books.filter(c => c._id !== payload)
