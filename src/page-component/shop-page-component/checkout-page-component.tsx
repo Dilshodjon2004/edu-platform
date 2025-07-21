@@ -1,10 +1,8 @@
 import { CheckoutForm } from '@/components'
 import SectionTitle from '@/components/section-title/section-title'
 import { loadImage } from '@/helpers/image.helper'
-import { getTotalPrice } from '@/helpers/total-price.helper'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { CardType } from '@/interfaces/constants.interface'
-import { PaymentService } from '@/services/payment.service'
 import {
 	Box,
 	Divider,
@@ -57,19 +55,8 @@ const CheckoutPageComponent = ({ cards }: { cards: CardType[] }) => {
 					<Text fontSize={'2xl'} fontWeight={'bold'}>
 						Order details
 					</Text>
-					{books.map(book => (
-						<Fragment key={book._id}>
-							<OrderedDetailedCard item={book} image={book.image} />
-							<Divider my={5} />
-						</Fragment>
-					))}
-					{courses.map(course => (
-						<Fragment key={course._id}>
-							<OrderedDetailedCard item={course} image={course.previewImage} />
-							<Divider my={5} />
-						</Fragment>
-					))}
-					{product.id && (
+
+					{product.id ? (
 						<>
 							<Divider my={5} />
 							<HStack justify={'space-between'}>
@@ -89,6 +76,24 @@ const CheckoutPageComponent = ({ cards }: { cards: CardType[] }) => {
 									)}
 								</Text>
 							</HStack>
+						</>
+					) : (
+						<>
+							{books.map(book => (
+								<Fragment key={book._id}>
+									<OrderedDetailedCard item={book} image={book.image} />
+									<Divider my={5} />
+								</Fragment>
+							))}
+							{courses.map(course => (
+								<Fragment key={course._id}>
+									<OrderedDetailedCard
+										item={course}
+										image={course.previewImage}
+									/>
+									<Divider my={5} />
+								</Fragment>
+							))}
 						</>
 					)}
 				</GridItem>

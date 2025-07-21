@@ -95,7 +95,7 @@ const CheckoutForm = ({ cards }: { cards: CardType[] }) => {
 			setIsLoading(false)
 		} else {
 			const { data } = await $axios.post(`/payment/books`, {
-				price: getTotalPrice(courses, books),
+				price: Number(getTotalPrice(courses, books).booksPrice),
 				paymentMethod: paymentMethod.id,
 			})
 
@@ -127,29 +127,20 @@ const CheckoutForm = ({ cards }: { cards: CardType[] }) => {
 
 		try {
 			if (product.id) {
-				const { data } = await $axios.post(`/payment/create-subscription`, {
+				await $axios.post(`/payment/create-subscription`, {
 					price: product.default_price.id,
 					paymentMethod: paymentMethod,
 				})
 
-				const payload = await stripe.confirmCardPayment(data)
-
-				if (payload.error) {
-					setIsLoading(false)
-					setError(
-						`Your payment details couldn't be verified: ${payload.error.message}`
-					)
-				} else {
-					toast({
-						title: 'Successfully purchased',
-						position: 'top-right',
-					})
-					router.push('/shop/success')
-				}
+				toast({
+					title: 'Successfully purchased',
+					position: 'top-right',
+				})
+				router.push('/shop/success')
 			} else {
 				if (books.length) {
 					const { data } = await $axios.post(`/payment/books`, {
-						price: getTotalPrice(courses, books),
+						price: Number(getTotalPrice(courses, books).booksPrice),
 						paymentMethod: paymentMethod,
 					})
 
@@ -165,7 +156,9 @@ const CheckoutForm = ({ cards }: { cards: CardType[] }) => {
 							await $axios.post(`${getMailUrl('books')}/${book._id}`)
 						}
 						getBooks([])
-						router.push('/shop/success')
+						if (!courses.length) {
+							router.push('/shop/success')
+						}
 					}
 				}
 
@@ -174,7 +167,7 @@ const CheckoutForm = ({ cards }: { cards: CardType[] }) => {
 
 					for (const course of courses) {
 						const { data } = await $axios.post(`/payment/courses`, {
-							price: course.price,
+							price: Number(course.price),
 							paymentMethod: paymentMethod,
 							courseId: course._id,
 						})
@@ -207,6 +200,8 @@ const CheckoutForm = ({ cards }: { cards: CardType[] }) => {
 			setError(result.message)
 		}
 	}
+
+	// console.log(product.default_price.unit_amount / 100)
 	return (
 		<Stack>
 			{error && <ErrorAlert title={error} clearHandler={() => setError('')} />}
@@ -243,10 +238,20 @@ const CheckoutForm = ({ cards }: { cards: CardType[] }) => {
 										colorScheme={'blue'}
 									>
 										Pay now{' '}
-										{getTotalPrice(courses, books).toLocaleString('en-US', {
-											style: 'currency',
-											currency: 'USD',
-										})}
+										{product.id
+											? (
+													product.default_price.unit_amount / 100
+											  ).toLocaleString('en-US', {
+													style: 'currency',
+													currency: 'USD',
+											  })
+											: getTotalPrice(courses, books).totalPrice.toLocaleString(
+													'en-US',
+													{
+														style: 'currency',
+														currency: 'USD',
+													}
+											  )}
 									</Button>
 								</Box>
 							)}
@@ -345,10 +350,21 @@ const CheckoutForm = ({ cards }: { cards: CardType[] }) => {
 						onClick={handleSubmit}
 					>
 						Pay now{' '}
-						{getTotalPrice(courses, books).toLocaleString('en-US', {
-							style: 'currency',
-							currency: 'USD',
-						})}
+						{product.id
+							? (product.default_price.unit_amount / 100).toLocaleString(
+									'en-US',
+									{
+										style: 'currency',
+										currency: 'USD',
+									}
+							  )
+							: getTotalPrice(courses, books).totalPrice.toLocaleString(
+									'en-US',
+									{
+										style: 'currency',
+										currency: 'USD',
+									}
+							  )}
 					</Button>
 				</>
 			)}

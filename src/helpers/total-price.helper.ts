@@ -1,12 +1,13 @@
 import { IBooksType } from '@/interfaces/books.interface'
 import { ICourseType } from '@/interfaces/course.interface'
 
-export const getTotalPrice = (
-	courses: ICourseType[],
-	books: IBooksType[]
-): number => {
+export const getTotalPrice = (courses: ICourseType[], books: IBooksType[]) => {
 	const booksPrice = books.reduce((total, item) => total + item.price, 0)
 	const coursesPrice = courses.reduce((total, item) => total + item.price, 0)
 	const totalPrice = booksPrice + coursesPrice
-	return totalPrice
+	return {
+		totalPrice,
+		booksPrice,
+		coursesPrice,
+	}
 }

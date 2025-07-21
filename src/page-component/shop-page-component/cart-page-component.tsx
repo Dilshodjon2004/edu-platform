@@ -71,7 +71,10 @@ const CartPageComponent = () => {
 							Total:
 						</Text>
 						<Heading>
-							{getTotalPrice(cart.courses, cart.books).toLocaleString('en-US', {
+							{getTotalPrice(
+								cart.courses,
+								cart.books
+							).totalPrice.toLocaleString('en-US', {
 								style: 'currency',
 								currency: 'USD',
 							})}
