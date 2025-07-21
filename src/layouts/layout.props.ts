@@ -1,5 +1,5 @@
 import { IBooksType } from '@/interfaces/books.interface'
-import { CardType } from '@/interfaces/constants.interface'
+import { CardType, ProductsType } from '@/interfaces/constants.interface'
 import { ICourseType } from '@/interfaces/course.interface'
 import { InstructorType } from '@/interfaces/instructor.interface'
 import { ReactNode } from 'react'
@@ -14,4 +14,5 @@ export interface AppProviderProps {
 	instructors: InstructorType[]
 	books: IBooksType[]
 	cards: CardType[]
+	products: ProductsType[]
 }
