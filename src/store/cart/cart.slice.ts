@@ -20,6 +20,9 @@ export const cartSlice = createSlice({
 		addCourseToCart: (state, { payload }: PayloadAction<ICourseType>) => {
 			state.courses = [...state.courses, payload]
 		},
+		editCourseCart: (state, { payload }: PayloadAction<ICourseType[]>) => {
+			state.courses = payload
+		},
 		addProductToCart: (state, { payload }: PayloadAction<ProductsType>) => {
 			state.product = payload
 		},

@@ -65,7 +65,7 @@ const RevenuePageComponent = ({ balance }: { balance: BalanceType }) => {
 				<CardBody>
 					<HStack justify={'space-between'}>
 						<Heading fontFamily={'mono'} letterSpacing={5}>
-							{t('revenue_report', { ns: 'instructor' })}
+							{t('sidebar_revenue', { ns: 'instructor' })}
 						</Heading>
 						<Icon as={MdAccountBalance} fontSize={60} color={'facebook.400'} />
 					</HStack>
