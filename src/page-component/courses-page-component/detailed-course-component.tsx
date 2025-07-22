@@ -1,4 +1,3 @@
-import { ICourseType } from '@/interfaces/course.interface'
 import {
 	Box,
 	Button,
@@ -15,10 +14,11 @@ import {
 	Tabs,
 	Text,
 	useMediaQuery,
+	useToast,
 } from '@chakra-ui/react'
 import { format } from 'date-fns'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {
 	FaBook,
 	FaLanguage,
@@ -38,6 +38,7 @@ import { useTranslation } from 'react-i18next'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { loadImage } from '@/helpers/image.helper'
 import { useActions } from '@/hooks/useActions'
+import { ICourseType } from '@/interfaces/course.interface'
 const DetailedCourseComponent = () => {
 	const { t } = useTranslation()
 	const [tabIndex, setTabIndex] = useState(0)
@@ -45,12 +46,38 @@ const DetailedCourseComponent = () => {
 
 	const { course } = useTypedSelector(state => state.course)
 	const { sections } = useTypedSelector(state => state.section)
-	const { getSection } = useActions()
+	const { user } = useTypedSelector(state => state.user)
+	const { courses } = useTypedSelector(state => state.cart)
+	const { getSection, addCourseToCart } = useActions()
+	const { push } = useRouter()
+	const toast = useToast()
 
 	const tabHandler = (idx: number) => {
 		setTabIndex(idx)
 		if (idx == 1 && !sections.length) {
 			getSection({ courseId: course?._id, callback: () => {} })
+		}
+	}
+
+	const navigateUser = () => {
+		if (user?.courses.includes(course?._id as string)) {
+			push(`/courses/dashboard/${course?.slug}`)
+		} else {
+			const existingProduct = courses.find(c => c._id == course?._id)
+
+			if (existingProduct) {
+				toast({
+					title: 'Course already exist in cart',
+					position: 'bottom',
+					status: 'warning',
+				})
+				return
+			}
+			addCourseToCart(course as ICourseType)
+			toast({
+				title: 'Course added successfully',
+				position: 'bottom',
+			})
 		}
 	}
 	return (
@@ -116,8 +143,16 @@ const DetailedCourseComponent = () => {
 											})}
 										</Text>
 									</Stack>
-									<Button mt={5} w={'full'} h={14} colorScheme='blue'>
-										{t('enroll', { ns: 'courses' })}
+									<Button
+										mt={5}
+										w={'full'}
+										h={14}
+										colorScheme='blue'
+										onClick={navigateUser}
+									>
+										{user?.courses.includes(course?._id as string)
+											? 'Go'
+											: 'Add to cart'}
 									</Button>
 									<Box mt={3}>
 										<Flex

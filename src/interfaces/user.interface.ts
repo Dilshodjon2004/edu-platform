@@ -8,4 +8,5 @@ export interface IUserType {
 	password?: string
 	avatar?: string
 	job?: string
+	courses: string[]
 }

@@ -30,7 +30,7 @@ import {
 import $axios from '@/api/axios'
 import { useRouter } from 'next/router'
 import { useActions } from '@/hooks/useActions'
-import { getMailUrl } from '@/config/api.config'
+import { getCourseUrl, getMailUrl } from '@/config/api.config'
 import { CardType } from '@/interfaces/constants.interface'
 
 const CheckoutForm = ({ cards }: { cards: CardType[] }) => {
@@ -45,7 +45,7 @@ const CheckoutForm = ({ cards }: { cards: CardType[] }) => {
 	const { courses, books, product } = useTypedSelector(state => state.cart)
 	const { colorMode } = useColorMode()
 	const router = useRouter()
-	const { getBooks } = useActions()
+	const { getBooks, checkAuth } = useActions()
 
 	const cardStyles = {
 		base: {
@@ -186,9 +186,11 @@ const CheckoutForm = ({ cards }: { cards: CardType[] }) => {
 								description: 'Successfully purchased',
 								position: 'top-right',
 							})
+							await $axios.put(`${getCourseUrl('enroll-user')}/${course._id}`)
 						}
 
 						if (counter == 0) {
+							checkAuth()
 							router.push('/shop/success')
 						}
 					}
