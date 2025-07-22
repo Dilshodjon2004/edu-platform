@@ -31,7 +31,7 @@ const Layout: FC<LayoutProps> = ({ children }): JSX.Element => {
 export default Layout
 
 export const withInstructorLayout = <
-	T extends Record<string, unknown> & IInstructorProviderProps
+	T extends Partial<IInstructorProviderProps> & Record<string, unknown>
 >(
 	Component: FunctionComponent<T>
 ) => {

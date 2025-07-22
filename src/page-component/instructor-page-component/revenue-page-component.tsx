@@ -1,3 +1,6 @@
+import { getBalanceObject } from '@/helpers/total-price.helper'
+import { BalanceType } from '@/interfaces/instructor.interface'
+import { PaymentService } from '@/services/payment.service'
 import {
 	Card,
 	CardBody,
@@ -11,13 +14,17 @@ import {
 } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { AiOutlineDollarCircle } from 'react-icons/ai'
-import { FaFunnelDollar } from 'react-icons/fa'
 import { FiSettings } from 'react-icons/fi'
-import { MdOutlineAccountBalanceWallet } from 'react-icons/md'
+import { MdAccountBalance, MdOutlineAccountBalanceWallet } from 'react-icons/md'
 import { SiFuturelearn } from 'react-icons/si'
 import { StatsCard } from 'src/components'
-const RevenuePageComponent = () => {
+const RevenuePageComponent = ({ balance }: { balance: BalanceType }) => {
 	const { t } = useTranslation()
+
+	const openAccountLinks = async () => {
+		const data = await PaymentService.instructorAccountLink()
+		window.open(data)
+	}
 	return (
 		<>
 			<chakra.h1
@@ -31,7 +38,7 @@ const RevenuePageComponent = () => {
 			<SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
 				<StatsCard
 					title={t('earn', { ns: 'instructor' })}
-					stat={Number('5000').toLocaleString('en-US', {
+					stat={getBalanceObject(balance).payouts.toLocaleString('en-US', {
 						style: 'currency',
 						currency: 'USD',
 					})}
@@ -60,7 +67,7 @@ const RevenuePageComponent = () => {
 						<Heading fontFamily={'mono'} letterSpacing={5}>
 							{t('revenue_report', { ns: 'instructor' })}
 						</Heading>
-						<Icon as={FaFunnelDollar} fontSize={60} color={'facebook.400'} />
+						<Icon as={MdAccountBalance} fontSize={60} color={'facebook.400'} />
 					</HStack>
 					<Text>{t('revenue_report_description', { ns: 'instructor' })}</Text>
 					<Divider my={5} />
@@ -69,7 +76,7 @@ const RevenuePageComponent = () => {
 							{t('pending_balance', { ns: 'instructor' })}
 						</Heading>
 						<Text fontSize={40} color={'facebook.400'}>
-							{Number('500').toLocaleString('en-US', {
+							{getBalanceObject(balance).payouts.toLocaleString('en-US', {
 								style: 'currency',
 								currency: 'USD',
 							})}
@@ -81,7 +88,13 @@ const RevenuePageComponent = () => {
 						<Heading fontFamily={'mono'} letterSpacing={5}>
 							{t('payouts', { ns: 'instructor' })}
 						</Heading>
-						<Icon as={FiSettings} fontSize={60} color={'facebook.400'} />
+						<Icon
+							as={FiSettings}
+							fontSize={60}
+							color={'facebook.400'}
+							cursor={'pointer'}
+							onClick={openAccountLinks}
+						/>
 					</HStack>
 					<Text>{t('payouts_description', { ns: 'instructor' })}</Text>
 				</CardBody>

@@ -4,8 +4,8 @@ import { FC, ReactNode, useEffect } from 'react'
 
 interface Props {
 	children: ReactNode
-	courses: ICourseType[]
-	course: ICourseType
+	courses?: ICourseType[]
+	course?: ICourseType
 }
 
 const InstructorProvider: FC<Props> = ({
