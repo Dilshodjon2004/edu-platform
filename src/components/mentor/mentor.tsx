@@ -1,3 +1,4 @@
+import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { Avatar, Box, Flex, Heading, Icon, Stack, Text } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { BsPlayCircle } from 'react-icons/bs'
@@ -5,20 +6,22 @@ import { FaStar, FaUserGraduate } from 'react-icons/fa'
 
 const Mentor = () => {
 	const { t } = useTranslation()
+	const { course } = useTypedSelector(state => state.course)
 	return (
 		<>
 			<Heading mt={5}>{t('mentor', { ns: 'courses' })}</Heading>
 			<Flex mt={5} gap={5} align={'center'}>
 				<Avatar
 					display={{ base: 'none', md: 'block' }}
-					src='https://media.graphassets.com/NfxHACAlR4CkvdhnB3gs'
+					src={course?.author.avatar}
+					name={course?.author.fullName}
 					size={'2xl'}
 				/>
 				<Box>
 					<Text fontWeight={'bold'} fontSize={'20px'}>
-						Dilshodbek Gulomov
+						{course?.author.fullName}
 					</Text>
-					<Text>Software Engineer & Coding Instructor</Text>
+					<Text>{course?.author.job}</Text>
 					<Stack
 						direction={{ base: 'column', md: 'row' }}
 						mt={2}
@@ -42,7 +45,7 @@ const Mentor = () => {
 			</Flex>
 			<Text mt={4}>
 				<Box as='span' fontWeight={'bold'} color={'blue.500'}>
-					Samar Badriddinov
+					{course?.author.fullName}
 				</Box>{' '}
 				- Sammi platformasi asoschisi hamda Amerika, Tunis, va Rossiya
 				davlatlarida bir nechta Startup loyihalarda ishtirok etgan. Hozirgi

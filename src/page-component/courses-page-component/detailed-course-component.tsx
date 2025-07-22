@@ -1,4 +1,3 @@
-import { courses } from '@/config/constants'
 import { ICourseType } from '@/interfaces/course.interface'
 import {
 	Box,
@@ -36,22 +35,23 @@ import { TbCertificate } from 'react-icons/tb'
 import { GiInfinity } from 'react-icons/gi'
 import { Curriculum, Mentor, Overview, Review } from '@/components'
 import { useTranslation } from 'react-i18next'
+import { useTypedSelector } from '@/hooks/useTypedSelector'
+import { loadImage } from '@/helpers/image.helper'
+import { useActions } from '@/hooks/useActions'
 const DetailedCourseComponent = () => {
 	const { t } = useTranslation()
-
-	const [data, setData] = useState<ICourseType>()
 	const [tabIndex, setTabIndex] = useState(0)
-
-	const router = useRouter()
 	const [media] = useMediaQuery('(min-width: 592px)')
 
-	useEffect(() => {
-		const currentCourse = courses.find(c => c.slug === router.query.slug)
-		setData(currentCourse)
-	}, [router.query])
+	const { course } = useTypedSelector(state => state.course)
+	const { sections } = useTypedSelector(state => state.section)
+	const { getSection } = useActions()
 
 	const tabHandler = (idx: number) => {
 		setTabIndex(idx)
+		if (idx == 1 && !sections.length) {
+			getSection({ courseId: course?._id, callback: () => {} })
+		}
 	}
 	return (
 		<>
@@ -61,7 +61,7 @@ const DetailedCourseComponent = () => {
 					<Stack direction={{ base: 'column', md: 'row' }} gap={5}>
 						<Box w={{ base: '100%', md: '60%' }}>
 							<Heading mt={5} fontSize={'3xl'}>
-								{data?.title}
+								{course?.title}
 							</Heading>
 							<Text mt={5}>
 								Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -81,7 +81,9 @@ const DetailedCourseComponent = () => {
 								<Flex align={'center'} fontSize={'sm'} gap={1}>
 									<Icon as={TfiAlarmClock} />
 									<Text>
-										Oxirgi yangilanish {format(new Date(), 'dd MMMM, yyyy')}
+										Oxirgi yangilanish{' '}
+										{course &&
+											format(new Date(course?.updatedAt), 'dd MMMM, yyyy')}
 									</Text>
 								</Flex>
 							</Stack>
@@ -94,8 +96,8 @@ const DetailedCourseComponent = () => {
 							<Card variant={'outline'} shadow={'dark-lg'}>
 								<CardBody p={{ base: 2, lg: 5 }}>
 									<Image
-										src={data?.image}
-										alt={data?.title}
+										src={loadImage(course?.previewImage)}
+										alt={course?.title}
 										w={'full'}
 										h={'300px'}
 										style={{ objectFit: 'cover', borderRadius: '8px' }}
@@ -108,7 +110,7 @@ const DetailedCourseComponent = () => {
 									>
 										<Heading fontSize={'2xl'}>Bepul</Heading>
 										<Text textDecoration={'line-through'}>
-											{data?.price.toLocaleString('en-US', {
+											{course?.price.toLocaleString('en-US', {
 												currency: 'USD',
 												style: 'currency',
 											})}
@@ -131,7 +133,7 @@ const DetailedCourseComponent = () => {
 													{t('lessons', { ns: 'courses' })}
 												</Text>
 											</Flex>
-											<Text>{data?.lessonCount}</Text>
+											<Text>{course?.lessonCount}</Text>
 										</Flex>
 										<Divider />
 										<Flex
@@ -148,7 +150,7 @@ const DetailedCourseComponent = () => {
 												</Text>
 											</Flex>
 											<Text>
-												{data?.totalHour} {t('hour', { ns: 'courses' })}
+												{course?.totalHour} {t('hour', { ns: 'courses' })}
 											</Text>
 										</Flex>
 										<Divider />
@@ -165,7 +167,7 @@ const DetailedCourseComponent = () => {
 													{t('level', { ns: 'courses' })}
 												</Text>
 											</Flex>
-											<Text>{data?.level}</Text>
+											<Text>{course?.level}</Text>
 										</Flex>
 										<Divider />
 										<Flex
@@ -181,7 +183,7 @@ const DetailedCourseComponent = () => {
 													{t('language', { ns: 'courses' })}
 												</Text>
 											</Flex>
-											<Text>English</Text>
+											<Text>{course?.language}</Text>
 										</Flex>
 										<Divider />
 										<Flex

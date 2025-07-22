@@ -137,7 +137,7 @@ const CartPageComponent = () => {
 						</Text>
 						<Box pos={'relative'} mt={5}>
 							<Input
-								w={'full'}
+								w={'full'}	
 								bg={'white'}
 								color={'gray.900'}
 								placeholder={'Enter coupon'}

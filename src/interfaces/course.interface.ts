@@ -18,9 +18,11 @@ export interface ICourseType {
 	_id: string
 	language: string
 	isActive: boolean
+	updatedAt: Date
 }
 
 export interface ICourseAuthorType {
 	fullName: string
 	avatar: string
+	job: string
 }
