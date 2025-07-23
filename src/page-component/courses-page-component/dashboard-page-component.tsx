@@ -15,15 +15,14 @@ const DashboardPageComponent = () => {
 	return (
 		<>
 			<Header />
-			<Box
-				display={{ base: 'none', lg: 'block' }}
-				position={'fixed'}
-				top={'12vh'}
-				right={'2vh'}
-				bottom={'2vh'}
-				w={'400px'}
-			>
-				<Sidebar />
+			<Box display={{ base: 'none', lg: 'block' }}>
+				<Sidebar
+					position={'fixed'}
+					top={'12vh'}
+					right={'2vh'}
+					bottom={'2vh'}
+					w={'400px'}
+				/>
 			</Box>
 			<Box
 				mt={'12vh'}
@@ -56,13 +55,13 @@ const DashboardPageComponent = () => {
 							__html: lesson.material,
 						}}
 					/>
-					<Box
-						display={{ base: 'block', lg: 'none' }}
-						pos={'relative'}
-						width={'100%'}
-						mb={10}
-					>
-						<Sidebar />
+					<Box display={{ base: 'block', lg: 'none' }}>
+						<Sidebar
+							display={'block'}
+							pos={'relative'}
+							width={'100%'}
+							mb={10}
+						/>
 					</Box>
 				</Container>
 			</Box>
