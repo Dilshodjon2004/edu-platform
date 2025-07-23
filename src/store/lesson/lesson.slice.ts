@@ -1,10 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ILessonInitialStateType } from './lesson.interface'
-import { createLesson, deleteLesson, editLesson } from './lesson.action'
+import { LessonType } from '@/interfaces/instructor.interface'
 
 const initialState: ILessonInitialStateType = {
 	isLoading: false,
 	error: null,
+	lesson: {} as LessonType,
 }
 
 export const lessonSlice = createSlice({
@@ -13,6 +14,9 @@ export const lessonSlice = createSlice({
 	reducers: {
 		clearLessonError: state => {
 			state.error = null
+		},
+		getLesson: (state, action: PayloadAction<LessonType>) => {
+			state.lesson = action.payload
 		},
 	},
 	extraReducers: builder => {
