@@ -16,14 +16,18 @@ import {
 	useColorModeValue,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { ChangeEvent, FC, useEffect, useState } from 'react'
 import { GoDotFill } from 'react-icons/go'
 import { getLessonTime } from 'src/helpers/time.helper'
 import { useActions } from 'src/hooks/useActions'
 import { useTypedSelector } from 'src/hooks/useTypedSelector'
+import { CourseDashboardProps } from './courses-page-component.props'
+import $axios from '@/api/axios'
+import { getLessonUrl } from '@/config/api.config'
 
-const Sidebar = () => {
+const Sidebar: FC<CourseDashboardProps> = ({ ...props }) => {
 	const [moduleIndex, setModuleIndex] = useState<number>(0)
+	const [isComplete, setIsComplete] = useState<boolean>(false)
 
 	const { sections, pendingSection } = useTypedSelector(state => state.section)
 	const { course } = useTypedSelector(state => state.course)
@@ -61,6 +65,25 @@ const Sidebar = () => {
 		setModuleIndex(findIndex === -1 ? 0 : findIndex)
 	}, [sections])
 
+	const onComplete = async (
+		evt: ChangeEvent<HTMLInputElement>,
+		lessonID: string
+	) => {
+		setIsComplete(true)
+
+		try {
+			if (evt.target.checked) {
+				await $axios.put(`${getLessonUrl('complete')}/${lessonID}`)
+			} else {
+				await $axios.put(`${getLessonUrl('uncomplete')}/${lessonID}`)
+			}
+			setIsComplete(false)
+		} catch (error) {
+			console.log(error)
+			setIsComplete(false)
+		}
+	}
+
 	return (
 		<Box
 			position={'fixed'}
@@ -82,6 +105,7 @@ const Sidebar = () => {
 				'&::-webkit-scrollbar-track': { width: '1px' },
 				'&::-webkit-scrollbar-thumb': { background: 'transparent' },
 			}}
+			{...props}
 		>
 			{pendingSection ? (
 				<Center alignItems={'center'} h={'full'}>
@@ -153,15 +177,11 @@ const Sidebar = () => {
 													{user ? (
 														<Checkbox
 															colorScheme={'green'}
-															// onChange={e =>
-															// onComplete(e, lesson._id)
-															// }
+															onChange={e => onComplete(e, lesson._id)}
 															defaultChecked={lesson.completed.includes(
-																user._id
+																user.id
 															)}
-															// cursor={
-															// 	isComplete ? 'progress' : 'pointer'
-															// }
+															cursor={isComplete ? 'progress' : 'pointer'}
 														/>
 													) : null}
 												</Flex>

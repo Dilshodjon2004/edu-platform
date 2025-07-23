@@ -1,4 +1,11 @@
-import { Box, Card, CardBody, Container, Divider, Heading } from '@chakra-ui/react'
+import {
+	Box,
+	Card,
+	CardBody,
+	Container,
+	Divider,
+	Heading,
+} from '@chakra-ui/react'
 import Header from './header'
 import Sidebar from './sidebar'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
@@ -8,7 +15,16 @@ const DashboardPageComponent = () => {
 	return (
 		<>
 			<Header />
-			<Sidebar />
+			<Box
+				display={{ base: 'none', lg: 'block' }}
+				position={'fixed'}
+				top={'12vh'}
+				right={'2vh'}
+				bottom={'2vh'}
+				w={'400px'}
+			>
+				<Sidebar />
+			</Box>
 			<Box
 				mt={'12vh'}
 				marginRight={{ base: 2, lg: '450px' }}
@@ -40,6 +56,14 @@ const DashboardPageComponent = () => {
 							__html: lesson.material,
 						}}
 					/>
+					<Box
+						display={{ base: 'block', lg: 'none' }}
+						pos={'relative'}
+						width={'100%'}
+						mb={10}
+					>
+						<Sidebar />
+					</Box>
 				</Container>
 			</Box>
 		</>
